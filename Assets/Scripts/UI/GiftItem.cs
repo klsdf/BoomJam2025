@@ -155,7 +155,7 @@ namespace BoomJam2025
         {
             if (textContribution != null)
             {
-                textContribution.text = value;
+                textContribution.text = $"+{value}";
             }
         }
 

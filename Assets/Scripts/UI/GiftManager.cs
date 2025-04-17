@@ -39,7 +39,17 @@ namespace BoomJam2025
         /// 主摄像机引用
         /// </summary>
         public Camera mainCamera;
-        
+
+        /// <summary>
+        /// 礼物数据配置
+        /// </summary>
+        public GiftData giftData;
+
+        /// <summary>
+        /// 总贡献值显示
+        /// </summary>
+        public TextMeshProUGUI textTotalContribution;
+
         [Header("Settings")]
         /// <summary>
         /// 礼物生成的最小X坐标
@@ -74,6 +84,9 @@ namespace BoomJam2025
             {
                 giftPool.giftItemPrefab = giftItemPrefab;
             }
+
+            // 初始化总贡献值显示
+            UpdateTotalContribution();
         }
         
         /// <summary>
@@ -105,6 +118,9 @@ namespace BoomJam2025
                     SpawnGift();
                 }
             }
+
+            // 更新总贡献值显示
+            UpdateTotalContribution();
         }
         
         /// <summary>
@@ -135,20 +151,53 @@ namespace BoomJam2025
             // 设置贡献值
             double contributionValue = CoreValueManager.Instance.ClickGiftValue();
             giftItem.SetObtainedContributionValue(CoreValueManager.Instance.FormatValue(contributionValue));
+
+            // 设置礼物图标
+            if (giftData != null)
+            {
+                Sprite giftSprite = giftData.GetRandomGiftSprite(contributionValue);
+                if (giftSprite != null)
+                {
+                    giftItem.SetGiftIcon(giftSprite);
+                }
+            }
         }
         
         /// <summary>
-        /// 检查鼠标是否悬停在UI对象上
+        /// 检查鼠标是否点击了Button组件
         /// </summary>
-        /// <returns>如果鼠标悬停在UI对象上返回true，否则返回false</returns>
+        /// <returns>如果鼠标点击了Button组件返回true，否则返回false</returns>
         private bool IsPointerOverUIObject()
         {
             // 检查是否点击了UI元素
             if (EventSystem.current.IsPointerOverGameObject())
             {
-                return true;
+                // 获取当前指针下的所有UI元素
+                var pointerData = new PointerEventData(EventSystem.current)
+                {
+                    position = Input.mousePosition
+                };
+                var results = new List<RaycastResult>();
+                EventSystem.current.RaycastAll(pointerData, results);
+
+                // 检查是否有Button组件
+                foreach (var result in results)
+                {
+                    if (result.gameObject.GetComponent<Button>() != null)
+                    {
+                        return true;
+                    }
+                }
             }
             return false;
+        }
+
+        /// <summary>
+        /// 更新总贡献值显示
+        /// </summary>
+        private void UpdateTotalContribution()
+        {
+            textTotalContribution.text = CoreValueManager.Instance.FormatValue(CoreValueManager.Instance.valueContribution);
         }
     }
 } 

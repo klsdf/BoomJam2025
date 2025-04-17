@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e05aecc22efa98b4d9fd2bcf338c26e4, type: 3}
+  m_Name: TestGiftSprites
+  m_EditorClassIdentifier: 
+  valueGroups:
+  - minValue: 0
+    maxValue: 1.5
+    giftSprites:
+    - {fileID: 21300000, guid: 0e05a237f45b3d84fb9638c931774754, type: 3}
+    - {fileID: 21300000, guid: c89cc35fcf299f1408460c7856d955c2, type: 3}
+  - minValue: 1.5
+    maxValue: -1
+    giftSprites:
+    - {fileID: 21300000, guid: 80b9c336fefe65d498b82dde6e290a8a, type: 3}
+    - {fileID: 21300000, guid: 4eec000a7e311964b86a9b78e4a2277c, type: 3}

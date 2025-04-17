@@ -36,10 +36,21 @@ namespace BoomJam2025
         public double valueContribution = 0;
 
         /// <summary>
-        /// 点击送出礼物
+        /// 点击送出礼物，并且增加贡献值
         /// </summary>
         /// <returns>本次点击获得的贡献值</returns>
         public double ClickGiftValue()
+        {
+            double singleClickValue = GetClickValue();
+            valueContribution += singleClickValue;
+            return singleClickValue;
+        }
+
+        /// <summary>
+        /// 获取单次点击价值
+        /// </summary>
+        /// <returns>单次点击价值</returns>
+        public double GetClickValue()
         {
             // 计算基础点击价值
             double baseValue = MemberBenefitManager.Instance.GetBaseClickValue();
@@ -48,16 +59,15 @@ namespace BoomJam2025
             float fanBoostPercentage = FanLevelManager.Instance.GetClickBoostPercentage();
 
             // 计算最终价值
-            double finalValue = baseValue * (1 + fanBoostPercentage);
+            double singleClickValue = baseValue * (1 + fanBoostPercentage);
 
             // 判断是否暴击
             if (Random.value < MemberBenefitManager.Instance.GetCriticalRate())
             {
-                finalValue *= MemberBenefitManager.Instance.GetCriticalMultiplier();
+                singleClickValue *= MemberBenefitManager.Instance.GetCriticalMultiplier();
             }
 
-            valueContribution += finalValue;
-            return finalValue;
+            return singleClickValue;
         }
 
         /// <summary>
@@ -90,21 +100,40 @@ namespace BoomJam2025
         /// <returns>格式化后的字符串</returns>
         public string FormatValue(double value)
         {
-            if (value < 1000)
+            // 将数字转换为字符串，保留所有小数位
+            string valueStr = value.ToString();
+            
+            // 计算纯数字的位数（不包括小数点）
+            int digitCount = valueStr.Replace(".", "").Length;
+            
+            // 如果纯数字位数不超过8位，直接显示
+            if (digitCount <= 8)
             {
-                // 小于1000时显示小数点后5位
-                return value.ToString("F5");
+                return valueStr;
             }
-            else if (value < 1000000)
+            
+            // 如果超过千万（8位），使用科学计数法
+            if (value >= 10000000)
             {
-                // 小于100万时显示整数
-                return value.ToString("F0");
-            }
-            else
-            {
-                // 大于等于100万时使用科学计数法
                 return value.ToString("E2");
             }
+            
+            // 其他情况（超过8位但小于千万），显示前8位数字
+            string digitsOnly = valueStr.Replace(".", "");
+            string firstEightDigits = digitsOnly.Substring(0, 8);
+            
+            // 如果有小数点，需要重新插入小数点
+            if (valueStr.Contains("."))
+            {
+                int decimalIndex = valueStr.IndexOf(".");
+                // 确保小数点位置正确
+                if (decimalIndex < 8)
+                {
+                    return firstEightDigits.Insert(decimalIndex, ".");
+                }
+            }
+            
+            return firstEightDigits;
         }
     }
 }
