@@ -37,7 +37,7 @@ namespace BoomJam2025
         {
             // 初始化默认值
             levelBaseClickValue = 1;
-            levelPercentagePerLevel = 1;
+            levelPercentagePer = 1;
             levelReductionFactor = 1;
             levelCriticalRate = 1;
             levelCriticalMultiplier = 1;
@@ -51,7 +51,7 @@ namespace BoomJam2025
         /// <summary>
         /// 每级提升百分比加点等级
         /// </summary>
-        public int levelPercentagePerLevel = 1;
+        public int levelPercentagePer = 1;
 
         /// <summary>
         /// 减免系数加点等级
@@ -69,6 +69,11 @@ namespace BoomJam2025
         public int levelCriticalMultiplier = 1;
 
         /// <summary>
+        /// 局外点数
+        /// </summary>
+        public int pointsOuter = 0;
+
+        /// <summary>
         /// 获取基础点击价值
         /// </summary>
         /// <returns>基础点击价值</returns>
@@ -81,9 +86,9 @@ namespace BoomJam2025
         /// 获取每级提升百分比
         /// </summary>
         /// <returns>每级提升百分比</returns>
-        public float GetPercentagePerLevel()
+        public float GetPercentagePer()
         {
-            return levelPercentagePerLevel * (float)System.Math.Pow(2, RebirthManager.Instance.countRebirthBig) * 0.01f;
+            return levelPercentagePer * (float)System.Math.Pow(2, RebirthManager.Instance.countRebirthBig) * 0.01f;
         }
 
         /// <summary>
@@ -121,9 +126,9 @@ namespace BoomJam2025
         public bool UpgradeBenefit(BenefitType benefitType)
         {
             int currentLevel = GetBenefitLevel(benefitType);
-            if (MemberLevelManager.Instance.pointsOuter < currentLevel) return false;
+            if (pointsOuter < currentLevel) return false;
 
-            MemberLevelManager.Instance.pointsOuter -= currentLevel;
+            pointsOuter -= currentLevel;
             SetBenefitLevel(benefitType, currentLevel + 1);
             return true;
         }
@@ -134,10 +139,11 @@ namespace BoomJam2025
         public void Reset()
         {
             levelBaseClickValue = 1;
-            levelPercentagePerLevel = 1;
+            levelPercentagePer = 1;
             levelReductionFactor = 1;
             levelCriticalRate = 1;
             levelCriticalMultiplier = 1;
+            pointsOuter = 0;
         }
 
         /// <summary>
@@ -150,7 +156,7 @@ namespace BoomJam2025
             return benefitType switch
             {
                 BenefitType.BaseClickValue => levelBaseClickValue,
-                BenefitType.PercentagePerLevel => levelPercentagePerLevel,
+                BenefitType.PercentagePer => levelPercentagePer,
                 BenefitType.ReductionFactor => levelReductionFactor,
                 BenefitType.CriticalRate => levelCriticalRate,
                 BenefitType.CriticalMultiplier => levelCriticalMultiplier,
@@ -170,8 +176,8 @@ namespace BoomJam2025
                 case BenefitType.BaseClickValue:
                     levelBaseClickValue = level;
                     break;
-                case BenefitType.PercentagePerLevel:
-                    levelPercentagePerLevel = level;
+                case BenefitType.PercentagePer:
+                    levelPercentagePer = level;
                     break;
                 case BenefitType.ReductionFactor:
                     levelReductionFactor = level;
@@ -198,7 +204,7 @@ namespace BoomJam2025
         /// <summary>
         /// 每级提升百分比
         /// </summary>
-        PercentagePerLevel,
+        PercentagePer,
         /// <summary>
         /// 粉丝等级升级消耗减免系数
         /// </summary>

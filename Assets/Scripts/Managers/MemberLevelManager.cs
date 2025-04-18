@@ -42,11 +42,6 @@ namespace BoomJam2025
         public int levelMember = 1;
 
         /// <summary>
-        /// 局外点数
-        /// </summary>
-        public int pointsOuter = 0;
-
-        /// <summary>
         /// Awake 初始化单例
         /// </summary>
         private void Awake()
@@ -65,17 +60,17 @@ namespace BoomJam2025
         /// <summary>
         /// 升级会员等级
         /// </summary>
-        /// <param name="contribution">当前贡献值</param>
         /// <returns>升级消耗的贡献值，升级失败返回0</returns>
-        public double TryUpgrade(double contribution)
+        public double TryUpgrade()
         {
             // 计算升级所需贡献值
             double cost = GetUpgradeCost();
 
-            if (contribution >= cost)
+            if (CoreValueManager.Instance.valueContribution >= cost)
             {
                 levelMember++;
-                pointsOuter++;
+                MemberBenefitManager.Instance.pointsOuter++;
+                CoreValueManager.Instance.valueContribution -= cost;
                 return cost;
             }
             return 0;
