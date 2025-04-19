@@ -134,5 +134,26 @@ namespace BoomJam2025
             
             return firstEightDigits;
         }
+
+        /// <summary>
+        /// 获取指定等级下的暴击价值
+        /// </summary>
+        /// <param name="level">等级</param>
+        /// <returns>暴击价值</returns>
+        public double GetCritValueAtLevel(int level)
+        {
+            // 计算基础点击价值
+            double baseValue = MemberBenefitManager.Instance.GetBaseClickValue();
+
+            // 计算粉丝等级提升百分比
+            float fanBoostPercentage = FanLevelManager.Instance.GetClickBoostPercentageAtLevel(level);
+
+            // 计算最终价值
+            double singleClickValue = baseValue * (1 + fanBoostPercentage);
+
+            singleClickValue *= MemberBenefitManager.Instance.GetCriticalMultiplier();
+
+            return singleClickValue;
+        }
     }
 }

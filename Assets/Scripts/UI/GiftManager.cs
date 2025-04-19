@@ -11,6 +11,7 @@ namespace BoomJam2025
     using TMPro;
     using System.Collections.Generic;
     using UnityEngine.EventSystems;
+    using System.Collections;
 
     /// <summary>
     /// 管理礼物掉落效果和贡献值显示的UI管理器
@@ -45,9 +46,14 @@ namespace BoomJam2025
 
         [Header("References")]
         /// <summary>
-        /// 礼物预制体
+        /// 普通礼物预制体
         /// </summary>
-        public GameObject giftItemPrefab;
+        public GameObject normalGiftPrefab;
+        
+        /// <summary>
+        /// 特殊礼物预制体
+        /// </summary>
+        public GameObject specialGiftPrefab;
         
         /// <summary>
         /// 礼物容器Transform（屏幕Canvas）
@@ -80,11 +86,23 @@ namespace BoomJam2025
         /// </summary>
         public float maxX = 1920f;
         
+        [Header("Special Gift Settings")]
+        /// <summary>
+        /// 特殊礼物生成概率（0-1）
+        /// </summary>
+        public float specialGiftProbability = 0.1f;
+        
+        /// <summary>
+        /// 特殊礼物冷却时间（秒）
+        /// </summary>
+        public float specialGiftCooldown = 30f;
+        
         private float screenHeight;
         private GiftPool giftPool;
-        
         private bool isGiftGenerationEnabled = true;
-        
+        private float lastSpecialGiftTime;
+        private bool isSpecialGiftAvailable = true;
+
         /// <summary>
         /// 初始化组件和对象池
         /// </summary>
@@ -111,7 +129,7 @@ namespace BoomJam2025
             // 确保预制体引用已设置
             if (giftPool.giftItemPrefab == null)
             {
-                giftPool.giftItemPrefab = giftItemPrefab;
+                giftPool.giftItemPrefab = normalGiftPrefab;
             }
 
             // 初始化总贡献值显示
@@ -129,6 +147,7 @@ namespace BoomJam2025
             }
             
             screenHeight = Screen.height;
+            lastSpecialGiftTime = Time.time;
         }
         
         /// <summary>
@@ -162,19 +181,38 @@ namespace BoomJam2025
         /// </remarks>
         private void SpawnGift()
         {
-            if (giftPool == null || giftContainer == null)
+            if (giftContainer == null)
             {
-                Debug.LogError("GiftPool or container is not assigned!");
+                Debug.LogError("Gift container is not assigned!");
                 return;
             }
             
-            // 从对象池获取礼物
-            GiftItem giftItem = giftPool.GetGiftItem();
-            giftItem.transform.SetParent(giftContainer);
+            // 检查是否可以生成特殊礼物
+            if (isSpecialGiftAvailable && Random.value < specialGiftProbability)
+            {
+                SpawnSpecialGift();
+                return;
+            }
+            
+            // 生成普通礼物
+            SpawnNormalGift();
+        }
+
+        private void SpawnNormalGift()
+        {
+            if (giftPool == null)
+            {
+                Debug.LogError("GiftPool is not assigned!");
+                return;
+            }
+
+            // 从对象池获取普通礼物
+            IGiftItem giftItem = giftPool.GetGiftItem();
+            giftItem.gameObject.transform.SetParent(giftContainer);
             
             // 设置随机X位置
             float randomX = Random.Range(minX, maxX);
-            giftItem.GetComponent<RectTransform>().anchoredPosition = new Vector2(randomX, 0);
+            giftItem.gameObject.GetComponent<RectTransform>().anchoredPosition = new Vector2(randomX, 0);
             
             // 初始化礼物
             giftItem.Initialize(screenHeight);
@@ -193,7 +231,7 @@ namespace BoomJam2025
                 }
             }
         }
-        
+
         /// <summary>
         /// 检查鼠标是否点击了Button组件
         /// </summary>
@@ -245,6 +283,92 @@ namespace BoomJam2025
         public void DisableGiftGeneration()
         {
             isGiftGenerationEnabled = false;
+        }
+
+        
+
+        /// <summary>
+        /// 生成特殊礼物
+        /// </summary>
+        private void SpawnSpecialGift()
+        {
+            if (specialGiftPrefab == null)
+            {
+                Debug.LogError("Special gift prefab is not assigned!");
+                return;
+            }
+
+            // 创建特殊礼物
+            GameObject specialGift = Instantiate(specialGiftPrefab, giftContainer);
+            SpecialGiftItem specialGiftItem = specialGift.GetComponent<SpecialGiftItem>();
+            
+            if (specialGiftItem == null)
+            {
+                Debug.LogError("SpecialGiftItem component is missing!");
+                Destroy(specialGift);
+                return;
+            }
+
+            // 设置随机X位置
+            float randomX = Random.Range(minX, maxX);
+            specialGift.GetComponent<RectTransform>().anchoredPosition = new Vector2(randomX, 0);
+            
+            // 初始化特殊礼物
+            specialGiftItem.Initialize(screenHeight);
+            specialGiftItem.SetGiftManager(this);
+            
+            // 设置特殊礼物图标
+            if (giftData != null)
+            {
+                Sprite specialSprite = giftData.GetSpecialGiftSprite();
+                if (specialSprite != null)
+                {
+                    specialGiftItem.SetGiftIcon(specialSprite);
+                }
+            }
+            
+            // 设置特殊礼物文本
+            specialGiftItem.SetObtainedContributionValue("特殊礼物");
+            
+            // 更新冷却时间
+            lastSpecialGiftTime = Time.time;
+            isSpecialGiftAvailable = false;
+            StartCoroutine(ResetSpecialGiftCooldown());
+        }
+
+        /// <summary>
+        /// 重置特殊礼物冷却时间
+        /// </summary>
+        private System.Collections.IEnumerator ResetSpecialGiftCooldown()
+        {
+            yield return new WaitForSeconds(specialGiftCooldown);
+            isSpecialGiftAvailable = true;
+        }
+
+        /// <summary>
+        /// 清理所有礼物，将普通礼物送回对象池，销毁特殊礼物
+        /// </summary>
+        public void ClearAllGifts()
+        {
+            if (giftContainer == null) return;
+
+            for (int i = giftContainer.childCount - 1; i >= 0; i--)
+            {
+                Transform child = giftContainer.GetChild(i);
+                NormalGiftItem normalGift = child.GetComponent<NormalGiftItem>();
+                SpecialGiftItem specialGift = child.GetComponent<SpecialGiftItem>();
+
+                if (normalGift != null)
+                {
+                    // 如果是普通礼物，送回对象池
+                    giftPool.ReturnGiftItem(normalGift);
+                }
+                else if (specialGift != null)
+                {
+                    // 如果是特殊礼物，直接销毁
+                    Destroy(child.gameObject);
+                }
+            }
         }
     }
 } 

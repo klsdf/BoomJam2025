@@ -47,6 +47,8 @@ namespace BoomJam2025
         public TextMeshProUGUI textTimeDisplay;
         [Tooltip("时间结束提示面板")]
         public GameObject timeEndPanel;
+        [Tooltip("提前重开提示面板")]
+        public GameObject restartPanel;
         [Tooltip("暂停时禁用玩家输入的遮罩")]
         public GameObject inputBlocker;
 
@@ -78,6 +80,10 @@ namespace BoomJam2025
             if (inputBlocker != null)
             {
                 inputBlocker.SetActive(false);
+            }
+            if (restartPanel != null)
+            {
+                restartPanel.SetActive(false);
             }
         }
 
@@ -135,19 +141,39 @@ namespace BoomJam2025
             GiftManager.Instance.DisableGiftGeneration();
         }
 
-        public void OnRestartButtonClicked()
+        private void ResumeGame()
         {
-            if (timeEndPanel != null)
-            {
-                timeEndPanel.SetActive(false);
-            }
+            isGamePaused = false;
+            Time.timeScale = 1f;
             if (inputBlocker != null)
             {
                 inputBlocker.SetActive(false);
             }
+            if (restartPanel != null)
+            {
+                restartPanel.SetActive(false);
+            }
+            if (timeEndPanel != null)
+            {
+                timeEndPanel.SetActive(false);
+            }
             GiftManager.Instance.EnableGiftGeneration();
+        }
+
+        private void RestartGame()
+        {
+            ResumeGame();
+            isTimeEnd = false;
+            InitializeTime();
+            GiftManager.Instance.ClearAllGifts();
+            RebirthManager.Instance.TryRebirth();
+        }
+        public void OnRestartButtonClicked()
+        {
             RestartGame();
         }
+
+
 
         public float GetGameTime()
         {
@@ -165,31 +191,22 @@ namespace BoomJam2025
             GiftManager.Instance.DisableGiftGeneration();
         }
 
-        public void ResumeGame()
+        public void OnAdvanceCancelButtonClicked()
         {
-            isGamePaused = false;
-            Time.timeScale = 1f;
-            if (inputBlocker != null)
-            {
-                inputBlocker.SetActive(false);
-            }
-            GiftManager.Instance.EnableGiftGeneration();
+            ResumeGame();
         }
 
-        public void RestartGame()
+        public void OnAdvanceRestartButtonClicked()
         {
-            gameTime = 0f;
-            isGamePaused = false;
-            isTimeEnd = false;
-            Time.timeScale = 1f;
+            PauseGame();
+            if (restartPanel != null)
+            {
+                restartPanel.SetActive(true);
+            }
             if (inputBlocker != null)
             {
-                inputBlocker.SetActive(false);
+                inputBlocker.SetActive(true);
             }
-            GiftManager.Instance.EnableGiftGeneration();
-            InitializeTime();
-            // 这里可以添加其他需要重置的游戏状态
-            RebirthManager.Instance.TryRebirth();
         }
     }
 

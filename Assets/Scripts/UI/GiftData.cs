@@ -44,6 +44,12 @@ namespace BoomJam2025
 
         public List<GiftValueGroup> valueGroups = new List<GiftValueGroup>();
 
+        [Header("Special Gift Settings")]
+        /// <summary>
+        /// 特殊礼物图标
+        /// </summary>
+        public Sprite specialGiftSprite;
+
         /// <summary>
         /// 根据贡献值获取对应的随机礼物图片
         /// </summary>
@@ -61,6 +67,14 @@ namespace BoomJam2025
                 }
             }
             return null;
+        }
+
+        /// <summary>
+        /// 获取特殊礼物图标
+        /// </summary>
+        public Sprite GetSpecialGiftSprite()
+        {
+            return specialGiftSprite;
         }
     }
 } 
