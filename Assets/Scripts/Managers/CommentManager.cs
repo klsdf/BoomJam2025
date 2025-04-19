@@ -1,37 +1,43 @@
-/****************************************************************************
- * Author: ÕÅ¼ÎÑô
+ï»¿/****************************************************************************
+ * Author: å¼ å˜‰é˜³
  * Date: 2025-04-19
- * Description: ÆÀÂÛ¹ÜÀíÆ÷£¬»ùÓÚ ScrollRect + ²¼¾Ö×é¼ş
+ * Description: è¯„è®ºç®¡ç†å™¨ï¼ˆåŸºäº ScrollRect + å¹³æ»‘æ»šåŠ¨ï¼‰
  ****************************************************************************/
 namespace BoomJam2025
 {
     using UnityEngine;
     using UnityEngine.UI;
+    using System.Collections;
     using System.Collections.Generic;
 
     /// <summary>
-    /// ¸ºÔğÉú³ÉÆÀÂÛ¡¢×Ô¶¯ÅÅ°æ²¢¹ö¶¯µ½×îĞÂ
+    /// å•ä¾‹ï¼šè‡ªåŠ¨ç”Ÿæˆè¯„è®ºã€ç»´æŠ¤é˜Ÿåˆ—ã€æ»šåŠ¨åˆ°åº•éƒ¨
     /// </summary>
-    /// 
-
-
     public class CommentManager : MonoBehaviour
     {
         public static CommentManager Instance { get; private set; }
 
-        [Header("UI ÒıÓÃ")]
+        [Header("UI å¼•ç”¨")]
+        [Tooltip("æŒ‚åœ¨ Scroll View ä¸Šçš„ ScrollRect")]
         public ScrollRect scrollRect;
+        [Tooltip("ScrollRect.Viewport ä¸‹çš„ Contentï¼ˆéœ€ VerticalLayoutGroup + ContentSizeFitterï¼‰")]
         public RectTransform content;
+        [Tooltip("CommentItem é¢„åˆ¶ä½“ï¼Œéœ€å« CommentItem è„šæœ¬ + TextMeshProUGUI")]
         public GameObject commentPrefab;
 
-        [Header("ÅäÖÃ")]
-        public int maxComments = 10;
+        [Header("é…ç½®")]
+        [Tooltip("æœ€å¤§ä¿ç•™è¯„è®ºæ•°ï¼Œè¶…å‡ºåˆ™å›æ”¶æœ€æ—§")]
+        public int maxComments = 20;
+        [Tooltip("æ»šåŠ¨åˆ°åº•éƒ¨çš„åŠ¨ç”»æ—¶é•¿ (ç§’)")]
+        public float scrollAnimDuration = 0.2f;
 
         private readonly Queue<CommentItem> activeQueue = new();
         private readonly List<CommentItem> pool = new();
+        private Coroutine scrollCoroutine;
 
         private void Awake()
         {
+            // å•ä¾‹åˆå§‹åŒ–
             if (Instance != null && Instance != this)
             {
                 Destroy(gameObject);
@@ -39,50 +45,69 @@ namespace BoomJam2025
             }
             Instance = this;
 
-            if (scrollRect == null || content == null || commentPrefab == null)
-                Debug.LogError("ÇëÔÚ Inspector ÀïÕıÈ·ÉèÖÃ ScrollRect¡¢Content¡¢CommentPrefab£¡");
+            // å¼•ç”¨æ ¡éªŒ
+            if (scrollRect == null) scrollRect = GetComponent<ScrollRect>();
+            if (content == null ||
+                commentPrefab == null)
+                Debug.LogError("è¯·åœ¨ Inspector è®¾ç½® ScrollRectã€Contentã€CommentPrefabï¼");
         }
 
         /// <summary>
-        /// ¶ÔÍâµ÷ÓÃ£º²åÈëÒ»ÌõĞÂÆÀÂÛ²¢¹ö¶¯µ½×îµ×²¿
+        /// å¯¹å¤–æ¥å£ï¼šæ·»åŠ ä¸€æ¡è¯„è®ºï¼Œå¹¶å¹³æ»‘æ»šåŠ¨åˆ°åº•éƒ¨
         /// </summary>
         public void AddComment(string text)
         {
-            // 1. »ñÈ¡»òĞÂ½¨
-            CommentItem item = GetFromPool();
+            // 1. å–æˆ–æ–°å»ºä¸€ä¸ª CommentItem
+            var item = GetFromPool();
+            item.gameObject.SetActive(true);
             item.transform.SetParent(content, false);
             item.Initialize(text);
             activeQueue.Enqueue(item);
 
-            // 2. ³¬³öÊ±»ØÊÕ×î¾É
+            // 2. è¶…å‡º maxComments å›æ”¶æœ€æ—§
             if (activeQueue.Count > maxComments)
             {
                 var old = activeQueue.Dequeue();
-                Recycle(old);
+                old.transform.SetParent(transform, false);
+                old.gameObject.SetActive(false);
             }
 
-            // 3. Ç¿ÖÆË¢ĞÂ²¼¾Öºó¹ö¶¯µ½µ×²¿
+            // 3. å¼ºåˆ¶åˆ·æ–°å¸ƒå±€åå¹³æ»‘æ»šåŠ¨åˆ°åº•éƒ¨
             Canvas.ForceUpdateCanvases();
+            if (scrollCoroutine != null) StopCoroutine(scrollCoroutine);
+            scrollCoroutine = StartCoroutine(SmoothScrollToBottom());
+        }
+
+        private IEnumerator SmoothScrollToBottom()
+        {
+            float elapsed = 0f;
+            float start = scrollRect.verticalNormalizedPosition;
+            while (elapsed < scrollAnimDuration)
+            {
+                elapsed += Time.deltaTime;
+                float t = Mathf.Clamp01(elapsed / scrollAnimDuration);
+                scrollRect.verticalNormalizedPosition = Mathf.Lerp(start, 0f, t);
+                yield return null;
+            }
             scrollRect.verticalNormalizedPosition = 0f;
         }
 
+        /// <summary>
+        /// ä»å¯¹è±¡æ± å–å¯ç”¨ CommentItemï¼Œæˆ–æ–°å»º
+        /// </summary>
         private CommentItem GetFromPool()
         {
             foreach (var it in pool)
+            {
                 if (!it.gameObject.activeSelf)
                     return it;
-
+            }
             var go = Instantiate(commentPrefab);
             var ci = go.GetComponent<CommentItem>();
-            if (ci == null) Debug.LogError("CommentPrefab È±ÉÙ CommentItem ½Å±¾£¡");
+            if (ci == null)
+                Debug.LogError("commentPrefab ç¼ºå°‘ CommentItem è„šæœ¬ï¼");
             pool.Add(ci);
             return ci;
         }
-
-        private void Recycle(CommentItem item)
-        {
-            item.gameObject.SetActive(false);
-        }
     }
-
 }
