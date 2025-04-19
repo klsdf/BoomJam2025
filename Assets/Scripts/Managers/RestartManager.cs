@@ -1,0 +1,196 @@
+namespace BoomJam2025
+{
+    using System.Collections;
+    using System.Collections.Generic;
+    using UnityEngine;
+    using UnityEngine.UI;
+    using System;
+    using TMPro;
+
+    public class RestartManager : MonoBehaviour
+    {
+        private static RestartManager _instance;
+        public static RestartManager Instance
+        {
+            get
+            {
+                if (_instance == null)
+                {
+                    _instance = FindObjectOfType<RestartManager>();
+                    if (_instance == null)
+                    {
+                        GameObject go = new GameObject("RestartManager");
+                        _instance = go.AddComponent<RestartManager>();
+                        DontDestroyOnLoad(go);
+                    }
+                }
+                return _instance;
+            }
+        }
+
+        [Header("时间配置")]
+        [Tooltip("开始小时（24小时制）")]
+        public int startHour = 0;
+        [Tooltip("开始分钟")]
+        public int startMinute = 0;
+        [Tooltip("开始秒")]
+        public int startSecond = 0;
+        [Tooltip("持续时间（小时）")]
+        public int durationHours = 0;
+        [Tooltip("持续时间（分钟）")]
+        public int durationMinutes = 0;
+        [Tooltip("持续时间（秒）")]
+        public int durationSeconds = 0;
+
+        [Header("UI引用")]
+        [Tooltip("显示时间的Text组件")]
+        public TextMeshProUGUI textTimeDisplay;
+        [Tooltip("时间结束提示面板")]
+        public GameObject timeEndPanel;
+        [Tooltip("暂停时禁用玩家输入的遮罩")]
+        public GameObject inputBlocker;
+
+        private float gameTime = 0f;
+        private bool isGamePaused = false;
+        private DateTime startDateTime;
+        private DateTime endDateTime;
+        private bool isTimeEnd = false;
+
+        private void Awake()
+        {
+            if (_instance != null && _instance != this)
+            {
+                Destroy(gameObject);
+                return;
+            }
+            _instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+
+        // Start is called before the first frame update
+        void Start()
+        {
+            InitializeTime();
+            if (timeEndPanel != null)
+            {
+                timeEndPanel.SetActive(false);
+            }
+            if (inputBlocker != null)
+            {
+                inputBlocker.SetActive(false);
+            }
+        }
+
+        // Update is called once per frame
+        void Update()
+        {
+            if (!isGamePaused && !isTimeEnd)
+            {
+                gameTime += Time.deltaTime;
+                UpdateTimeDisplay();
+                CheckTimeLimit();
+            }
+        }
+
+        private void InitializeTime()
+        {
+            // 设置开始时间
+            startDateTime = DateTime.Today.AddHours(startHour).AddMinutes(startMinute).AddSeconds(startSecond);
+            // 计算结束时间
+            endDateTime = startDateTime.AddHours(durationHours).AddMinutes(durationMinutes).AddSeconds(durationSeconds);
+            gameTime = 0f;
+            isTimeEnd = false;
+        }
+
+        private void UpdateTimeDisplay()
+        {
+            if (textTimeDisplay != null)
+            {
+                DateTime currentTime = startDateTime.AddSeconds(gameTime);
+                textTimeDisplay.text = currentTime.ToString("HH:mm:ss");
+            }
+        }
+
+        private void CheckTimeLimit()
+        {
+            DateTime currentTime = startDateTime.AddSeconds(gameTime);
+            if (currentTime > endDateTime)
+            {
+                OnTimeEnd();
+            }
+        }
+
+        private void OnTimeEnd()
+        {
+            isTimeEnd = true;
+            PauseGame();
+            if (timeEndPanel != null)
+            {
+                timeEndPanel.SetActive(true);
+            }
+            if (inputBlocker != null)
+            {
+                inputBlocker.SetActive(true);
+            }
+            GiftManager.Instance.DisableGiftGeneration();
+        }
+
+        public void OnRestartButtonClicked()
+        {
+            if (timeEndPanel != null)
+            {
+                timeEndPanel.SetActive(false);
+            }
+            if (inputBlocker != null)
+            {
+                inputBlocker.SetActive(false);
+            }
+            GiftManager.Instance.EnableGiftGeneration();
+            RestartGame();
+        }
+
+        public float GetGameTime()
+        {
+            return gameTime;
+        }
+
+        public void PauseGame()
+        {
+            isGamePaused = true;
+            Time.timeScale = 0f;
+            if (inputBlocker != null)
+            {
+                inputBlocker.SetActive(true);
+            }
+            GiftManager.Instance.DisableGiftGeneration();
+        }
+
+        public void ResumeGame()
+        {
+            isGamePaused = false;
+            Time.timeScale = 1f;
+            if (inputBlocker != null)
+            {
+                inputBlocker.SetActive(false);
+            }
+            GiftManager.Instance.EnableGiftGeneration();
+        }
+
+        public void RestartGame()
+        {
+            gameTime = 0f;
+            isGamePaused = false;
+            isTimeEnd = false;
+            Time.timeScale = 1f;
+            if (inputBlocker != null)
+            {
+                inputBlocker.SetActive(false);
+            }
+            GiftManager.Instance.EnableGiftGeneration();
+            InitializeTime();
+            // 这里可以添加其他需要重置的游戏状态
+            RebirthManager.Instance.TryRebirth();
+        }
+    }
+
+}

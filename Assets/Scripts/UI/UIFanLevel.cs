@@ -33,6 +33,11 @@ namespace BoomJam2025
         /// </summary>
         [SerializeField] private TextMeshProUGUI textRequiredContribution;
 
+        /// <summary>
+        /// 暴击率
+        /// </summary>
+        [SerializeField] private TextMeshProUGUI textCriticalRate;
+
         private void Start()
         {
             UpdateUI();
@@ -72,6 +77,11 @@ namespace BoomJam2025
                 textRequiredContribution.text = $"{required.ToString("F2")}";
             }
 
+            if (textCriticalRate != null)
+            {
+                textCriticalRate.text = $"暴击率+{MemberBenefitManager.Instance.GetCriticalRate():P0}";
+            }
+
         }
 
         /// <summary>
@@ -85,7 +95,7 @@ namespace BoomJam2025
             }
             else
             {
-                Debug.Log("升级失败");
+                Debug.Log("升级粉丝等级失败");
             }
         }
 

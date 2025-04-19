@@ -24,6 +24,25 @@ namespace BoomJam2025
     /// </remarks>
     public class GiftManager : MonoBehaviour
     {
+        private static GiftManager _instance;
+        public static GiftManager Instance
+        {
+            get
+            {
+                if (_instance == null)
+                {
+                    _instance = FindObjectOfType<GiftManager>();
+                    if (_instance == null)
+                    {
+                        GameObject go = new GameObject("GiftManager");
+                        _instance = go.AddComponent<GiftManager>();
+                        DontDestroyOnLoad(go);
+                    }
+                }
+                return _instance;
+            }
+        }
+
         [Header("References")]
         /// <summary>
         /// 礼物预制体
@@ -64,6 +83,8 @@ namespace BoomJam2025
         private float screenHeight;
         private GiftPool giftPool;
         
+        private bool isGiftGenerationEnabled = true;
+        
         /// <summary>
         /// 初始化组件和对象池
         /// </summary>
@@ -72,6 +93,14 @@ namespace BoomJam2025
         /// </remarks>
         private void Awake()
         {
+            if (_instance != null && _instance != this)
+            {
+                Destroy(gameObject);
+                return;
+            }
+            _instance = this;
+            DontDestroyOnLoad(gameObject);
+
             // 初始化对象池
             giftPool = GetComponent<GiftPool>();
             if (giftPool == null)
@@ -110,6 +139,8 @@ namespace BoomJam2025
         /// </remarks>
         private void Update()
         {
+            if (!isGiftGenerationEnabled) return;
+
             if (Input.GetMouseButtonDown(0))
             {
                 // 检查是否点击了UI按钮
@@ -198,6 +229,22 @@ namespace BoomJam2025
         private void UpdateTotalContribution()
         {
             textTotalContribution.text = CoreValueManager.Instance.FormatValue(CoreValueManager.Instance.valueContribution);
+        }
+
+        /// <summary>
+        /// 启用礼物生成
+        /// </summary>
+        public void EnableGiftGeneration()
+        {
+            isGiftGenerationEnabled = true;
+        }
+
+        /// <summary>
+        /// 禁用礼物生成
+        /// </summary>
+        public void DisableGiftGeneration()
+        {
+            isGiftGenerationEnabled = false;
         }
     }
 } 

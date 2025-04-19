@@ -63,8 +63,8 @@ namespace BoomJam2025
         /// <returns>提升百分比</returns>
         public float GetClickBoostPercentage()
         {
-            float percentagePerLevel = MemberBenefitManager.Instance.GetPercentagePerLevel();
-            return (levelFan - 1) * percentagePerLevel;
+            float percentagePer = MemberBenefitManager.Instance.GetPercentagePer();
+            return (levelFan - 1) * percentagePer;
         }
 
         /// <summary>

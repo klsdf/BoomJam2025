@@ -42,12 +42,17 @@ namespace BoomJam2025
         public double ClickGiftValue()
         {
             double singleClickValue = GetClickValue();
+            // 判断是否暴击
+            if (Random.value < MemberBenefitManager.Instance.GetCriticalRate())
+            {
+                singleClickValue *= MemberBenefitManager.Instance.GetCriticalMultiplier();
+            }
             valueContribution += singleClickValue;
             return singleClickValue;
         }
 
         /// <summary>
-        /// 获取单次点击价值
+        /// 获取单次点击价值，不考虑暴击
         /// </summary>
         /// <returns>单次点击价值</returns>
         public double GetClickValue()
@@ -60,12 +65,6 @@ namespace BoomJam2025
 
             // 计算最终价值
             double singleClickValue = baseValue * (1 + fanBoostPercentage);
-
-            // 判断是否暴击
-            if (Random.value < MemberBenefitManager.Instance.GetCriticalRate())
-            {
-                singleClickValue *= MemberBenefitManager.Instance.GetCriticalMultiplier();
-            }
 
             return singleClickValue;
         }
