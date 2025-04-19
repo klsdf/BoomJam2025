@@ -23,3 +23,4 @@ MonoBehaviour:
     giftSprites:
     - {fileID: 21300000, guid: 80b9c336fefe65d498b82dde6e290a8a, type: 3}
     - {fileID: 21300000, guid: 4eec000a7e311964b86a9b78e4a2277c, type: 3}
+  specialGiftSprite: {fileID: 21300000, guid: 7ad62591932c3734b94a2f2eb7b2fa6e, type: 3}

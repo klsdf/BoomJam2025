@@ -20,7 +20,7 @@ namespace BoomJam2025
     {
         [Header("Pool Settings")]
         /// <summary>
-        /// 礼物预制体
+        /// 普通礼物预制体
         /// </summary>
         public GameObject giftItemPrefab;
         
@@ -29,7 +29,7 @@ namespace BoomJam2025
         /// </summary>
         public int initialPoolSize = 20;
 
-        private Queue<GiftItem> pool = new Queue<GiftItem>();
+        private Queue<IGiftItem> pool = new Queue<IGiftItem>();
         private Transform poolContainer;
         private bool isInitialized = false;
 
@@ -100,10 +100,10 @@ namespace BoomJam2025
             }
 
             GameObject giftObj = Instantiate(giftItemPrefab, poolContainer);
-            GiftItem giftItem = giftObj.GetComponent<GiftItem>();
+            IGiftItem giftItem = giftObj.GetComponent<IGiftItem>();
             if (giftItem == null)
             {
-                Debug.LogError("GiftItem component not found on prefab!");
+                Debug.LogError("IGiftItem component not found on prefab!");
                 Destroy(giftObj);
                 return;
             }
@@ -119,7 +119,7 @@ namespace BoomJam2025
         /// <remarks>
         /// 如果池中没有可用对象，会创建新的对象。
         /// </remarks>
-        public GiftItem GetGiftItem()
+        public IGiftItem GetGiftItem()
         {
             if (!isInitialized)
             {
@@ -131,7 +131,7 @@ namespace BoomJam2025
                 CreateNewGiftItem();
             }
 
-            GiftItem giftItem = pool.Dequeue();
+            IGiftItem giftItem = pool.Dequeue();
             giftItem.gameObject.SetActive(true);
             return giftItem;
         }
@@ -143,12 +143,12 @@ namespace BoomJam2025
         /// <remarks>
         /// 重置对象状态并将其放回对象池以供重用。
         /// </remarks>
-        public void ReturnGiftItem(GiftItem giftItem)
+        public void ReturnGiftItem(IGiftItem giftItem)
         {
             if (giftItem == null) return;
             
             giftItem.gameObject.SetActive(false);
-            giftItem.transform.SetParent(poolContainer);
+            giftItem.gameObject.transform.SetParent(poolContainer);
             pool.Enqueue(giftItem);
         }
     }

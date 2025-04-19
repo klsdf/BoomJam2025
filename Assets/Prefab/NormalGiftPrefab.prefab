@@ -9,11 +9,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 327320184619107862}
-  - component: {fileID: 4480513758906098062}
   - component: {fileID: 2892607394647195540}
   - component: {fileID: 1856165147339934753}
+  - component: {fileID: 1268815220341319366}
   m_Layer: 5
-  m_Name: GiftPrefab
+  m_Name: NormalGiftPrefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -39,23 +39,6 @@ RectTransform:
   m_AnchoredPosition: {x: 1046, y: 829}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0}
---- !u!114 &4480513758906098062
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1041726611399724039}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 04556b77f66ed6943bcca8dc25fc7fdc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  imageGiftIcon: {fileID: 1856165147339934753}
-  textContribution: {fileID: 1368443740305758216}
-  fallSpeed: 500
-  stayDuration: 2
-  fadeOutDuration: 0.5
 --- !u!222 &2892607394647195540
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -94,6 +77,23 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &1268815220341319366
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1041726611399724039}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7596c3037794fca4f81389426e77cde6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  imageGiftIcon: {fileID: 1856165147339934753}
+  textContribution: {fileID: 1368443740305758216}
+  fallSpeed: 500
+  stayDuration: 2
+  fadeOutDuration: 0.5
 --- !u!1 &4145387691095167061
 GameObject:
   m_ObjectHideFlags: 0

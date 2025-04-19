@@ -66,6 +66,17 @@ namespace BoomJam2025
             float percentagePer = MemberBenefitManager.Instance.GetPercentagePer();
             return (levelFan - 1) * percentagePer;
         }
+        
+        /// <summary>
+        /// 获取指定等级下的提升百分比
+        /// </summary>
+        /// <param name="level">等级</param>
+        /// <returns>提升百分比</returns>
+        public float GetClickBoostPercentageAtLevel(int level)
+        {
+            float percentagePer = MemberBenefitManager.Instance.GetPercentagePer();
+            return (level - 1) * percentagePer;
+        }
 
         /// <summary>
         /// 升级粉丝等级
