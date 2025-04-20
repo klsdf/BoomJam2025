@@ -126,13 +126,28 @@ namespace BoomJam2025
                 InitializePool();
             }
 
-            if (pool.Count == 0)
+            IGiftItem giftItem;
+            if (pool.Count > 0)
             {
-                CreateNewGiftItem();
+                giftItem = pool.Dequeue();
             }
-
-            IGiftItem giftItem = pool.Dequeue();
+            else
+            {
+                GameObject go = Instantiate(giftItemPrefab);
+                giftItem = go.GetComponent<IGiftItem>();
+            }
+            
+            // 激活游戏对象
             giftItem.gameObject.SetActive(true);
+            
+            // 重置礼物大小
+            RectTransform rectTransform = giftItem.gameObject.GetComponent<RectTransform>();
+            if (rectTransform != null)
+            {
+                rectTransform.localScale = Vector3.one;
+                rectTransform.sizeDelta = new Vector2(100, 100);
+            }
+            
             return giftItem;
         }
 

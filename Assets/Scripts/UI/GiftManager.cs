@@ -212,7 +212,9 @@ namespace BoomJam2025
             
             // 设置随机X位置
             float randomX = Random.Range(minX, maxX);
-            giftItem.gameObject.GetComponent<RectTransform>().anchoredPosition = new Vector2(randomX, 0);
+            RectTransform rectTransform = giftItem.gameObject.GetComponent<RectTransform>();
+            rectTransform.anchoredPosition = new Vector2(randomX, 0);
+            rectTransform.localScale = Vector3.one;
             
             // 初始化礼物
             giftItem.Initialize(screenHeight);
@@ -249,10 +251,23 @@ namespace BoomJam2025
                 var results = new List<RaycastResult>();
                 EventSystem.current.RaycastAll(pointerData, results);
 
-                // 检查是否有Button组件
+                // 检查是否有可交互的UI元素
                 foreach (var result in results)
                 {
-                    if (result.gameObject.GetComponent<Button>() != null)
+                    // 检查是否有Button组件且按钮可交互
+                    Button button = result.gameObject.GetComponent<Button>();
+                    if (button != null && button.interactable)
+                    {
+                        // 检查按钮是否在活动状态
+                        if (button.gameObject.activeInHierarchy)
+                        {
+                            return true;
+                        }
+                    }
+                    
+                    // 检查是否有其他可交互的UI组件
+                    Selectable selectable = result.gameObject.GetComponent<Selectable>();
+                    if (selectable != null && selectable.interactable && selectable.gameObject.activeInHierarchy)
                     {
                         return true;
                     }
