@@ -1,113 +1,180 @@
-﻿/****************************************************************************
- * Author: 张嘉阳
- * Date: 2025-04-19
- * Description: 评论管理器（基于 ScrollRect + 平滑滚动）
+/****************************************************************************
+ * Author: 周欣悦
+ * Date: 2025-04-21
+ * Description: 评论管理器
  ****************************************************************************/
 namespace BoomJam2025
 {
     using UnityEngine;
-    using UnityEngine.UI;
-    using System.Collections;
     using System.Collections.Generic;
+    using System.IO;
+    using UnityEngine.UI;
+    using System.Linq;
 
-    /// <summary>
-    /// 单例：自动生成评论、维护队列、滚动到底部
-    /// </summary>
     public class CommentManager : MonoBehaviour
     {
         public static CommentManager Instance { get; private set; }
-
-        [Header("UI 引用")]
-        [Tooltip("挂在 Scroll View 上的 ScrollRect")]
-        public ScrollRect scrollRect;
-        [Tooltip("ScrollRect.Viewport 下的 Content（需 VerticalLayoutGroup + ContentSizeFitter）")]
-        public RectTransform content;
-        [Tooltip("CommentItem 预制体，需含 CommentItem 脚本 + TextMeshProUGUI")]
-        public GameObject commentPrefab;
-
-        [Header("配置")]
-        [Tooltip("最大保留评论数，超出则回收最旧")]
-        public int maxComments = 20;
-        [Tooltip("滚动到底部的动画时长 (秒)")]
-        public float scrollAnimDuration = 0.2f;
-
-        private readonly Queue<CommentItem> activeQueue = new();
-        private readonly List<CommentItem> pool = new();
-        private Coroutine scrollCoroutine;
-
+        
+        /// <summary>
+        /// 评论预制体
+        /// </summary>
+        [SerializeField] private GameObject commentPrefab;
+        /// <summary>
+        /// 评论容器
+        /// </summary>
+        [SerializeField] private Transform commentContainer;
+        /// <summary>
+        /// 最大评论数量
+        /// </summary>
+        [SerializeField] private int maxComments = 50;
+        
+        private List<string> userNames = new List<string>();
+        private List<string> comments = new List<string>();
+        private CommentPool commentPool;
+        private bool isInitialized = false;
+        
+        public enum SpawnSpeed
+        {
+            VeryFast,    // 2秒以内
+            Fast,        // 6秒以内
+            QuickPaced,  // 10秒以内
+            Medium,      // 15秒以内
+            Slow         // 30秒以内
+        }
+        
+        [SerializeField] private SpawnSpeed currentSpeed = SpawnSpeed.Medium;
+        private float nextSpawnTime;
+        
         private void Awake()
         {
-            // 单例初始化
-            if (Instance != null && Instance != this)
+            if (Instance == null)
+            {
+                Instance = this;
+                DontDestroyOnLoad(gameObject);
+            }
+            else
             {
                 Destroy(gameObject);
                 return;
             }
-            Instance = this;
 
-            // 引用校验
-            if (scrollRect == null) scrollRect = GetComponent<ScrollRect>();
-            if (content == null ||
-                commentPrefab == null)
-                Debug.LogError("请在 Inspector 设置 ScrollRect、Content、CommentPrefab！");
-        }
-
-        /// <summary>
-        /// 对外接口：添加一条评论，并平滑滚动到底部
-        /// </summary>
-        public void AddComment(string text)
-        {
-            // 1. 取或新建一个 CommentItem
-            var item = GetFromPool();
-            item.gameObject.SetActive(true);
-            item.transform.SetParent(content, false);
-            item.Initialize(text);
-            activeQueue.Enqueue(item);
-
-            // 2. 超出 maxComments 回收最旧
-            if (activeQueue.Count > maxComments)
+            // 检查必要组件
+            if (commentPrefab == null)
             {
-                var old = activeQueue.Dequeue();
-                old.transform.SetParent(transform, false);
-                old.gameObject.SetActive(false);
+                Debug.LogError("CommentManager: 未设置评论预制体！");
+                enabled = false;
+                return;
             }
 
-            // 3. 强制刷新布局后平滑滚动到底部
-            Canvas.ForceUpdateCanvases();
-            if (scrollCoroutine != null) StopCoroutine(scrollCoroutine);
-            scrollCoroutine = StartCoroutine(SmoothScrollToBottom());
-        }
-
-        private IEnumerator SmoothScrollToBottom()
-        {
-            float elapsed = 0f;
-            float start = scrollRect.verticalNormalizedPosition;
-            while (elapsed < scrollAnimDuration)
+            if (commentContainer == null)
             {
-                elapsed += Time.deltaTime;
-                float t = Mathf.Clamp01(elapsed / scrollAnimDuration);
-                scrollRect.verticalNormalizedPosition = Mathf.Lerp(start, 0f, t);
-                yield return null;
+                Debug.LogError("CommentManager: 未设置评论容器！");
+                enabled = false;
+                return;
             }
-            scrollRect.verticalNormalizedPosition = 0f;
         }
-
-        /// <summary>
-        /// 从对象池取可用 CommentItem，或新建
-        /// </summary>
-        private CommentItem GetFromPool()
+        
+        private void Start()
         {
-            foreach (var it in pool)
+            if (!enabled) return;
+            
+            InitializeData();
+            
+            // 检查数据是否加载成功
+            if (userNames.Count == 0 || comments.Count == 0)
             {
-                if (!it.gameObject.activeSelf)
-                    return it;
+                Debug.LogError("CommentManager: CSV数据加载失败！");
+                enabled = false;
+                return;
             }
-            var go = Instantiate(commentPrefab);
-            var ci = go.GetComponent<CommentItem>();
-            if (ci == null)
-                Debug.LogError("commentPrefab 缺少 CommentItem 脚本！");
-            pool.Add(ci);
-            return ci;
+
+            commentPool = new CommentPool(commentPrefab, commentContainer, maxComments);
+            isInitialized = true;
+            SetNextSpawnTime();
         }
-    }
+        
+        private void Update()
+        {
+            if (!isInitialized) return;
+            
+            if (Time.time >= nextSpawnTime)
+            {
+                SpawnComment();
+                SetNextSpawnTime();
+            }
+        }
+        
+        private void InitializeData()
+        {
+            // 读取用户名CSV
+            TextAsset userNamesCsv = Resources.Load<TextAsset>("CSVData/usernames");
+            if (userNamesCsv != null)
+            {
+                userNames = userNamesCsv.text.Split('\n')
+                    .Where(x => !string.IsNullOrEmpty(x.Trim()))
+                    .Select(x => x.Trim())
+                    .ToList();
+            }
+            else
+            {
+                Debug.LogError("CommentManager: 无法加载usernames.csv文件！");
+            }
+            
+            // 读取评论内容CSV
+            TextAsset commentsCsv = Resources.Load<TextAsset>("CSVData/comments");
+            if (commentsCsv != null)
+            {
+                comments = commentsCsv.text.Split('\n')
+                    .Where(x => !string.IsNullOrEmpty(x.Trim()))
+                    .Select(x => x.Trim())
+                    .ToList();
+            }
+            else
+            {
+                Debug.LogError("CommentManager: 无法加载comments.csv文件！");
+            }
+        }
+        
+        private void SpawnComment()
+        {
+            if (!isInitialized || userNames.Count == 0 || comments.Count == 0) return;
+            
+            string randomUserName = userNames[Random.Range(0, userNames.Count)];
+            string randomComment = comments[Random.Range(0, comments.Count)];
+            
+            GameObject commentObj = commentPool.GetComment();
+            if (commentObj != null)
+            {
+                CommentBubble commentBubble = commentObj.GetComponent<CommentBubble>();
+                if (commentBubble != null)
+                {
+                    commentBubble.Initialize(randomUserName, randomComment);
+                }
+                else
+                {
+                    Debug.LogError("CommentManager: 评论预制体缺少CommentBubble组件！");
+                }
+            }
+        }
+        
+        private void SetNextSpawnTime()
+        {
+            float maxDelay = currentSpeed switch
+            {
+                SpawnSpeed.VeryFast => 2f,
+                SpawnSpeed.Fast => 6f,
+                SpawnSpeed.QuickPaced => 10f,
+                SpawnSpeed.Medium => 15f,
+                SpawnSpeed.Slow => 30f,
+                _ => 15f
+            };
+            
+            nextSpawnTime = Time.time + Random.Range(0.5f, maxDelay);
+        }
+        
+        public void SetSpawnSpeed(SpawnSpeed speed)
+        {
+            currentSpeed = speed;
+        }
+    } 
 }
