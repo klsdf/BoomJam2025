@@ -62,7 +62,7 @@ namespace BoomJam2025
             {
                 double baseClickValue = MemberBenefitManager.Instance.GetBaseClickValue();
                 double percentage = FanLevelManager.Instance.GetClickBoostPercentage();
-                textComputationalFormula.text = $"{CoreValueManager.Instance.FormatValue(baseClickValue)} X ( 1 + {percentage:P0} )";
+                textComputationalFormula.text = $"{CoreValueManager.Instance.FormatValue(baseClickValue)}X(1+{percentage:P0})";
             }
 
             if (textSingleClickValue != null)

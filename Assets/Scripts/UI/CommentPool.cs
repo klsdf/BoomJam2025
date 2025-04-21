@@ -7,7 +7,9 @@
 namespace BoomJam2025
 {
     using UnityEngine;
+    using UnityEngine.UI;
     using System.Collections.Generic;
+    using DG.Tweening;
 
     public class CommentPool
     {
@@ -16,6 +18,8 @@ namespace BoomJam2025
         private Queue<GameObject> recyclePool;  // 回收池
         private List<GameObject> activePool;    // 显示池
         private int maxActiveSize;              // 最大显示数量
+        private ScrollRect scrollRect;          // 滚动视图引用
+        private float scrollDuration = 0.4f;    // 滚动动画持续时间
 
         public CommentPool(GameObject commentPrefab, Transform commentContainer, int maxPoolSize)
         {
@@ -24,6 +28,14 @@ namespace BoomJam2025
             maxActiveSize = maxPoolSize;
             recyclePool = new Queue<GameObject>();
             activePool = new List<GameObject>();
+        }
+
+        /// <summary>
+        /// 设置滚动视图引用
+        /// </summary>
+        public void SetScrollRect(ScrollRect rect)
+        {
+            scrollRect = rect;
         }
 
         /// <summary>
@@ -57,7 +69,28 @@ namespace BoomJam2025
             // 确保新获取的评论显示在最下方
             commentObj.transform.SetAsLastSibling();
 
+            // 调整滚动视图位置
+            if (scrollRect != null)
+            {
+                // 延迟一帧调整滚动位置，确保布局已经更新
+                scrollRect.StartCoroutine(AdjustScrollPosition(scrollRect));
+            }
+
             return commentObj;
+        }
+
+        private System.Collections.IEnumerator AdjustScrollPosition(ScrollRect scrollRect)
+        {
+            yield return null; // 等待一帧
+            
+            // 使用DOTween实现平滑滚动
+            scrollRect.verticalNormalizedPosition = 0.1f; // 设置起始位置
+            DOTween.To(
+                () => scrollRect.verticalNormalizedPosition,
+                x => scrollRect.verticalNormalizedPosition = x,
+                0f,
+                scrollDuration
+            ).SetEase(Ease.OutQuad);
         }
 
         /// <summary>

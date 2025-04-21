@@ -98,16 +98,16 @@ namespace BoomJam2025
         {
             float rewardType = Random.value;
             
-            if (rewardType < 0.9f) // 90% 概率获得贡献值
+            if (rewardType < 0.8f) // 80% 概率获得贡献值
             {
-                double contributionValue = CoreValueManager.Instance.GetCritValueAtLevel(200);
+                double contributionValue = CoreValueManager.Instance.GetCritValueAtLevel(2000);
                 CoreValueManager.Instance.valueContribution += contributionValue;
-                ShowFadeOutText($"Contribution +{contributionValue}");
+                ShowFadeOutText($"贡献值+{contributionValue}");
             }
-            else // 10% 概率获得加点
+            else // 20% 概率获得加点
             {
                 MemberBenefitManager.Instance.pointsOuter += 1;
-                ShowFadeOutText($"Point +1");
+                ShowFadeOutText($"点数+1");
             }
             
             

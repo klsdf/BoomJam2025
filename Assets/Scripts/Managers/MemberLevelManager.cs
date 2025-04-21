@@ -82,7 +82,7 @@ namespace BoomJam2025
         /// <returns>升级所需贡献值</returns>
         public double GetUpgradeCost()
         {
-            return 1000 * System.Math.Pow(2, levelMember - 1);
+            return 500 * System.Math.Pow(2, levelMember - 1);
         }
 
         /// <summary>

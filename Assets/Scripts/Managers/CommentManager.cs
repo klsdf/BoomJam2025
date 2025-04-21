@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
  * Author: 周欣悦
  * Date: 2025-04-21
  * Description: 评论管理器
@@ -27,6 +27,8 @@ namespace BoomJam2025
         /// 最大评论数量
         /// </summary>
         [SerializeField] private int maxComments = 50;
+        
+        [SerializeField] private ScrollRect scrollRect;  // 添加ScrollRect引用
         
         private List<string> userNames = new List<string>();
         private List<string> comments = new List<string>();
@@ -89,6 +91,16 @@ namespace BoomJam2025
             }
 
             commentPool = new CommentPool(commentPrefab, commentContainer, maxComments);
+            
+            // 设置ScrollRect
+            if (scrollRect == null)
+            {
+                Debug.LogError("CommentManager: 未设置ScrollRect！");
+                enabled = false;
+                return;
+            }
+            commentPool.SetScrollRect(scrollRect);
+            
             isInitialized = true;
             SetNextSpawnTime();
         }
@@ -176,5 +188,13 @@ namespace BoomJam2025
         {
             currentSpeed = speed;
         }
-    } 
+
+        /// <summary>
+        /// 清空所有评论
+        /// </summary>
+        public void ClearComments()
+        {
+            commentPool.Clear();
+        }
+    }
 }

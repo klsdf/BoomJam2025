@@ -86,10 +86,18 @@ namespace BoomJam2025
             if (number == 0) return "0";
             
             number = System.Math.Abs(number);
-            // 将数字除以1000并向下取整
-            double thousands = System.Math.Floor(number / 1000);
-            
-            return thousands.ToString("0");
+            // 检查是否是整百
+            if (number % 100 == 0)
+            {
+                double thousands = number / 1000;
+                return thousands.ToString("0.0");
+            }
+            else
+            {
+                // 将数字除以1000并向下取整
+                double thousands = System.Math.Floor(number / 1000);
+                return thousands.ToString("0");
+            }
         }
     }
 } 

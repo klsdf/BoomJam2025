@@ -166,6 +166,7 @@ namespace BoomJam2025
             isTimeEnd = false;
             InitializeTime();
             GiftManager.Instance.ClearAllGifts();
+            CommentManager.Instance.ClearComments();
             RebirthManager.Instance.TryRebirth();
         }
         public void OnRestartButtonClicked()

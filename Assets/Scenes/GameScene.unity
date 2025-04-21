@@ -288,6 +288,7 @@ MonoBehaviour:
   commentPrefab: {fileID: 523228478247475897, guid: 87c6b6344e995694389ad44ef1b22a50, type: 3}
   commentContainer: {fileID: 1094271958}
   maxComments: 10
+  scrollRect: {fileID: 1381068985}
   currentSpeed: 1
 --- !u!4 &57430931
 Transform:

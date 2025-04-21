@@ -85,6 +85,12 @@ namespace BoomJam2025
         /// 礼物生成的最大X坐标
         /// </summary>
         public float maxX = 1920f;
+
+        [Header("Long Press Settings")]
+        /// <summary>
+        /// 长按送礼的频率（秒）
+        /// </summary>
+        public float giftSpawnInterval = 0.1f;
         
         [Header("Special Gift Settings")]
         /// <summary>
@@ -102,6 +108,8 @@ namespace BoomJam2025
         private bool isGiftGenerationEnabled = true;
         private float lastSpecialGiftTime;
         private bool isSpecialGiftAvailable = true;
+        private float lastGiftSpawnTime;
+        private bool isLongPressing;
 
         /// <summary>
         /// 初始化组件和对象池
@@ -155,16 +163,35 @@ namespace BoomJam2025
         /// </summary>
         /// <remarks>
         /// 检查用户是否点击了非UI区域，如果是则生成礼物。
+        /// 支持长按连续送礼功能。
         /// </remarks>
         private void Update()
         {
             if (!isGiftGenerationEnabled) return;
 
+            // 检测鼠标按下
             if (Input.GetMouseButtonDown(0))
             {
-                // 检查是否点击了UI按钮
                 if (!IsPointerOverUIObject())
                 {
+                    isLongPressing = true;
+                    lastGiftSpawnTime = Time.time;
+                    SpawnGift();
+                }
+            }
+
+            // 检测鼠标抬起
+            if (Input.GetMouseButtonUp(0))
+            {
+                isLongPressing = false;
+            }
+
+            // 长按送礼逻辑
+            if (isLongPressing && !IsPointerOverUIObject())
+            {
+                if (Time.time - lastGiftSpawnTime >= giftSpawnInterval)
+                {
+                    lastGiftSpawnTime = Time.time;
                     SpawnGift();
                 }
             }
@@ -230,6 +257,29 @@ namespace BoomJam2025
                 if (giftSprite != null)
                 {
                     giftItem.SetGiftIcon(giftSprite);
+                }
+            }
+
+            // 确保特殊礼物保持在最上层
+            EnsureSpecialGiftOnTop();
+        }
+
+        /// <summary>
+        /// 确保特殊礼物保持在最上层
+        /// </summary>
+        private void EnsureSpecialGiftOnTop()
+        {
+            if (giftContainer == null) return;
+
+            // 查找所有特殊礼物
+            for (int i = 0; i < giftContainer.childCount; i++)
+            {
+                Transform child = giftContainer.GetChild(i);
+                SpecialGiftItem specialGift = child.GetComponent<SpecialGiftItem>();
+                if (specialGift != null)
+                {
+                    // 将特殊礼物移到最上层
+                    child.SetAsLastSibling();
                 }
             }
         }
