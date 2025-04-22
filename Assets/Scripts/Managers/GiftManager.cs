@@ -259,13 +259,13 @@ namespace BoomJam2025
             giftItem.Initialize(screenHeight);
             
             // 设置贡献值
-            double contributionValue = CoreValueManager.Instance.ClickGiftValue();
+            decimal contributionValue = CoreValueManager.Instance.ClickGiftValue();
             giftItem.SetObtainedContributionValue(CoreValueManager.Instance.FormatValue(contributionValue));
 
             // 设置礼物图标
             if (giftData != null)
             {
-                Sprite giftSprite = giftData.GetRandomGiftSprite(contributionValue);
+                Sprite giftSprite = giftData.GetRandomGiftSprite((double)contributionValue);
                 if (giftSprite != null)
                 {
                     giftItem.SetGiftIcon(giftSprite);
@@ -343,7 +343,7 @@ namespace BoomJam2025
         /// </summary>
         private void UpdateTotalContribution()
         {
-            textTotalContribution.text = CoreValueManager.Instance.FormatValue(CoreValueManager.Instance.valueContribution);
+            textTotalContribution.text = CoreValueManager.Instance.FormatValueInteger(CoreValueManager.Instance.valueContribution);
         }
 
         /// <summary>

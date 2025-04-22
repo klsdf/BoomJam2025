@@ -33,21 +33,28 @@ namespace BoomJam2025
         /// <summary>
         /// 当前贡献值
         /// </summary>
-        public double valueContribution = 0;
+        public decimal valueContribution = 0;
 
         /// <summary>
         /// 点击送出礼物，并且增加贡献值
         /// </summary>
         /// <returns>本次点击获得的贡献值</returns>
-        public double ClickGiftValue()
+        public decimal ClickGiftValue()
         {
-            double singleClickValue = GetClickValue();
+            decimal singleClickValue = GetClickValue();
             // 判断是否暴击
-            if (Random.value < MemberBenefitManager.Instance.GetCriticalRate())
+            if (Random.value < (float)MemberBenefitManager.Instance.GetCriticalRate())
             {
-                singleClickValue *= MemberBenefitManager.Instance.GetCriticalMultiplier();
+                singleClickValue *= (decimal)MemberBenefitManager.Instance.GetCriticalMultiplier();
             }
             valueContribution += singleClickValue;
+            
+            // 检查是否达到1 trillion
+            if (valueContribution >= 1000000000000m) // 1 trillion = 1,000,000,000,000
+            {
+                RestartManager.Instance.OnAdvanceRestartButtonClicked();
+            }
+            
             return singleClickValue;
         }
 
@@ -55,16 +62,17 @@ namespace BoomJam2025
         /// 获取单次点击价值，不考虑暴击
         /// </summary>
         /// <returns>单次点击价值</returns>
-        public double GetClickValue()
+        public decimal GetClickValue()
         {
             // 计算基础点击价值
-            double baseValue = MemberBenefitManager.Instance.GetBaseClickValue();
+            decimal baseValue = (decimal)MemberBenefitManager.Instance.GetBaseClickValue();
 
             // 计算粉丝等级提升百分比
-            float fanBoostPercentage = FanLevelManager.Instance.GetClickBoostPercentage();
+            decimal fanBoostPercentage = (decimal)MemberBenefitManager.Instance.GetPercentagePer();
 
+            int levelFan = FanLevelManager.Instance.levelFan;
             // 计算最终价值
-            double singleClickValue = baseValue * (1 + fanBoostPercentage);
+            decimal singleClickValue = baseValue * (decimal)System.Math.Pow((double)(1 + fanBoostPercentage), levelFan - 1);
 
             return singleClickValue;
         }
@@ -74,7 +82,7 @@ namespace BoomJam2025
         /// </summary>
         /// <param name="amount">消耗量</param>
         /// <returns>是否消耗成功</returns>
-        public bool ConsumeContribution(double amount)
+        public bool ConsumeContribution(decimal amount)
         {
             if (valueContribution >= amount)
             {
@@ -97,63 +105,87 @@ namespace BoomJam2025
         /// </summary>
         /// <param name="value">贡献值</param>
         /// <returns>格式化后的字符串</returns>
-        public string FormatValue(double value)
+        public string FormatValue(decimal value)
         {
-            // 将数字转换为字符串，保留所有小数位
-            string valueStr = value.ToString();
-            
-            // 计算纯数字的位数（不包括小数点）
-            int digitCount = valueStr.Replace(".", "").Length;
-            
-            // 如果纯数字位数不超过8位，直接显示
-            if (digitCount <= 8)
+            if (value < 1000000)
             {
-                return valueStr;
+                // 小于100万时，显示到小数点后2位
+                return value.ToString("N2");
             }
-            
-            // 如果超过千万（8位），使用科学计数法
-            if (value >= 10000000)
+            else if (value < 1000000000)
             {
+                // 100万到10亿之间，使用K/M为单位
+                if (value < 1000000)
+                    return (value / 1000).ToString("N2") + "K";
+                else
+                    return (value / 1000000).ToString("N2") + "M";
+            }
+            else
+            {
+                // 大于10亿时，使用科学计数法
                 return value.ToString("E2");
             }
-            
-            // 其他情况（超过8位但小于千万），显示前8位数字
-            string digitsOnly = valueStr.Replace(".", "");
-            string firstEightDigits = digitsOnly.Substring(0, 8);
-            
-            // 如果有小数点，需要重新插入小数点
-            if (valueStr.Contains("."))
-            {
-                int decimalIndex = valueStr.IndexOf(".");
-                // 确保小数点位置正确
-                if (decimalIndex < 8)
-                {
-                    return firstEightDigits.Insert(decimalIndex, ".");
-                }
-            }
-            
-            return firstEightDigits;
         }
-
+        
+        public string FormatValueShort(decimal value)
+        {
+            if (value < 1000)
+            {
+                // 小于1000时，显示到小数点后2位
+                return value.ToString("N2");
+            }
+            else if (value < 1000000000)
+            {
+                // 100万到10亿之间，使用K/M为单位
+                if (value < 1000000)
+                    return (value / 1000).ToString("N2") + "K";
+                else
+                    return (value / 1000000).ToString("N2") + "M";
+            }
+            else
+            {
+                // 大于10亿时，使用科学计数法
+                return value.ToString("E2");
+            }
+        }
         /// <summary>
         /// 获取指定等级下的暴击价值
         /// </summary>
         /// <param name="level">等级</param>
         /// <returns>暴击价值</returns>
-        public double GetCritValueAtLevel(int level)
+        public decimal GetCritValueAtLevel(int level)
         {
             // 计算基础点击价值
-            double baseValue = MemberBenefitManager.Instance.GetBaseClickValue();
+            decimal baseValue = (decimal)MemberBenefitManager.Instance.GetBaseClickValue();
 
             // 计算粉丝等级提升百分比
-            float fanBoostPercentage = FanLevelManager.Instance.GetClickBoostPercentageAtLevel(level);
+            decimal fanBoostPercentage = (decimal)MemberBenefitManager.Instance.GetPercentagePer();
 
             // 计算最终价值
-            double singleClickValue = baseValue * (1 + fanBoostPercentage);
+            decimal singleClickValue = baseValue * (decimal)System.Math.Pow((double)(1 + fanBoostPercentage), level - 1);
 
-            singleClickValue *= MemberBenefitManager.Instance.GetCriticalMultiplier();
+            singleClickValue *= (decimal)MemberBenefitManager.Instance.GetCriticalMultiplier();
 
             return singleClickValue;
+        }
+
+        /// <summary>
+        /// 格式化贡献值显示（大于100万时只显示整数部分）
+        /// </summary>
+        /// <param name="value">贡献值</param>
+        /// <returns>格式化后的字符串</returns>
+        public string FormatValueInteger(decimal value)
+        {
+            if (value < 1000000)
+            {
+                // 小于100万时，显示到小数点后2位
+                return value.ToString("N2");
+            }
+            else
+            {
+                // 大于100万时，只显示整数部分
+                return ((long)value).ToString();
+            }
         }
     }
 }

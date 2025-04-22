@@ -58,34 +58,13 @@ namespace BoomJam2025
         }
 
         /// <summary>
-        /// 获取每次点击的提升百分比
-        /// </summary>
-        /// <returns>提升百分比</returns>
-        public float GetClickBoostPercentage()
-        {
-            float percentagePer = MemberBenefitManager.Instance.GetPercentagePer();
-            return (levelFan - 1) * percentagePer;
-        }
-        
-        /// <summary>
-        /// 获取指定等级下的提升百分比
-        /// </summary>
-        /// <param name="level">等级</param>
-        /// <returns>提升百分比</returns>
-        public float GetClickBoostPercentageAtLevel(int level)
-        {
-            float percentagePer = MemberBenefitManager.Instance.GetPercentagePer();
-            return (level - 1) * percentagePer;
-        }
-
-        /// <summary>
         /// 升级粉丝等级
         /// </summary>
         /// <returns>升级消耗的贡献值，升级失败返回0</returns>
-        public double TryUpgrade()
+        public decimal TryUpgrade()
         {
             // 计算升级所需贡献值
-            double cost = GetUpgradeCost();
+            decimal cost = GetUpgradeCost();
             
             if (CoreValueManager.Instance.ConsumeContribution(cost))
             {
@@ -99,10 +78,10 @@ namespace BoomJam2025
         /// 获取升级所需贡献值
         /// </summary>
         /// <returns>升级所需贡献值</returns>
-        public double GetUpgradeCost()
+        public decimal GetUpgradeCost()
         {
             int reductionFactor = MemberBenefitManager.Instance.GetReductionFactor();
-            return 11 * System.Math.Pow(1.1, levelFan - 1) / reductionFactor;
+            return (decimal)(11 * System.Math.Pow(1.1, levelFan - 1) / reductionFactor);
         }
 
         /// <summary>

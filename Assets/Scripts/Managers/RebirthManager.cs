@@ -44,7 +44,7 @@ namespace BoomJam2025
         /// <summary>
         /// 大重开次数
         /// </summary>
-        public int countRebirthBig = 1;
+        public int countRebirthBig = 0;
 
         /// <summary>
         /// Awake 初始化单例

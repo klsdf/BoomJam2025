@@ -60,28 +60,27 @@ namespace BoomJam2025
 
             if (textComputationalFormula != null)
             {
-                double baseClickValue = MemberBenefitManager.Instance.GetBaseClickValue();
-                double percentage = FanLevelManager.Instance.GetClickBoostPercentage();
-                textComputationalFormula.text = $"{CoreValueManager.Instance.FormatValue(baseClickValue)}X(1+{percentage:P0})";
+                decimal percentage = MemberBenefitManager.Instance.GetPercentagePer() * (FanLevelManager.Instance.levelFan - 1);
+                textComputationalFormula.text = $"{percentage:P0}";
             }
 
             if (textSingleClickValue != null)
             {
-                double singleClickValue = CoreValueManager.Instance.GetClickValue();
+                decimal singleClickValue = CoreValueManager.Instance.GetClickValue();
                 textSingleClickValue.text = $"{CoreValueManager.Instance.FormatValue(singleClickValue)}";
             }
 
             if (textRequiredContribution != null)
             {
-                double required = FanLevelManager.Instance.GetUpgradeCost();
-                textRequiredContribution.text = $"{required.ToString("F2")}";
+                decimal required = FanLevelManager.Instance.GetUpgradeCost();
+                textRequiredContribution.text = $"{CoreValueManager.Instance.FormatValueShort(required)}";
             }
 
             if (textCriticalRate != null)
             {
-                textCriticalRate.text = $"暴击率+{MemberBenefitManager.Instance.GetCriticalRate():P0}";
+                decimal critRate = MemberBenefitManager.Instance.GetCriticalRate();
+                textCriticalRate.text = $"暴击率+{critRate:P0}";
             }
-
         }
 
         /// <summary>

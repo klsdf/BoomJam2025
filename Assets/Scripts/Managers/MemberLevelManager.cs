@@ -61,10 +61,10 @@ namespace BoomJam2025
         /// 升级会员等级
         /// </summary>
         /// <returns>升级消耗的贡献值，升级失败返回0</returns>
-        public double TryUpgrade()
+        public decimal TryUpgrade()
         {
             // 计算升级所需贡献值
-            double cost = GetUpgradeCost();
+            decimal cost = GetUpgradeCost();
 
             if (CoreValueManager.Instance.valueContribution >= cost)
             {
@@ -80,9 +80,9 @@ namespace BoomJam2025
         /// 获取升级所需贡献值
         /// </summary>
         /// <returns>升级所需贡献值</returns>
-        public double GetUpgradeCost()
+        public decimal GetUpgradeCost()
         {
-            return 500 * System.Math.Pow(2, levelMember - 1);
+            return (decimal)(500 * System.Math.Pow(2, levelMember - 1));
         }
 
         /// <summary>

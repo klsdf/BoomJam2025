@@ -67,7 +67,7 @@ namespace BoomJam2025
         public void LoadGame()
         {
             string valueStr = PlayerPrefs.GetString("value", "0");
-            CoreValueManager.Instance.valueContribution = double.Parse(valueStr);
+            CoreValueManager.Instance.valueContribution = decimal.Parse(valueStr);
             RebirthManager.Instance.countRebirth = PlayerPrefs.GetInt("rebirth", 0);
         }
     }

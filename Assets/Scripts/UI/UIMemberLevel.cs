@@ -55,10 +55,9 @@ namespace BoomJam2025
 
             if (textRequiredContribution != null)
             {
-                double required = MemberLevelManager.Instance.GetUpgradeCost();
-                textRequiredContribution.text = $"{GetThousands(required)}K";
+                decimal required = MemberLevelManager.Instance.GetUpgradeCost();
+                textRequiredContribution.text = $"{FormatValueShort(required)}";
             }
-
         }
 
         /// <summary>
@@ -76,28 +75,14 @@ namespace BoomJam2025
             }
         }
 
-        /// <summary>
-        /// 获取千位数字
-        /// </summary>
-        /// <param name="number">数字</param>
-        /// <returns>千位数字</returns>
-        private string GetThousands(double number)
+        private string FormatValueShort(decimal value)
         {
-            if (number == 0) return "0";
-            
-            number = System.Math.Abs(number);
-            // 检查是否是整百
-            if (number % 100 == 0)
-            {
-                double thousands = number / 1000;
-                return thousands.ToString("0.0");
-            }
+            if (value < 1000)
+                return (value / 1000).ToString() + "K";
+            else if (value < 1000000)
+                return ((int)(value / 1000)).ToString() + "K";
             else
-            {
-                // 将数字除以1000并向下取整
-                double thousands = System.Math.Floor(number / 1000);
-                return thousands.ToString("0");
-            }
+                return ((int)(value / 1000000)).ToString() + "M";
         }
-    }
+    }    
 } 

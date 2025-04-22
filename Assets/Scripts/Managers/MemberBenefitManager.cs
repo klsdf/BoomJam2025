@@ -77,18 +77,18 @@ namespace BoomJam2025
         /// 获取基础点击价值
         /// </summary>
         /// <returns>基础点击价值</returns>
-        public double GetBaseClickValue()
+        public decimal GetBaseClickValue()
         {
-            return levelBaseClickValue * System.Math.Pow(2, RebirthManager.Instance.countRebirthBig);
+            return (decimal)(levelBaseClickValue * System.Math.Pow(2, RebirthManager.Instance.countRebirthBig));
         }
 
         /// <summary>
         /// 获取每级提升百分比
         /// </summary>
         /// <returns>每级提升百分比</returns>
-        public float GetPercentagePer()
+        public decimal GetPercentagePer()
         {
-            return levelPercentagePer * (float)System.Math.Pow(2, RebirthManager.Instance.countRebirthBig) * 0.01f;
+            return (decimal)(levelPercentagePer * System.Math.Pow(2, RebirthManager.Instance.countRebirthBig) * 0.01);
         }
 
         /// <summary>
@@ -104,18 +104,18 @@ namespace BoomJam2025
         /// 获取暴击率
         /// </summary>
         /// <returns>暴击率</returns>
-        public float GetCriticalRate()
+        public decimal GetCriticalRate()
         {
-            return levelCriticalRate * (float)System.Math.Pow(2, RebirthManager.Instance.countRebirthBig) * 0.01f;
+            return (decimal)(levelCriticalRate * System.Math.Pow(2, RebirthManager.Instance.countRebirthBig) * 0.01);
         }
 
         /// <summary>
         /// 获取暴击倍率
         /// </summary>
         /// <returns>暴击倍率</returns>
-        public float GetCriticalMultiplier()
+        public decimal GetCriticalMultiplier()
         {
-            return levelCriticalMultiplier * (float)System.Math.Pow(2, RebirthManager.Instance.countRebirthBig);
+            return (decimal)(levelCriticalMultiplier * System.Math.Pow(2, RebirthManager.Instance.countRebirthBig));
         }
 
         /// <summary>
