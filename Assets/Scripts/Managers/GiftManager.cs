@@ -110,6 +110,7 @@ namespace BoomJam2025
         private bool isSpecialGiftAvailable = true;
         private float lastGiftSpawnTime;
         private bool isLongPressing;
+        private bool isSpacePressing;  // 新增：空格键长按状态
 
         /// <summary>
         /// 初始化组件和对象池
@@ -172,12 +173,9 @@ namespace BoomJam2025
             // 检测鼠标按下
             if (Input.GetMouseButtonDown(0))
             {
-                if (!IsPointerOverUIObject())
-                {
-                    isLongPressing = true;
-                    lastGiftSpawnTime = Time.time;
-                    SpawnGift();
-                }
+                isLongPressing = true;
+                lastGiftSpawnTime = Time.time;
+                SpawnGift();
             }
 
             // 检测鼠标抬起
@@ -186,8 +184,22 @@ namespace BoomJam2025
                 isLongPressing = false;
             }
 
-            // 长按送礼逻辑
-            if (isLongPressing && !IsPointerOverUIObject())
+            // 检测空格键按下
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                isSpacePressing = true;
+                lastGiftSpawnTime = Time.time;
+                SpawnGift();
+            }
+
+            // 检测空格键抬起
+            if (Input.GetKeyUp(KeyCode.Space))
+            {
+                isSpacePressing = false;
+            }
+
+            // 长按送礼逻辑（鼠标和空格键独立）
+            if (isLongPressing || isSpacePressing)
             {
                 if (Time.time - lastGiftSpawnTime >= giftSpawnInterval)
                 {
