@@ -8,8 +8,7 @@ using System.Text.RegularExpressions;
 using UnityEditor.U2D.Sprites;
 using UnityEditor.AssetImporters;
 
-[CustomEditor(typeof(SequenceAnimation))]
-public class SequenceAnimationEditor : Editor
+public class SequenceAnimationTool : EditorWindow
 {
     private const string RESOURCES_ROOT = "Assets/Resources";
     private const string ANIMATIONS_FOLDER = "Animations";
@@ -25,24 +24,16 @@ public class SequenceAnimationEditor : Editor
     // 从文件名中提取数字的正则表达式
     private static readonly Regex NumberRegex = new Regex(@"\d+", RegexOptions.Compiled);
 
-    [MenuItem("Tools/序列帧动画/创建序列帧动画")]
+    [MenuItem("Tools/序列帧动画/序列帧动画工具")]
     public static void ShowWindow()
     {
-        // 创建一个新的GameObject并添加SequenceAnimation组件
-        GameObject go = new GameObject("SequenceAnimation");
-        SequenceAnimation sequenceAnimation = go.AddComponent<SequenceAnimation>();
-        Selection.activeGameObject = go;
+        GetWindow<SequenceAnimationTool>("序列帧动画工具");
     }
 
-    public override void OnInspectorGUI()
+    private void OnGUI()
     {
-        SequenceAnimation sequenceAnimation = (SequenceAnimation)target;
-
-        // 显示原有的Inspector内容
-        DrawDefaultInspector();
-
-        EditorGUILayout.Space(10);
-        EditorGUILayout.LabelField("序列帧动画工具", EditorStyles.boldLabel);
+        GUILayout.Label("序列帧动画工具", EditorStyles.boldLabel);
+        EditorGUILayout.Space();
 
         // 文件夹路径输入
         showFolderPath = EditorGUILayout.Foldout(showFolderPath, "序列帧文件夹设置");
@@ -85,7 +76,7 @@ public class SequenceAnimationEditor : Editor
         EditorGUILayout.Space(5);
         if (GUILayout.Button("创建序列帧动画"))
         {
-            CreateSequenceAnimation(sequenceAnimation);
+            CreateSequenceAnimation();
         }
 
         if (!string.IsNullOrEmpty(resultMessage))
@@ -94,7 +85,7 @@ public class SequenceAnimationEditor : Editor
         }
     }
 
-    private void CreateSequenceAnimation(SequenceAnimation sequenceAnimation)
+    private void CreateSequenceAnimation()
     {
         if (string.IsNullOrEmpty(folderPath) || !Directory.Exists(folderPath))
         {
@@ -178,15 +169,15 @@ public class SequenceAnimationEditor : Editor
         AssetDatabase.SaveAssets();
         AssetDatabase.Refresh();
 
-        // 设置到组件
-        Undo.RecordObject(sequenceAnimation, "Set Animation Data");
+        // 创建新的GameObject并添加SequenceAnimation组件
+        GameObject go = new GameObject(animationName);
+        SequenceAnimation sequenceAnimation = go.AddComponent<SequenceAnimation>();
         sequenceAnimation.SetAnimationData(animationData);
-        EditorUtility.SetDirty(sequenceAnimation);
 
-        // 选中新创建的资源
-        Selection.activeObject = animationData;
+        // 选中新创建的对象
+        Selection.activeGameObject = go;
 
-        resultMessage = $"已创建序列帧动画资源：\n" +
+        resultMessage = $"已创建序列帧动画：\n" +
                        $"动画数据：{ANIMATIONS_FOLDER}/{Path.GetFileName(savePath)}";
         
         if (createSpriteSheet)
