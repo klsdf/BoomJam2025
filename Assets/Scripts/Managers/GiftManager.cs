@@ -12,6 +12,7 @@ namespace BoomJam2025
     using System.Collections.Generic;
     using UnityEngine.EventSystems;
     using System.Collections;
+    using Febucci.UI;
 
     /// <summary>
     /// 管理礼物掉落效果和贡献值显示的UI管理器
@@ -22,6 +23,7 @@ namespace BoomJam2025
     /// 2. 生成礼物对象
     /// 3. 管理礼物对象池
     /// 4. 处理礼物位置和动画
+    /// 5. 更新总贡献值显示及其动画
     /// </remarks>
     public class GiftManager : MonoBehaviour
     {
@@ -71,9 +73,14 @@ namespace BoomJam2025
         public GiftData giftData;
 
         /// <summary>
-        /// 总贡献值显示
+        /// 总贡献值显示 因动画插件弃用
         /// </summary>
-        public TextMeshProUGUI textTotalContribution;
+        //public TextMeshProUGUI textTotalContribution;
+
+        /// <summary>
+        /// 动画组件
+        /// </summary>
+        public TextAnimator_TMP textAnimator;
 
         [Header("Settings")]
         /// <summary>
@@ -111,7 +118,7 @@ namespace BoomJam2025
         private float lastGiftSpawnTime;
         private bool isLongPressing;
         private bool isSpacePressing;  // 新增：空格键长按状态
-
+     
         /// <summary>
         /// 初始化组件和对象池
         /// </summary>
@@ -157,6 +164,8 @@ namespace BoomJam2025
             
             screenHeight = Screen.height;
             lastSpecialGiftTime = Time.time;
+
+            RemoveRainbowEffect(); //初始化总贡献值
         }
         
         /// <summary>
@@ -182,6 +191,7 @@ namespace BoomJam2025
             if (Input.GetMouseButtonUp(0))
             {
                 isLongPressing = false;
+                RemoveRainbowEffect();
             }
 
             // 检测空格键按下
@@ -196,11 +206,14 @@ namespace BoomJam2025
             if (Input.GetKeyUp(KeyCode.Space))
             {
                 isSpacePressing = false;
+                RemoveRainbowEffect();
             }
 
             // 长按送礼逻辑（鼠标和空格键独立）
             if (isLongPressing || isSpacePressing)
             {
+                ApplyRainbowEffect();//炫彩特效
+
                 if (Time.time - lastGiftSpawnTime >= giftSpawnInterval)
                 {
                     lastGiftSpawnTime = Time.time;
@@ -343,7 +356,20 @@ namespace BoomJam2025
         /// </summary>
         private void UpdateTotalContribution()
         {
-            textTotalContribution.text = CoreValueManager.Instance.FormatValueInteger(CoreValueManager.Instance.valueContribution);
+           //改用插件更新 textTotalContribution.text = CoreValueManager.Instance.FormatValueInteger(CoreValueManager.Instance.valueContribution);
+        }
+
+        /// <summary>
+        /// 更新总贡献值显示（分别是炫彩更新和普通更新）
+        /// </summary>
+        private void ApplyRainbowEffect()
+        {
+            textAnimator.SetText($"<wave><rainb>{CoreValueManager.Instance.FormatValueInteger(CoreValueManager.Instance.valueContribution)}</rainb><wave>");
+        }
+
+        private void RemoveRainbowEffect()
+        {
+            textAnimator.SetText(CoreValueManager.Instance.FormatValueInteger(CoreValueManager.Instance.valueContribution));
         }
 
         /// <summary>
