@@ -9,7 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8008883420749021144}
-  - component: {fileID: 1431283187218755068}
+  - component: {fileID: 9204963223674667249}
+  - component: {fileID: 8887587330821713447}
   m_Layer: 0
   m_Name: AudioManagers
   m_TagString: Untagged
@@ -32,7 +33,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1431283187218755068
+--- !u!114 &9204963223674667249
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -41,15 +42,34 @@ MonoBehaviour:
   m_GameObject: {fileID: 6426898489452192508}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8a46587252163c040ba317d78b6c9d25, type: 3}
+  m_Script: {fileID: 11500000, guid: ba718a1043d386c45b5292cb717a1979, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  musicManager: {fileID: 8887587330821713447}
+  debugMode: 1
+  debugCurrentStage: 0
+  debugTargetStage: 0
+  debugPlayBackground: 0
+  debugStartGame: 0
+  debugSwitchStage: 0
+  debugRestart: 0
+  debugStopAll: 0
+--- !u!114 &8887587330821713447
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6426898489452192508}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e3fe4ebf057b3da4cb271ef278df4d1a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   autoDetectLoopLength: 1
   manualLoopLength: 0
-  stages:
-  - stageName: "\u4E3B\u9898"
-    tracks:
-    - {fileID: 8300000, guid: 5ad5e39cef5cd49489157663907e4925, type: 3}
+  backgroundMusic: {fileID: 8300000, guid: 5ad5e39cef5cd49489157663907e4925, type: 3}
+  gameStages:
   - stageName: "\u4E3B\u9898+\u9F13\u70B9"
     tracks:
     - {fileID: 8300000, guid: 5ad5e39cef5cd49489157663907e4925, type: 3}
@@ -57,14 +77,13 @@ MonoBehaviour:
   - stageName: "\u4E3B\u9898+\u8D1D\u65AF"
     tracks:
     - {fileID: 8300000, guid: 5ad5e39cef5cd49489157663907e4925, type: 3}
-    - {fileID: 8300000, guid: ac2ab32d2c462f144b5225f966141c57, type: 3}
     - {fileID: 8300000, guid: ead9492190f36404ab500d5bc94dc715, type: 3}
     - {fileID: 8300000, guid: 4d0254662c7a4d84583c70b47c04af95, type: 3}
+    - {fileID: 8300000, guid: ac2ab32d2c462f144b5225f966141c57, type: 3}
   - stageName: "\u5B8C\u6574\u6DF7\u97F3"
     tracks:
     - {fileID: 8300000, guid: 5ad5e39cef5cd49489157663907e4925, type: 3}
-    - {fileID: 8300000, guid: ac2ab32d2c462f144b5225f966141c57, type: 3}
     - {fileID: 8300000, guid: ead9492190f36404ab500d5bc94dc715, type: 3}
-    - {fileID: 8300000, guid: 4d0254662c7a4d84583c70b47c04af95, type: 3}
     - {fileID: 8300000, guid: cecb152f5e1c2754ba0b4f6885ff4a0a, type: 3}
-  startStageIndex: 3
+    - {fileID: 8300000, guid: 4d0254662c7a4d84583c70b47c04af95, type: 3}
+    - {fileID: 8300000, guid: ac2ab32d2c462f144b5225f966141c57, type: 3}

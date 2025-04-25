@@ -8,30 +8,19 @@
  *    - 在Inspector中设置backgroundMusic（仅主旋律）
  *    - 在gameStages中设置三个阶段的音轨（主题+鼓点、主题+贝斯、完整混音）
  * 
- * 2. 调试功能：
- *    - 勾选debugMode启用调试模式
- *    - 使用调试按钮控制音乐：
- *      * debugPlayBackground：播放背景音乐
- *      * debugStartGame：开始游戏音乐
- *      * debugSwitchStage：切换到指定阶段（配合debugTargetStage使用）
- *      * debugRestart：重新开始游戏音乐
- *    - debugCurrentStage显示当前阶段（只读）
- * 
- * 3. 公共接口：
+ * 2. 公共接口（不建议直接调用）：
  *    - PlayBackgroundMusic()：播放背景音乐
  *    - StartGameMusic()：开始游戏音乐
  *    - PrepareSwitchToStage(int stageIndex)：准备切换到指定阶段
- *    - 阶段分别为：
- *      * 主题+鼓点（int 0)
- *      * 主题+贝斯 (int 1)
- *      * 完整混音 (int 2)
  *    - RestartGameMusic()：重新开始游戏音乐
  *    - StopAllMusic()：停止所有音乐播放
+ *    - GetCurrentStage()：获取当前阶段
  * 
- * 4. 注意事项：
+ * 3. 注意事项：
  *    - 确保所有音轨长度一致
  *    - 可以使用autoDetectLoopLength自动检测循环长度
  *    - 或手动设置manualLoopLength
+ *    - ！！！其他管理器应该通过AudioManager调用本类的方法，不建议直接调用！！！
  ****************************************************************************/
 namespace BoomJam2025
 {
@@ -89,47 +78,6 @@ namespace BoomJam2025
             new MusicStage { stageName = "主题+贝斯" },
             new MusicStage { stageName = "完整混音" }
         };
-
-        [Header("调试设置")]
-        /// <summary>
-        /// 是否启用调试模式
-        /// </summary>
-        [SerializeField] private bool debugMode = false;
-        
-        /// <summary>
-        /// 调试模式下的当前阶段
-        /// </summary>
-        [SerializeField, ReadOnly] private int debugCurrentStage = 0;
-        
-        /// <summary>
-        /// 调试模式下的目标阶段
-        /// </summary>
-        [SerializeField] private int debugTargetStage = 0;
-        
-        /// <summary>
-        /// 调试按钮：播放背景音乐
-        /// </summary>
-        [SerializeField] private bool debugPlayBackground = false;
-        
-        /// <summary>
-        /// 调试按钮：开始游戏音乐
-        /// </summary>
-        [SerializeField] private bool debugStartGame = false;
-        
-        /// <summary>
-        /// 调试按钮：切换阶段
-        /// </summary>
-        [SerializeField] private bool debugSwitchStage = false;
-        
-        /// <summary>
-        /// 调试按钮：重新开始
-        /// </summary>
-        [SerializeField] private bool debugRestart = false;
-
-        /// <summary>
-        /// 调试按钮：停止所有音乐
-        /// </summary>
-        [SerializeField] private bool debugStopAll = false;
         #endregion
 
         #region Private Fields
@@ -198,7 +146,7 @@ namespace BoomJam2025
         public void StartGameMusic()
         {
             isPlayingBackground = false;
-            currentStageIndex = debugMode ? debugCurrentStage : 0; // 默认从主题+鼓点开始
+            currentStageIndex = 0; // 默认从主题+鼓点开始
             targetStageIndex = currentStageIndex;
             StartPlayback();
         }
@@ -234,10 +182,14 @@ namespace BoomJam2025
             isPlayingBackground = false;
             currentStageIndex = 0;
             targetStageIndex = 0;
-            if (debugMode)
-            {
-                debugCurrentStage = 0;
-            }
+        }
+
+        /// <summary>
+        /// 获取当前阶段
+        /// </summary>
+        public int GetCurrentStage()
+        {
+            return currentStageIndex;
         }
         #endregion
 
@@ -395,53 +347,6 @@ namespace BoomJam2025
                 source.UnPause();
             }
         }
-
-        /// <summary>
-        /// 处理调试按钮
-        /// </summary>
-        private void HandleDebugButtons()
-        {
-            if (!debugMode) return;
-
-            if (debugPlayBackground)
-            {
-                debugPlayBackground = false;
-                PlayBackgroundMusic();
-            }
-
-            if (debugStartGame)
-            {
-                debugStartGame = false;
-                StartGameMusic();
-            }
-
-            if (debugSwitchStage)
-            {
-                debugSwitchStage = false;
-                PrepareSwitchToStage(debugTargetStage);
-            }
-
-            if (debugRestart)
-            {
-                debugRestart = false;
-                RestartGameMusic();
-            }
-
-            if (debugStopAll)
-            {
-                debugStopAll = false;
-                StopAllMusic();
-            }
-        }
-
-        /// <summary>
-        /// 更新调试显示
-        /// </summary>
-        private void UpdateDebugDisplay()
-        {
-            if (!debugMode) return;
-            debugCurrentStage = currentStageIndex;
-        }
         #endregion
 
         #region Unity Methods
@@ -452,20 +357,8 @@ namespace BoomJam2025
             SetupLoopLength();
         }
 
-        private void Start()
-        {
-            if (debugMode)
-            {
-                currentStageIndex = debugCurrentStage;
-                targetStageIndex = debugCurrentStage;
-            }
-        }
-
         private void Update()
         {
-            // 处理调试按钮
-            HandleDebugButtons();
-
             if (!isPlaying) return;
 
             // 处理游戏暂停
@@ -494,7 +387,6 @@ namespace BoomJam2025
                 {
                     // 在循环结束时切换阶段
                     currentStageIndex = targetStageIndex;
-                    UpdateDebugDisplay();
                 }
 
                 PlayStageTracks();
@@ -503,9 +395,4 @@ namespace BoomJam2025
         }
         #endregion
     }
-
-    /// <summary>
-    /// 只读属性特性
-    /// </summary>
-    public class ReadOnlyAttribute : PropertyAttribute { }
 } 
