@@ -58,6 +58,9 @@ namespace BoomJam2025
         [Header("音乐管理器引用")]
         [SerializeField] private MusicManager musicManager;
 
+        [Header("节拍管理器引用")]
+        [SerializeField] private BeatManager beatManager;
+
         [Header("调试设置")]
         /// <summary>
         /// 是否启用调试模式
@@ -100,6 +103,36 @@ namespace BoomJam2025
         [SerializeField] private bool debugStopAll = false;
         #endregion
 
+        private void Start()
+        {
+            // 监听节拍事件
+            if (beatManager != null)
+            {
+                beatManager.OnBeat += OnBeat;
+            }
+        }
+
+        private void OnDestroy()
+        {
+            // 取消监听节拍事件
+            if (beatManager != null)
+            {
+                beatManager.OnBeat -= OnBeat;
+            }
+        }
+
+        /// <summary>
+        /// 节拍事件处理
+        /// </summary>
+        private void OnBeat(int beat)
+        {
+            if (debugMode)
+            {
+                int currentStage = musicManager.GetCurrentStage();
+                Debug.Log($"节拍: {beat}, 当前阶段: {currentStage}");
+            }
+        }
+
         #region Public Methods
         /// <summary>
         /// 播放背景音乐
@@ -115,6 +148,10 @@ namespace BoomJam2025
         public void StartGameMusic()
         {
             musicManager.StartGameMusic();
+            if (beatManager != null)
+            {
+                beatManager.StartBeat();
+            }
         }
 
         /// <summary>
@@ -123,6 +160,10 @@ namespace BoomJam2025
         public void SwitchToStage(int stageIndex)
         {
             musicManager.PrepareSwitchToStage(stageIndex);
+            if (beatManager != null)
+            {
+                beatManager.StartBeat(); // 重新开始节拍以确保同步
+            }
         }
 
         /// <summary>
@@ -131,6 +172,10 @@ namespace BoomJam2025
         public void RestartGameMusic()
         {
             musicManager.RestartGameMusic();
+            if (beatManager != null)
+            {
+                beatManager.StartBeat();
+            }
         }
 
         /// <summary>
@@ -139,6 +184,10 @@ namespace BoomJam2025
         public void StopAllMusic()
         {
             musicManager.StopAllMusic();
+            if (beatManager != null)
+            {
+                beatManager.StopBeat();
+            }
         }
         #endregion
 
