@@ -137,7 +137,9 @@ namespace BoomJam2025
             
             StopAllTracks();
             isPlayingBackground = true;
+            isPlaying = true;  // 启用Update中的循环检查
             PlayBackgroundTrack();
+            nextLoopTime = Time.time + currentLoopLength;  // 设置下一个循环时间
         }
 
         /// <summary>
@@ -310,8 +312,9 @@ namespace BoomJam2025
         {
             if (audioSources.Count > 0 && backgroundMusic != null)
             {
-                audioSources[0].clip = backgroundMusic;
-                audioSources[0].Play();
+                var source = audioSources[0];
+                source.clip = backgroundMusic;
+                source.Play();
             }
         }
 
