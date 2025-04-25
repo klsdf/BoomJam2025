@@ -91,9 +91,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   imageGiftIcon: {fileID: 1856165147339934753}
   textContribution: {fileID: 1368443740305758216}
-  fallSpeed: 500
+  fallDuration: 1
   stayDuration: 2
   fadeOutDuration: 0.5
+  fallEase: 5
+  screenBottomOffset: -100
 --- !u!1 &4145387691095167061
 GameObject:
   m_ObjectHideFlags: 0

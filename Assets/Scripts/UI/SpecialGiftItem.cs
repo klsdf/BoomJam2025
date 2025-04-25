@@ -5,6 +5,7 @@ namespace BoomJam2025
     using TMPro;
     using UnityEngine.EventSystems;
     using MoreMountains.Feedbacks;
+    using DG.Tweening;
     
     /// <summary>
     /// 特殊礼物项
@@ -16,24 +17,27 @@ namespace BoomJam2025
         public GameObject textFadeOut;
         
         [Header("Animation Settings")]
-        public float fallSpeed = 500f;
+        public float fallDuration = 1f;
         public float stayDuration = 5f;
         public float fadeOutDuration = 1f;
+        public Ease fallEase = Ease.InQuad;
 
         private RectTransform rectTransform;
         private CanvasGroup canvasGroup;
         private float startY;
         private float targetY;
-        private float currentStayTime;
-        private bool isFalling = true;
-        private bool isFading = false;
-        private GiftManager giftManager;
-        private bool isInitialized = false;
         private bool isAnimating = false;
+        private Tween fallTween;
+        private Tween fadeTween;
+        private Tween delayTween;
+        private GiftManager giftManager;
 
         private Button button;
         private void Awake()
         {
+            // 设置 DOTween 容量
+            DOTween.SetTweensCapacity(200, 50);
+            
             rectTransform = GetComponent<RectTransform>();
             canvasGroup = GetComponent<CanvasGroup>();
             if (canvasGroup == null)
@@ -50,45 +54,58 @@ namespace BoomJam2025
 
         public void Initialize(float screenHeight)
         {
+            // 清理之前的动画
+            KillAllTweens();
+            
             startY = screenHeight;
             targetY = 0;
-            currentStayTime = 0f;
-            isFalling = true;
-            isFading = false;
             canvasGroup.alpha = 1f;
-            isInitialized = true;
             
             rectTransform.anchoredPosition = new Vector2(rectTransform.anchoredPosition.x, startY);
+            
+            // 使用 DOTween 实现自由落体运动
+            fallTween = rectTransform.DOAnchorPosY(targetY, fallDuration)
+                .SetEase(fallEase)
+                .OnComplete(() => {
+                    if (this == null || gameObject == null) return;
+                    // 开始停留计时
+                    delayTween = DOVirtual.DelayedCall(stayDuration, () => {
+                        if (this == null || gameObject == null) return;
+                        // 开始淡出
+                        fadeTween = canvasGroup.DOFade(0, fadeOutDuration)
+                            .OnComplete(() => {
+                                if (this == null || gameObject == null) return;
+                                if (!isAnimating) // 如果没有被点击，则销毁
+                                {
+                                    Destroy(gameObject);
+                                }
+                            });
+                    });
+                });
         }
 
-        private void Update()
+        private void KillAllTweens()
         {
-            if (isFalling)
+            if (fallTween != null && fallTween.IsActive())
             {
-                float newY = rectTransform.anchoredPosition.y - fallSpeed * Time.deltaTime;
-                rectTransform.anchoredPosition = new Vector2(rectTransform.anchoredPosition.x, newY);
-                
-                if (newY <= targetY)
-                {
-                    isFalling = false;
-                }
+                fallTween.Kill();
+                fallTween = null;
             }
-            else if (!isFading)
+            if (fadeTween != null && fadeTween.IsActive())
             {
-                currentStayTime += Time.deltaTime;
-                if (currentStayTime >= stayDuration)
-                {
-                    isFading = true;
-                }
+                fadeTween.Kill();
+                fadeTween = null;
             }
-            else
+            if (delayTween != null && delayTween.IsActive())
             {
-                canvasGroup.alpha -= Time.deltaTime / fadeOutDuration;
-                if (canvasGroup.alpha <= 0)
-                {
-                    Destroy(gameObject);
-                }
+                delayTween.Kill();
+                delayTween = null;
             }
+        }
+
+        private void OnDestroy()
+        {
+            KillAllTweens();
         }
 
         /// <summary>
@@ -114,7 +131,7 @@ namespace BoomJam2025
         
         private void OnButtonClick()
         {
-            if (!isInitialized || isAnimating) return;
+            if (isAnimating) return;
             
             isAnimating = true;
             button.interactable = false;
@@ -150,7 +167,7 @@ namespace BoomJam2025
 
         public void SetObtainedContributionValue(string value)
         {
-            
+            // 特殊礼物不需要显示贡献值
         }
 
         public void SetGiftManager(GiftManager manager)

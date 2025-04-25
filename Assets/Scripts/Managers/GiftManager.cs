@@ -262,6 +262,15 @@ namespace BoomJam2025
             IGiftItem giftItem = giftPool.GetGiftItem();
             giftItem.gameObject.transform.SetParent(giftContainer);
             
+            // 设置礼物不接收射线检测
+            CanvasGroup canvasGroup = giftItem.gameObject.GetComponent<CanvasGroup>();
+            if (canvasGroup == null)
+            {
+                canvasGroup = giftItem.gameObject.AddComponent<CanvasGroup>();
+            }
+            canvasGroup.blocksRaycasts = false;
+            canvasGroup.interactable = false;
+            
             // 设置随机X位置
             float randomX = Random.Range(minX, maxX);
             RectTransform rectTransform = giftItem.gameObject.GetComponent<RectTransform>();

@@ -3,6 +3,7 @@ namespace BoomJam2025
     using UnityEngine;
     using UnityEngine.UI;
     using TMPro;
+    using DG.Tweening;
 
     /// <summary>
     /// 普通礼物项
@@ -14,21 +15,23 @@ namespace BoomJam2025
         public TextMeshProUGUI textContribution;
         
         [Header("Animation Settings")]
-        public float fallSpeed = 500f;
-        public float stayDuration = 2f;
-        public float fadeOutDuration = 0.5f;
+        public float fallDuration = 1f;
+        public float screenBottomOffset = -100f; // 屏幕下边界的偏移量
+        public Ease fallEase = Ease.InQuad;
 
         private RectTransform rectTransform;
         private CanvasGroup canvasGroup;
         private float startY;
         private float targetY;
-        private float currentStayTime;
-        private bool isFalling = true;
-        private bool isFading = false;
         private GiftPool giftPool;
+        private Tween fallTween;
+        private Canvas canvas;
 
         private void Awake()
         {
+            // 设置 DOTween 容量
+            DOTween.SetTweensCapacity(200, 50);
+            
             rectTransform = GetComponent<RectTransform>();
             canvasGroup = GetComponent<CanvasGroup>();
             if (canvasGroup == null)
@@ -36,47 +39,66 @@ namespace BoomJam2025
                 canvasGroup = gameObject.AddComponent<CanvasGroup>();
             }
             giftPool = FindObjectOfType<GiftPool>();
-        }
-
-        public void Initialize(float screenHeight)
-        {
-            startY = screenHeight;
-            targetY = 0;
-            currentStayTime = 0f;
-            isFalling = true;
-            isFading = false;
-            canvasGroup.alpha = 1f;
             
-            rectTransform.anchoredPosition = new Vector2(rectTransform.anchoredPosition.x, startY);
-        }
-
-        private void Update()
-        {
-            if (isFalling)
+            // 获取画布
+            if (GiftManager.Instance != null && GiftManager.Instance.giftContainer != null)
             {
-                float newY = rectTransform.anchoredPosition.y - fallSpeed * Time.deltaTime;
-                rectTransform.anchoredPosition = new Vector2(rectTransform.anchoredPosition.x, newY);
-                
-                if (newY <= targetY)
+                canvas = GiftManager.Instance.giftContainer.GetComponentInParent<Canvas>();
+                if (canvas == null)
                 {
-                    isFalling = false;
-                }
-            }
-            else if (!isFading)
-            {
-                currentStayTime += Time.deltaTime;
-                if (currentStayTime >= stayDuration)
-                {
-                    isFading = true;
+                    Debug.LogWarning("Canvas not found in gift container hierarchy");
                 }
             }
             else
             {
-                canvasGroup.alpha -= Time.deltaTime / fadeOutDuration;
-                if (canvasGroup.alpha <= 0)
-                {
+                Debug.LogWarning("GiftManager or giftContainer not found");
+            }
+        }
+
+        public void Initialize(float screenHeight)
+        {
+            // 清理之前的动画
+            if (fallTween != null && fallTween.IsActive())
+            {
+                fallTween.Kill();
+                fallTween = null;
+            }
+            
+            startY = screenHeight;
+            
+            // 计算目标位置
+            if (GiftManager.Instance != null && GiftManager.Instance.mainCamera != null && canvas != null)
+            {
+                // 使用相机坐标计算屏幕下边界
+                Vector3 bottomLeft = GiftManager.Instance.mainCamera.ScreenToWorldPoint(new Vector3(0, 0, 0));
+                targetY = bottomLeft.y + screenBottomOffset;
+            }
+            else
+            {
+                // 备选方案：使用固定值
+                targetY = -screenHeight;
+            }
+            
+            canvasGroup.alpha = 1f;
+            
+            rectTransform.anchoredPosition = new Vector2(rectTransform.anchoredPosition.x, startY);
+            
+            // 使用 DOTween 实现自由落体运动
+            fallTween = rectTransform.DOAnchorPosY(targetY, fallDuration)
+                .SetEase(fallEase)
+                .OnComplete(() => {
+                    if (this == null || gameObject == null) return;
+                    // 直接回收，不再停留
                     ReturnToPool();
-                }
+                });
+        }
+
+        private void OnDestroy()
+        {
+            if (fallTween != null && fallTween.IsActive())
+            {
+                fallTween.Kill();
+                fallTween = null;
             }
         }
 
