@@ -36,6 +36,46 @@ namespace BoomJam2025
         public decimal valueContribution = 0;
 
         /// <summary>
+        /// 上一秒的贡献值
+        /// </summary>
+        private decimal lastSecondValue = 0;
+
+        /// <summary>
+        /// 每秒贡献值
+        /// </summary>
+        public decimal valuePerSecond { get; private set; } = 0;
+
+        /// <summary>
+        /// 历史最大每秒贡献值
+        /// </summary>
+        public decimal maxValuePerSecond { get; private set; } = 0;
+
+        /// <summary>
+        /// 计时器
+        /// </summary>
+        private float timer = 0f;
+
+        /// <summary>
+        /// 更新每秒贡献值
+        /// </summary>
+        public void Update()
+        {
+            timer += Time.deltaTime;
+            if (timer >= 1f)
+            {
+                // 计算每秒贡献值
+                valuePerSecond = valueContribution - lastSecondValue;
+                // 更新最大每秒贡献值
+                if (valuePerSecond > maxValuePerSecond)
+                {
+                    maxValuePerSecond = valuePerSecond;
+                }
+                lastSecondValue = valueContribution;
+                timer = 0f;
+            }
+        }
+
+        /// <summary>
         /// 点击送出礼物，并且增加贡献值
         /// </summary>
         /// <returns>本次点击获得的贡献值</returns>
@@ -98,6 +138,10 @@ namespace BoomJam2025
         public void Reset()
         {
             valueContribution = 0;
+            lastSecondValue = 0;
+            valuePerSecond = 0;
+            maxValuePerSecond = 0;
+            timer = 0f;
         }
 
         /// <summary>
