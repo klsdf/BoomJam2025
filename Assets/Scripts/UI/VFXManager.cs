@@ -1,7 +1,7 @@
 /****************************************************************************
- * Author: ÕÅ¼ÎÑô
+ * Author: å¼ å˜‰é˜³
  * Date: 2025-04-25
- * Description: VFX¹ÜÀíÆ÷
+ * Description: VFXç®¡ç†å™¨ï¼Œç›®å‰ä»…æ§åˆ¶çœ¨çœ¼æ•ˆæœ
  ****************************************************************************/
 using System.Collections;
 using System.Collections.Generic;
@@ -11,18 +11,18 @@ using MoreMountains.Feedbacks;
 public class VFXManager : MonoBehaviour
 {
     ///<summary>
-    ///»ñÈ¡Õ£ÑÛµÄMMF_Player
+    ///è·å–çœ¨çœ¼MMF_Player
     ///</summary>
     public MMF_Player blinkPlayerStart;
     public MMF_Player blinkPlayerEnd;
 
     ///<summary>
-    ///ÉèÖÃÕ£ÑÛÊ±³¤
+    ///çœ¨çœ¼æ—¶é•¿
     ///</summary>
     public float blinkDuration = 2f;
 
     ///<summary>
-    ///²¥·ÅÕ£ÑÛÌØĞ§
+    ///è°ƒç”¨çœ¨çœ¼åç¨‹
     ///</summary>
     public void PlayBlink()
     {
@@ -30,7 +30,7 @@ public class VFXManager : MonoBehaviour
     }
 
 
-    //Ğ­³Ì²¥·ÅÕ£ÑÛÌØĞ§
+    //çœ¨çœ¼åç¨‹
     public IEnumerator BlinkCoroutine()
     {
         blinkPlayerStart.PlayFeedbacks();

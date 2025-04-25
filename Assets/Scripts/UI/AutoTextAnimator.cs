@@ -1,7 +1,7 @@
 /****************************************************************************
- * Author: ÕÅ¼ÎÑô
+ * Author: å¼ å˜‰é˜³
  * Date: 2025-04-24
- * Description: ¹ÒÔØÔÚº¬ÓĞTypeWriterµÄ×é¼şÉÏÒÔÊµÏÖÆôÓÃÊ±×Ô¶¯²¥·ÅÈë³¡¶¯»­
+ * Description: æŒ‚è½½æ­¤ä»£ç ä½¿ç‰©ä½“Enablesæ—¶è‡ªåŠ¨æ’­æ”¾TypewriteråŠ¨ç”»
  ****************************************************************************/
 using UnityEngine;
 using Febucci.UI;
@@ -15,7 +15,7 @@ public class AutoTextAnimator : MonoBehaviour
     void Awake()
     {
         typewriter = GetComponent<TypewriterByCharacter>();
-        originalText = typewriter.GetComponent<TextAnimator_TMP>().text;
+        originalText = typewriter.GetComponent<TextAnimator_TMP>().textFull;
     }
 
     void OnEnable()
