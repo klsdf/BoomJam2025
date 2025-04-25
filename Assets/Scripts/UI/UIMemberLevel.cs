@@ -9,6 +9,7 @@ namespace BoomJam2025
     using UnityEngine;
     using TMPro;
     using UnityEngine.UI;
+    using UnityEngine.Events;
 
     public class UIMemberLevel : MonoBehaviour
     {
@@ -27,6 +28,17 @@ namespace BoomJam2025
         /// 升级所需贡献值
         /// </summary>
         [SerializeField] private TextMeshProUGUI textRequiredContribution;
+
+        [Header("Events")]
+        /// <summary>
+        /// 升级成功事件
+        /// </summary>
+        [SerializeField] private UnityEvent onUpgradeSuccess;
+
+        /// <summary>
+        /// 升级失败事件
+        /// </summary>
+        [SerializeField] private UnityEvent onUpgradeFailed;
 
         private void Start()
         {
@@ -67,12 +79,31 @@ namespace BoomJam2025
         {
             if (MemberLevelManager.Instance.TryUpgrade() != 0)
             {
+                OnUpgradeSuccess();
                 UpdateUI();
             }
             else
             {
+                OnUpgradeFailed();
                 Debug.Log("升级会员等级失败");
             }
+        }
+
+        /// <summary>
+        /// 会员等级升级成功回调
+        /// </summary>
+        private void OnUpgradeSuccess()
+        {
+            onUpgradeSuccess?.Invoke();
+            Debug.Log("会员等级升级成功！");
+        }
+
+        /// <summary>
+        /// 会员等级升级失败回调
+        /// </summary>
+        private void OnUpgradeFailed()
+        {
+            onUpgradeFailed?.Invoke();
         }
 
         private string FormatValueShort(decimal value)

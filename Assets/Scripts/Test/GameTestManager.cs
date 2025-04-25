@@ -13,7 +13,7 @@ namespace BoomJam2025
         [SerializeField] private bool applyFanLevel = false;
 
         [Header("贡献值设置")]
-        [SerializeField] private decimal contributionValue = 0;
+        [SerializeField] private double contributionValue = 0;
         [SerializeField] private bool applyContribution = false;
 
         [Header("局外点数设置")]
@@ -44,7 +44,7 @@ namespace BoomJam2025
 
             if (applyContribution)
             {
-                CoreValueManager.Instance.valueContribution = contributionValue;
+                CoreValueManager.Instance.valueContribution = (decimal)contributionValue;
                 applyContribution = false;
             }
 

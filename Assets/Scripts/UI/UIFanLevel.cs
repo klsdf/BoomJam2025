@@ -9,6 +9,7 @@ namespace BoomJam2025
     using UnityEngine;
     using TMPro;
     using UnityEngine.UI;
+    using UnityEngine.Events;
 
     public class UIFanLevel : MonoBehaviour
     {
@@ -37,6 +38,17 @@ namespace BoomJam2025
         /// 暴击率
         /// </summary>
         [SerializeField] private TextMeshProUGUI textCriticalRate;
+
+        [Header("Events")]
+        /// <summary>
+        /// 升级成功事件
+        /// </summary>
+        [SerializeField] private UnityEvent onUpgradeSuccess;
+
+        /// <summary>
+        /// 升级失败事件
+        /// </summary>
+        [SerializeField] private UnityEvent onUpgradeFailed;
 
         private void Start()
         {
@@ -90,10 +102,12 @@ namespace BoomJam2025
         {
             if (FanLevelManager.Instance.TryUpgrade() != 0)
             {
+                OnUpgradeSuccess();
                 UpdateUI();
             }
             else
             {
+                OnUpgradeFailed();
                 Debug.Log("升级粉丝等级失败");
             }
         }
@@ -103,15 +117,43 @@ namespace BoomJam2025
         /// </summary>
         public void UpgradeFanLevelMax()
         {
+            bool hasUpgraded = false;
             // 循环尝试升级，直到升级失败
             while (FanLevelManager.Instance.TryUpgrade() != 0)
             {
+                hasUpgraded = true;
                 // 升级成功，继续循环
                 continue;
             }
             
+            if (hasUpgraded)
+            {
+                OnUpgradeSuccess();
+            }
+            else
+            {
+                OnUpgradeFailed();
+            }
+            
             // 更新UI显示
             UpdateUI();
+        }
+
+        /// <summary>
+        /// 升级成功回调
+        /// </summary>
+        private void OnUpgradeSuccess()
+        {
+            onUpgradeSuccess?.Invoke();
+            Debug.Log("粉丝等级升级成功！");
+        }
+
+        /// <summary>
+        /// 升级失败回调
+        /// </summary>
+        private void OnUpgradeFailed()
+        {
+            onUpgradeFailed?.Invoke();
         }
     }
 } 

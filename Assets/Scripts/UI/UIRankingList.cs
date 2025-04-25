@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace BoomJam2025
 {
-    public class RankingListUI : MonoBehaviour
+    public class UIRankingList : MonoBehaviour
     {
         [System.Serializable]
         public class RankerInfo
@@ -147,7 +147,7 @@ namespace BoomJam2025
                 {
                     rankerAvatars[i].sprite = allRankers[i].avatar;
                     rankerNicknames[i].text = allRankers[i].nickname;
-                    rankerScores[i].text = CoreValueManager.Instance.FormatValue(allScores[i]);
+                    rankerScores[i].text = CoreValueManager.Instance.FormatValueInteger(allScores[i]);
                 }
             }
         }

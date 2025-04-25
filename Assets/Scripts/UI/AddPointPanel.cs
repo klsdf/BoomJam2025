@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.Events;
 
 namespace BoomJam2025
 {
@@ -8,6 +9,17 @@ namespace BoomJam2025
     {
         [SerializeField]
         private BenefitType currentValueType;
+
+        [Header("Events")]
+        /// <summary>
+        /// 升级成功事件
+        /// </summary>
+        [SerializeField] private UnityEvent onUpgradeSuccess;
+
+        /// <summary>
+        /// 升级失败事件
+        /// </summary>
+        [SerializeField] private UnityEvent onUpgradeFailed;
 
         private TextMeshProUGUI textTitle;
         private TextMeshProUGUI textValue;
@@ -37,12 +49,32 @@ namespace BoomJam2025
         {
             if(MemberBenefitManager.Instance.UpgradeBenefit(currentValueType))
             {
+                OnUpgradeSuccess();
                 UpdateValue();
             }
             else
             {
+                OnUpgradeFailed();
                 Debug.Log("升级会员权益失败失败");
             }
+        }
+
+        /// <summary>
+        /// 升级成功回调
+        /// </summary>
+        private void OnUpgradeSuccess()
+        {
+            onUpgradeSuccess?.Invoke();
+            Debug.Log("会员权益升级成功！");
+        }
+
+        /// <summary>
+        /// 升级失败回调
+        /// </summary>
+        private void OnUpgradeFailed()
+        {
+            onUpgradeFailed?.Invoke();
+            Debug.Log("会员权益升级失败，可能是点数不足");
         }
 
         // 更新值的显示
