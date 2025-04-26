@@ -21,4 +21,6 @@ MonoBehaviour:
     maxValue: -1
     giftSprites:
     - {fileID: 21300000, guid: 278a4468bfdd174468a3d38260b44739, type: 3}
-  specialGiftSprite: {fileID: 21300000, guid: 7ad62591932c3734b94a2f2eb7b2fa6e, type: 3}
+  specialGiftAnimations:
+  - {fileID: 11400000, guid: aa9b9390ff1ce294197b2fd4eea364d0, type: 2}
+  - {fileID: 0}

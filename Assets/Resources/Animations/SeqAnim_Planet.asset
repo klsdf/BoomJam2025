@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7866c076a81d1e243ab647d487ceead7, type: 3}
-  m_Name: SeqAnim_SpecialGift
+  m_Name: SeqAnim_Planet
   m_EditorClassIdentifier: 
   sprites:
   - {fileID: -2317599881744859753, guid: 6232089bde3030c48a857c86ec6246f3, type: 3}

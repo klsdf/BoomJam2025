@@ -432,10 +432,15 @@ namespace BoomJam2025
             // 设置特殊礼物图标
             if (giftData != null)
             {
-                Sprite specialSprite = giftData.GetSpecialGiftSprite();
-                if (specialSprite != null)
+                SequenceAnimationData animationData = giftData.GetRandomSpecialGiftAnimation();
+                if (animationData != null)
                 {
-                    specialGiftItem.SetGiftIcon(specialSprite);
+                    SequenceAnimation sequenceAnimation = specialGiftItem.GetComponent<SequenceAnimation>();
+                    if (sequenceAnimation != null)
+                    {
+                        sequenceAnimation.SetAnimationData(animationData);
+                        sequenceAnimation.Play();
+                    }
                 }
             }
             
