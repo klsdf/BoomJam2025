@@ -79,8 +79,8 @@ namespace BoomJam2025
 
         // 定义状态切换的阈值
         private const decimal CASUAL_SINGING_THRESHOLD = 0m;    // 随性唱歌阈值
-        private const decimal FOCUSED_SINGING_THRESHOLD = 800m;  // 投入唱歌阈值
-        private const decimal PASSIONATE_SINGING_THRESHOLD = 80000m; // 激情唱歌阈值
+        private const decimal FOCUSED_SINGING_THRESHOLD = 200m;  // 投入唱歌阈值
+        private const decimal PASSIONATE_SINGING_THRESHOLD = 20000m; // 激情唱歌阈值
 
         private void Awake()
         {
