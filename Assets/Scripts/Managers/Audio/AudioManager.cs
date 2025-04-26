@@ -160,6 +160,7 @@ namespace BoomJam2025
         public void SwitchToStage(int stageIndex)
         {
             musicManager.PrepareSwitchToStage(stageIndex);
+            Debug.Log("AudioManager接受到命令，切换到阶段：" + stageIndex);
         }
 
         /// <summary>
