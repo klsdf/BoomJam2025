@@ -46,9 +46,9 @@ namespace BoomJam2025
 
         [Header("Special Gift Settings")]
         /// <summary>
-        /// 特殊礼物图标
+        /// 特殊礼物动画数据列表
         /// </summary>
-        public Sprite specialGiftSprite;
+        public List<SequenceAnimationData> specialGiftAnimations = new List<SequenceAnimationData>();
 
         /// <summary>
         /// 根据贡献值获取对应的随机礼物图片
@@ -70,11 +70,16 @@ namespace BoomJam2025
         }
 
         /// <summary>
-        /// 获取特殊礼物图标
+        /// 获取随机特殊礼物动画数据
         /// </summary>
-        public Sprite GetSpecialGiftSprite()
+        public SequenceAnimationData GetRandomSpecialGiftAnimation()
         {
-            return specialGiftSprite;
+            if (specialGiftAnimations.Count > 0)
+            {
+                int randomIndex = Random.Range(0, specialGiftAnimations.Count);
+                return specialGiftAnimations[randomIndex];
+            }
+            return null;
         }
     }
 } 

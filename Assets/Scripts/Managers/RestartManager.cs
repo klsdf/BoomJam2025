@@ -168,6 +168,7 @@ namespace BoomJam2025
             GiftManager.Instance.ClearAllGifts();
             CommentManager.Instance.ClearComments();
             RebirthManager.Instance.TryRebirth();
+            AudioManager.Instance.StartGameMusic();
         }
         public void OnRestartButtonClicked()
         {
