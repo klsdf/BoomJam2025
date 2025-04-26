@@ -27,6 +27,7 @@ namespace BoomJam2025
     using UnityEngine;
     using System.Collections;
     using System.Collections.Generic;
+    using System;
 
     /// <summary>
     /// 音乐阶段类，用于定义每个阶段的音轨组合
@@ -50,6 +51,10 @@ namespace BoomJam2025
     /// </summary>
     public class MusicManager : MonoBehaviour
     {
+        #region Events
+        public event Action<int> OnStageChanged;  // 阶段切换事件
+        #endregion
+
         #region Inspector Settings
         [Header("音乐设置")]
         /// <summary>
@@ -390,6 +395,7 @@ namespace BoomJam2025
                 {
                     // 在循环结束时切换阶段
                     currentStageIndex = targetStageIndex;
+                    OnStageChanged?.Invoke(currentStageIndex);
                 }
 
                 PlayStageTracks();

@@ -103,33 +103,32 @@ namespace BoomJam2025
         [SerializeField] private bool debugStopAll = false;
         #endregion
 
+        #region Private Fields
+        private int currentStage;
+        #endregion
+
         private void Start()
         {
-            // 监听节拍事件
-            if (beatManager != null)
+            if (musicManager != null)
             {
-                beatManager.OnBeat += OnBeat;
+                musicManager.OnStageChanged += HandleStageChanged;
             }
         }
 
         private void OnDestroy()
         {
-            // 取消监听节拍事件
-            if (beatManager != null)
+            if (musicManager != null)
             {
-                beatManager.OnBeat -= OnBeat;
+                musicManager.OnStageChanged -= HandleStageChanged;
             }
         }
 
-        /// <summary>
-        /// 节拍事件处理
-        /// </summary>
-        private void OnBeat(int beat)
+        private void HandleStageChanged(int newStage)
         {
-            if (debugMode)
+            currentStage = newStage;
+            if (beatManager != null)
             {
-                int currentStage = musicManager.GetCurrentStage();
-                Debug.Log($"节拍: {beat}, 当前阶段: {currentStage}");
+                beatManager.StartBeat(currentStage);
             }
         }
 
@@ -148,9 +147,10 @@ namespace BoomJam2025
         public void StartGameMusic()
         {
             musicManager.StartGameMusic();
+            currentStage = 0;
             if (beatManager != null)
             {
-                beatManager.StartBeat();
+                beatManager.StartBeat(currentStage);
             }
         }
 
@@ -160,10 +160,6 @@ namespace BoomJam2025
         public void SwitchToStage(int stageIndex)
         {
             musicManager.PrepareSwitchToStage(stageIndex);
-            if (beatManager != null)
-            {
-                beatManager.StartBeat(); // 重新开始节拍以确保同步
-            }
         }
 
         /// <summary>
@@ -172,9 +168,10 @@ namespace BoomJam2025
         public void RestartGameMusic()
         {
             musicManager.RestartGameMusic();
+            currentStage = 0;
             if (beatManager != null)
             {
-                beatManager.StartBeat();
+                beatManager.StartBeat(currentStage);
             }
         }
 
@@ -188,6 +185,11 @@ namespace BoomJam2025
             {
                 beatManager.StopBeat();
             }
+        }
+
+        public int GetCurrentStage()
+        {
+            return currentStage;
         }
         #endregion
 
@@ -236,7 +238,7 @@ namespace BoomJam2025
         private void UpdateDebugDisplay()
         {
             if (!debugMode) return;
-            debugCurrentStage = musicManager.GetCurrentStage();
+            debugCurrentStage = currentStage;
         }
         #endregion
 
