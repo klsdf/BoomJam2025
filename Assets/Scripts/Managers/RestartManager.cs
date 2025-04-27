@@ -126,10 +126,57 @@ namespace BoomJam2025
             }
         }
 
+        /// <summary>
+        /// 时间结束
+        /// </summary>
         private void OnTimeEnd()
         {
             isTimeEnd = true;
-            PauseGame();
+
+            GiftManager.Instance.DisableGiftGeneration();
+            
+            // 检查是否达到1 trillion
+            if (CoreValueManager.Instance.valueContribution >= 1000000000000m)
+            {
+                StartCoroutine(PlayGrandFinale());
+            }
+            else
+            {
+                StartCoroutine(PlayNormalEnding());
+            }
+        }
+
+        /// <summary>
+        /// 播放普通结局
+        /// </summary>
+        private IEnumerator PlayNormalEnding()
+        {
+            // TODO: 在这里添加普通结局的演出逻辑
+            
+            // 等待当前对话完成（如果有的话）
+            while (DialogueManager.Instance.IsDialogueRunning())
+            {
+                yield return null;
+            }
+            
+            // 开始对话并等待对话完成
+            bool dialogueCompleted = false;
+            Action<string> onDialogueComplete = null;
+            onDialogueComplete = (nodeName) => {
+                if (nodeName == "NormalEnd") {
+                    dialogueCompleted = true;
+                    DialogueManager.Instance.OnDialogueNodeComplete -= onDialogueComplete;
+                }
+            };
+            
+            DialogueManager.Instance.OnDialogueNodeComplete += onDialogueComplete;
+            DialogueManager.Instance.StartDialogue("NormalEnd");
+            
+            // 等待对话完成
+            while (!dialogueCompleted) {
+                yield return null;
+            }
+
             if (timeEndPanel != null)
             {
                 timeEndPanel.SetActive(true);
@@ -138,7 +185,24 @@ namespace BoomJam2025
             {
                 inputBlocker.SetActive(true);
             }
-            GiftManager.Instance.DisableGiftGeneration();
+        }
+
+        /// <summary>
+        /// 播放大结局
+        /// </summary>
+        private IEnumerator PlayGrandFinale()
+        {
+            // TODO: 在这里添加大结局的演出逻辑
+            yield return new WaitForSeconds(10f); // 临时占位，等待实际演出逻辑
+            
+            if (timeEndPanel != null)
+            {
+                timeEndPanel.SetActive(true);
+            }
+            if (inputBlocker != null)
+            {
+                inputBlocker.SetActive(true);
+            }
         }
 
         private void ResumeGame()
