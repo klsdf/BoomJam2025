@@ -123,6 +123,38 @@ namespace BoomJam2025
         }
 
         /// <summary>
+        /// 等待当前对话完成后开始新的对话
+        /// </summary>
+        /// <param name="nextNode">下一个要开始的对话节点</param>
+        /// <returns>协程</returns>
+        public IEnumerator StartDialogueAfterCurrent(string nextNode)
+        {
+            // 等待当前对话完成（如果有的话）
+            while (isDialogueRunning)
+            {
+                yield return null;
+            }
+
+            // 开始新的对话
+            bool dialogueCompleted = false;
+            Action<string> onDialogueComplete = null;
+            onDialogueComplete = (nodeName) => {
+                if (nodeName == nextNode) {
+                    dialogueCompleted = true;
+                    OnDialogueNodeComplete -= onDialogueComplete;
+                }
+            };
+            
+            OnDialogueNodeComplete += onDialogueComplete;
+            StartDialogue(nextNode);
+            
+            // 等待新对话完成
+            while (!dialogueCompleted) {
+                yield return null;
+            }
+        }
+
+        /// <summary>
         /// 停止当前对话
         /// </summary>
         public void StopDialogue()

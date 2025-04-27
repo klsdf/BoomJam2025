@@ -153,29 +153,8 @@ namespace BoomJam2025
         {
             // TODO: 在这里添加普通结局的演出逻辑
             
-            // 等待当前对话完成（如果有的话）
-            while (DialogueManager.Instance.IsDialogueRunning())
-            {
-                yield return null;
-            }
-            
-            // 开始对话并等待对话完成
-            bool dialogueCompleted = false;
-            Action<string> onDialogueComplete = null;
-            onDialogueComplete = (nodeName) => {
-                if (nodeName == "NormalEnd") {
-                    dialogueCompleted = true;
-                    DialogueManager.Instance.OnDialogueNodeComplete -= onDialogueComplete;
-                }
-            };
-            
-            DialogueManager.Instance.OnDialogueNodeComplete += onDialogueComplete;
-            DialogueManager.Instance.StartDialogue("NormalEnd");
-            
-            // 等待对话完成
-            while (!dialogueCompleted) {
-                yield return null;
-            }
+            // 等待当前对话完成并开始新的对话
+            yield return DialogueManager.Instance.StartDialogueAfterCurrent("NormalEnd");
 
             if (timeEndPanel != null)
             {
