@@ -1,6 +1,7 @@
 namespace BoomJam2025
 {
     using UnityEngine;
+    using System;
 
     public enum StreamerState
     {
@@ -62,7 +63,6 @@ namespace BoomJam2025
         /// <summary>
         /// 设置状态
         /// </summary>
-        /// <param name="newState"></param>
         public void SetState(StreamerState newState)
         {
             Debug.Log($"尝试设置主播状态为: {newState}");
@@ -73,7 +73,6 @@ namespace BoomJam2025
         /// <summary>
         /// 判断是否在唱歌状态
         /// </summary>
-        /// <returns></returns>
         public bool IsInSingingState()
         {
             return CurrentState == StreamerState.CasualSinging ||
@@ -84,20 +83,29 @@ namespace BoomJam2025
         /// <summary>
         /// 处理状态变化
         /// </summary>
-        /// <param name="newState"></param>
         private void HandleStateChange(StreamerState newState)
         {
             Debug.Log($"处理状态变化: {newState}");
+            
+            // 通知UI管理器准备切换状态
+            if (StreamerUIManager.Instance != null)
+            {
+                StreamerUIManager.Instance.PrepareSwitchToState(newState);
+            }
             
             // 根据新状态播放相应的音乐
             switch (newState)
             {
                 case StreamerState.Chatting:
                     Debug.Log("切换到闲聊状态");
-
+                    AudioManager.Instance.StopAllMusic();
+                    AudioManager.Instance.PlayBackgroundMusic();
                     break;
                 case StreamerState.CasualSinging:
                     Debug.Log("切换到随性唱歌状态，切换到阶段0");
+                    AudioManager.Instance.StopAllMusic();
+                    AudioManager.Instance.StartGameMusic();
+
                     AudioManager.Instance.SwitchToStage(0);
                     break;
                 case StreamerState.FocusedSinging:
@@ -108,6 +116,27 @@ namespace BoomJam2025
                     Debug.Log("切换到激情唱歌状态，切换到阶段2");
                     AudioManager.Instance.SwitchToStage(2);
                     break;
+            }
+        }
+
+        private void Update()
+        {
+            // 调试功能：通过按键切换状态
+            if (Input.GetKeyDown(KeyCode.Alpha1))
+            {
+                SetState(StreamerState.Chatting);
+            }
+            else if (Input.GetKeyDown(KeyCode.Alpha2))
+            {
+                SetState(StreamerState.CasualSinging);
+            }
+            else if (Input.GetKeyDown(KeyCode.Alpha3))
+            {
+                SetState(StreamerState.FocusedSinging);
+            }
+            else if (Input.GetKeyDown(KeyCode.Alpha4))
+            {
+                SetState(StreamerState.PassionateSinging);
             }
         }
     }

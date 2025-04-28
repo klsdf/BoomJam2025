@@ -104,8 +104,10 @@ namespace BoomJam2025
         #endregion
 
         #region Private Fields
-        private int currentStage;
+        private int currentStage = 0;
         #endregion
+
+        public MusicManager MusicManager => musicManager;
 
         private void Start()
         {
