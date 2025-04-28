@@ -20,7 +20,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Glitch_Tex
+  m_Name: GlitchTex
   m_Shader: {fileID: -6465566751694194690, guid: 0b6bc3bdf44dc3d438cb400d74c85603, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
