@@ -94,7 +94,6 @@ namespace BoomJam2025
             CoreValueManager.Instance.ResetAllValues();
             
             // 重置其他管理器状态
-            TimerManager.Instance.ResetTimer();
             GiftManager.Instance.ClearAllGifts();
             CommentManager.Instance.ClearComments();
         }

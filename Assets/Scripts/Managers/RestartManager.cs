@@ -57,6 +57,7 @@ namespace BoomJam2025
         private DateTime startDateTime;
         private DateTime endDateTime;
         private bool isTimeEnd = false;
+        private bool isTimerRunning = false;
 
         private void Awake()
         {
@@ -90,7 +91,7 @@ namespace BoomJam2025
         // Update is called once per frame
         void Update()
         {
-            if (!isGamePaused && !isTimeEnd)
+            if (isTimerRunning && !isGamePaused && !isTimeEnd)
             {
                 gameTime += Time.deltaTime;
                 UpdateTimeDisplay();
@@ -252,6 +253,30 @@ namespace BoomJam2025
             {
                 inputBlocker.SetActive(true);
             }
+        }
+
+        public void StartRunning()
+        {
+            isTimerRunning = true;
+            isGamePaused = false;
+            Time.timeScale = 1f;
+            if (inputBlocker != null)
+            {
+                inputBlocker.SetActive(false);
+            }
+            GiftManager.Instance.EnableGiftGeneration();
+        }
+
+        public void StopRunning()
+        {
+            isTimerRunning = false;
+            isGamePaused = true;
+            Time.timeScale = 0f;
+            if (inputBlocker != null)
+            {
+                inputBlocker.SetActive(true);
+            }
+            GiftManager.Instance.DisableGiftGeneration();
         }
     }
 

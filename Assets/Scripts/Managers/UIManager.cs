@@ -118,7 +118,7 @@ namespace BoomJam2025
         /// </summary>
         private void StartAllManagers()
         {
-            TimerManager.Instance.StartRunning();
+            RestartManager.Instance.StartRunning();
             GiftManager.Instance.StartRunning();
             CommentManager.Instance.StartRunning();
         }
@@ -128,7 +128,7 @@ namespace BoomJam2025
         /// </summary>
         private void StopAllManagers()
         {
-            TimerManager.Instance.StopRunning();
+            RestartManager.Instance.StopRunning();
             GiftManager.Instance.StopRunning();
             CommentManager.Instance.StopRunning();
         }
