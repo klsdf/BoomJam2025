@@ -41,6 +41,11 @@ namespace BoomJam2025
         private bool _isPaused = false;
 
         /// <summary>
+        /// 是否启用
+        /// </summary>
+        private bool _isEnabled = false;
+
+        /// <summary>
         /// 强制重生时间间隔（秒）
         /// </summary>
         private float _intervalForceRebirth = 60f; // 默认1分钟
@@ -71,7 +76,7 @@ namespace BoomJam2025
         /// </summary>
         private void Update()
         {
-            if (_isPaused) return;
+            if (!_isEnabled || _isPaused) return;
 
             _timerCurrent += Time.deltaTime;
             if (_timerCurrent >= _intervalForceRebirth)
@@ -82,10 +87,31 @@ namespace BoomJam2025
         }
 
         /// <summary>
+        /// 开始运行
+        /// </summary>
+        public void StartRunning()
+        {
+            _isEnabled = true;
+            _isPaused = false;
+            Time.timeScale = 1f;
+        }
+
+        /// <summary>
+        /// 停止运行
+        /// </summary>
+        public void StopRunning()
+        {
+            _isEnabled = false;
+            _isPaused = true;
+            Time.timeScale = 0f;
+        }
+
+        /// <summary>
         /// 暂停游戏
         /// </summary>
         public void PauseGame()
         {
+            if (!_isEnabled) return;
             _isPaused = true;
             Time.timeScale = 0f;
         }
@@ -95,6 +121,7 @@ namespace BoomJam2025
         /// </summary>
         public void ResumeGame()
         {
+            if (!_isEnabled) return;
             _isPaused = false;
             Time.timeScale = 1f;
         }

@@ -93,6 +93,44 @@ namespace BoomJam2025
             DontDestroyOnLoad(gameObject);
         }
 
+        private void Start()
+        {
+            // 注册游戏状态改变事件
+            GameManager.Instance.onGameStateChanged.AddListener(OnGameStateChanged);
+        }
+
+        private void OnDestroy()
+        {
+            if (GameManager.Instance != null)
+            {
+                GameManager.Instance.onGameStateChanged.RemoveListener(OnGameStateChanged);
+            }
+        }
+
+        private void OnGameStateChanged(GameState newState)
+        {
+            if (newState == GameState.MainMenu)
+            {
+                ResetAllValues();
+            }
+        }
+
+        /// <summary>
+        /// 重置所有数值
+        /// </summary>
+        public void ResetAllValues()
+        {
+            valueContribution = 0;
+            normalGiftContribution = 0;
+            lastSecondValue = 0;
+            lastSecondNormalValue = 0;
+            valuePerSecond = 0;
+            normalValuePerSecond = 0;
+            maxValuePerSecond = 0;
+            maxNormalValuePerSecond = 0;
+            timer = 0f;
+        }
+
         /// <summary>
         /// 更新每秒贡献值
         /// </summary>
