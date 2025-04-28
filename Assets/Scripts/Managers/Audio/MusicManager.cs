@@ -60,12 +60,17 @@ namespace BoomJam2025
         /// <summary>
         /// 是否自动检测循环长度
         /// </summary>
-        [SerializeField] private bool autoDetectLoopLength = true;
+        [SerializeField] private bool autoDetectLoopLength = false;
         
         /// <summary>
         /// 手动设置的循环长度
         /// </summary>
-        [SerializeField] private float manualLoopLength = 0f;
+        [SerializeField] private float manualLoopLength = 15.0f;
+
+        /// <summary>
+        /// 误差时间，用于跳过音频开始的一小段
+        /// </summary>
+        [SerializeField] private float errorTime = 0.0f;
 
         [Header("背景音乐")]
         /// <summary>
@@ -246,31 +251,47 @@ namespace BoomJam2025
         /// </summary>
         private void SetupLoopLength()
         {
-            if (autoDetectLoopLength)
+            if (!autoDetectLoopLength)
             {
+                // 优先使用手动设置的固定循环长度
+                currentLoopLength = manualLoopLength;
+                Debug.Log($"MusicManager: 使用固定循环长度: {currentLoopLength}秒");
+                
+                // 自动检测误差时间
                 if (backgroundMusic != null)
                 {
-                    currentLoopLength = backgroundMusic.length;
-                    return;
+                    errorTime = backgroundMusic.length - manualLoopLength;
+                    Debug.Log($"MusicManager: 自动检测到误差时间: {errorTime}秒 (来自背景音乐)");
                 }
-
-                foreach (var stage in gameStages)
+                else if (gameStages.Count > 0 && gameStages[0].tracks.Count > 0 && gameStages[0].tracks[0] != null)
                 {
-                    foreach (var track in stage.tracks)
+                    errorTime = gameStages[0].tracks[0].length - manualLoopLength;
+                    Debug.Log($"MusicManager: 自动检测到误差时间: {errorTime}秒 (来自游戏音乐)");
+                }
+                return;
+            }
+            
+            // 以下是自动检测循环长度的逻辑
+            if (backgroundMusic != null)
+            {
+                currentLoopLength = backgroundMusic.length;
+                Debug.Log($"MusicManager: 自动检测到循环长度: {currentLoopLength}秒 (来自背景音乐)");
+                return;
+            }
+
+            foreach (var stage in gameStages)
+            {
+                foreach (var track in stage.tracks)
+                {
+                    if (track != null)
                     {
-                        if (track != null)
-                        {
-                            currentLoopLength = track.length;
-                            return;
-                        }
+                        currentLoopLength = track.length;
+                        Debug.Log($"MusicManager: 自动检测到循环长度: {currentLoopLength}秒 (来自游戏音乐)");
+                        return;
                     }
                 }
-                throw new System.Exception("MusicManager: 未找到有效的音频片段！");
             }
-            else
-            {
-                currentLoopLength = manualLoopLength;
-            }
+            throw new System.Exception("MusicManager: 未找到有效的音频片段！");
         }
 
         /// <summary>
@@ -305,6 +326,7 @@ namespace BoomJam2025
                 if (currentStage.tracks[i] != null)
                 {
                     audioSources[i].clip = currentStage.tracks[i];
+                    audioSources[i].time = errorTime; // 跳过误差时间
                     audioSources[i].Play();
                 }
             }
@@ -319,6 +341,7 @@ namespace BoomJam2025
             {
                 var source = audioSources[0];
                 source.clip = backgroundMusic;
+                source.time = errorTime; // 跳过误差时间
                 source.Play();
             }
         }

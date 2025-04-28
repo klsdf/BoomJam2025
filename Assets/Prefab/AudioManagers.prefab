@@ -122,6 +122,7 @@ MonoBehaviour:
   DebugActive: 0
   FeedbacksList:
   - rid: 2505063018823155714
+  - rid: 2505063018823155716
   KeepPlayModeChanges: 0
   PerformanceMode: 0
   StopFeedbacksOnDisable: 0
@@ -132,12 +133,129 @@ MonoBehaviour:
     - rid: 2505063018823155714
       type: {class: MMF_ScaleShake, ns: MoreMountains.Feedbacks, asm: MoreMountains.Feedbacks}
       data:
-        Active: 1
+        Active: 0
         UniqueID: -516738821
         Label: ScaleShake
-        ChannelMode: 0
+        ChannelMode: 1
         Channel: 2
-        MMChannelDefinition: {fileID: 0}
+        MMChannelDefinition: {fileID: 11400000, guid: 0f60cbcd7d19be7489547709fb121cc9, type: 2}
+        Chance: 100
+        DisplayColor: {r: 0, g: 0, b: 0, a: 1}
+        Timing:
+          TimescaleMode: 0
+          ExcludeFromHoldingPauses: 0
+          ContributeToTotalDuration: 1
+          InitialDelay: 0
+          CooldownDuration: 0
+          InterruptsOnStop: 1
+          NumberOfRepeats: 0
+          RepeatForever: 0
+          DelayBetweenRepeats: 1
+          MMFeedbacksDirectionCondition: 0
+          PlayDirection: 0
+          ConstantIntensity: 0
+          UseIntensityInterval: 0
+          IntensityIntervalMin: 0
+          IntensityIntervalMax: 0
+          Sequence: {fileID: 0}
+          TrackID: 0
+          Quantized: 0
+          TargetBPM: 120
+        AutomatedTargetAcquisition:
+          Mode: 0
+          ChildIndex: 0
+        RandomizeOutput: 0
+        RandomMultiplier: {x: 0.8, y: 1}
+        RandomizeDuration: 0
+        RandomDurationMultiplier: {x: 0.5, y: 2}
+        UseRange: 0
+        RangeDistance: 5
+        UseRangeFalloff: 0
+        RangeFalloff:
+          serializedVersion: 2
+          m_Curve:
+          - serializedVersion: 3
+            time: 0
+            value: 1
+            inSlope: 0
+            outSlope: 0
+            tangentMode: 0
+            weightedMode: 0
+            inWeight: 0
+            outWeight: 0
+          - serializedVersion: 3
+            time: 1
+            value: 0
+            inSlope: 0
+            outSlope: 0
+            tangentMode: 0
+            weightedMode: 0
+            inWeight: 0
+            outWeight: 0
+          m_PreInfinity: 2
+          m_PostInfinity: 2
+          m_RotationOrder: 4
+        RemapRangeFalloff: {x: 0, y: 1}
+        Owner: {fileID: 5022474239907696855}
+        DebugActive: 0
+        TargetShaker: {fileID: 0}
+        Duration: 0.2
+        ResetShakerValuesAfterShake: 1
+        ResetTargetValuesAfterShake: 1
+        ShakeSpeed: 20
+        ShakeRange: 0.5
+        ShakeMainDirection: {x: 1, y: 1, z: 1}
+        RandomizeDirection: 0
+        ShakeAltDirection: {x: 0, y: 1, z: 0}
+        RandomizeDirectionOnPlay: 0
+        AddDirectionalNoise: 1
+        DirectionalNoiseStrengthMin: {x: 0.25, y: 0.25, z: 0.25}
+        DirectionalNoiseStrengthMax: {x: 0.25, y: 0.25, z: 0.25}
+        RandomnessSeed: {x: 0, y: 0, z: 0}
+        RandomizeSeedOnShake: 1
+        UseAttenuation: 1
+        AttenuationCurve:
+          serializedVersion: 2
+          m_Curve:
+          - serializedVersion: 3
+            time: 0
+            value: 0
+            inSlope: 0
+            outSlope: 0
+            tangentMode: 0
+            weightedMode: 0
+            inWeight: 0
+            outWeight: 0
+          - serializedVersion: 3
+            time: 0.5
+            value: 1
+            inSlope: 0
+            outSlope: 0
+            tangentMode: 0
+            weightedMode: 0
+            inWeight: 0
+            outWeight: 0
+          - serializedVersion: 3
+            time: 1
+            value: 0
+            inSlope: 0
+            outSlope: 0
+            tangentMode: 0
+            weightedMode: 0
+            inWeight: 0
+            outWeight: 0
+          m_PreInfinity: 2
+          m_PostInfinity: 2
+          m_RotationOrder: 4
+    - rid: 2505063018823155716
+      type: {class: MMF_PositionShake, ns: MoreMountains.Feedbacks, asm: MoreMountains.Feedbacks}
+      data:
+        Active: 1
+        UniqueID: -1004686863
+        Label: Position Shake
+        ChannelMode: 1
+        Channel: 0
+        MMChannelDefinition: {fileID: 11400000, guid: 0f60cbcd7d19be7489547709fb121cc9, type: 2}
         Chance: 100
         DisplayColor: {r: 0, g: 0, b: 0, a: 1}
         Timing:
@@ -368,6 +486,7 @@ MonoBehaviour:
   DebugActive: 0
   FeedbacksList:
   - rid: 2505063018823155714
+  - rid: 2505063018823155717
   KeepPlayModeChanges: 0
   PerformanceMode: 0
   StopFeedbacksOnDisable: 0
@@ -378,12 +497,129 @@ MonoBehaviour:
     - rid: 2505063018823155714
       type: {class: MMF_ScaleShake, ns: MoreMountains.Feedbacks, asm: MoreMountains.Feedbacks}
       data:
-        Active: 1
+        Active: 0
         UniqueID: -516738821
         Label: Scale Shake
-        ChannelMode: 0
+        ChannelMode: 1
         Channel: 3
-        MMChannelDefinition: {fileID: 0}
+        MMChannelDefinition: {fileID: 11400000, guid: 6cfa14ceaa225804f9d0a24e7e9a75e0, type: 2}
+        Chance: 100
+        DisplayColor: {r: 0, g: 0, b: 0, a: 1}
+        Timing:
+          TimescaleMode: 0
+          ExcludeFromHoldingPauses: 0
+          ContributeToTotalDuration: 1
+          InitialDelay: 0
+          CooldownDuration: 0
+          InterruptsOnStop: 1
+          NumberOfRepeats: 0
+          RepeatForever: 0
+          DelayBetweenRepeats: 1
+          MMFeedbacksDirectionCondition: 0
+          PlayDirection: 0
+          ConstantIntensity: 0
+          UseIntensityInterval: 0
+          IntensityIntervalMin: 0
+          IntensityIntervalMax: 0
+          Sequence: {fileID: 0}
+          TrackID: 0
+          Quantized: 0
+          TargetBPM: 120
+        AutomatedTargetAcquisition:
+          Mode: 0
+          ChildIndex: 0
+        RandomizeOutput: 0
+        RandomMultiplier: {x: 0.8, y: 1}
+        RandomizeDuration: 0
+        RandomDurationMultiplier: {x: 0.5, y: 2}
+        UseRange: 0
+        RangeDistance: 5
+        UseRangeFalloff: 0
+        RangeFalloff:
+          serializedVersion: 2
+          m_Curve:
+          - serializedVersion: 3
+            time: 0
+            value: 1
+            inSlope: 0
+            outSlope: 0
+            tangentMode: 0
+            weightedMode: 0
+            inWeight: 0
+            outWeight: 0
+          - serializedVersion: 3
+            time: 1
+            value: 0
+            inSlope: 0
+            outSlope: 0
+            tangentMode: 0
+            weightedMode: 0
+            inWeight: 0
+            outWeight: 0
+          m_PreInfinity: 2
+          m_PostInfinity: 2
+          m_RotationOrder: 4
+        RemapRangeFalloff: {x: 0, y: 1}
+        Owner: {fileID: 5763091350117042767}
+        DebugActive: 0
+        TargetShaker: {fileID: 0}
+        Duration: 0.2
+        ResetShakerValuesAfterShake: 1
+        ResetTargetValuesAfterShake: 1
+        ShakeSpeed: 20
+        ShakeRange: 0.5
+        ShakeMainDirection: {x: 0, y: 1, z: 0}
+        RandomizeDirection: 0
+        ShakeAltDirection: {x: 0, y: 1, z: 0}
+        RandomizeDirectionOnPlay: 0
+        AddDirectionalNoise: 1
+        DirectionalNoiseStrengthMin: {x: 0.25, y: 0.25, z: 0.25}
+        DirectionalNoiseStrengthMax: {x: 0.25, y: 0.25, z: 0.25}
+        RandomnessSeed: {x: 0, y: 0, z: 0}
+        RandomizeSeedOnShake: 1
+        UseAttenuation: 1
+        AttenuationCurve:
+          serializedVersion: 2
+          m_Curve:
+          - serializedVersion: 3
+            time: 0
+            value: 0
+            inSlope: 0
+            outSlope: 0
+            tangentMode: 0
+            weightedMode: 0
+            inWeight: 0
+            outWeight: 0
+          - serializedVersion: 3
+            time: 0.5
+            value: 1
+            inSlope: 0
+            outSlope: 0
+            tangentMode: 0
+            weightedMode: 0
+            inWeight: 0
+            outWeight: 0
+          - serializedVersion: 3
+            time: 1
+            value: 0
+            inSlope: 0
+            outSlope: 0
+            tangentMode: 0
+            weightedMode: 0
+            inWeight: 0
+            outWeight: 0
+          m_PreInfinity: 2
+          m_PostInfinity: 2
+          m_RotationOrder: 4
+    - rid: 2505063018823155717
+      type: {class: MMF_PositionShake, ns: MoreMountains.Feedbacks, asm: MoreMountains.Feedbacks}
+      data:
+        Active: 1
+        UniqueID: -840015760
+        Label: Position Shake
+        ChannelMode: 1
+        Channel: 0
+        MMChannelDefinition: {fileID: 11400000, guid: 6cfa14ceaa225804f9d0a24e7e9a75e0, type: 2}
         Chance: 100
         DisplayColor: {r: 0, g: 0, b: 0, a: 1}
         Timing:
@@ -614,6 +850,7 @@ MonoBehaviour:
   DebugActive: 0
   FeedbacksList:
   - rid: 2505063018823155714
+  - rid: 2505063018823155715
   KeepPlayModeChanges: 0
   PerformanceMode: 0
   StopFeedbacksOnDisable: 0
@@ -624,12 +861,129 @@ MonoBehaviour:
     - rid: 2505063018823155714
       type: {class: MMF_ScaleShake, ns: MoreMountains.Feedbacks, asm: MoreMountains.Feedbacks}
       data:
-        Active: 1
+        Active: 0
         UniqueID: -516738821
         Label: Scale Shake
-        ChannelMode: 0
+        ChannelMode: 1
         Channel: 1
-        MMChannelDefinition: {fileID: 0}
+        MMChannelDefinition: {fileID: 11400000, guid: b884338ef34b563429fa2a8b298b35bd, type: 2}
+        Chance: 100
+        DisplayColor: {r: 0, g: 0, b: 0, a: 1}
+        Timing:
+          TimescaleMode: 0
+          ExcludeFromHoldingPauses: 0
+          ContributeToTotalDuration: 1
+          InitialDelay: 0
+          CooldownDuration: 0
+          InterruptsOnStop: 1
+          NumberOfRepeats: 0
+          RepeatForever: 0
+          DelayBetweenRepeats: 1
+          MMFeedbacksDirectionCondition: 0
+          PlayDirection: 0
+          ConstantIntensity: 0
+          UseIntensityInterval: 0
+          IntensityIntervalMin: 0
+          IntensityIntervalMax: 0
+          Sequence: {fileID: 0}
+          TrackID: 0
+          Quantized: 0
+          TargetBPM: 120
+        AutomatedTargetAcquisition:
+          Mode: 0
+          ChildIndex: 0
+        RandomizeOutput: 0
+        RandomMultiplier: {x: 0.8, y: 1}
+        RandomizeDuration: 0
+        RandomDurationMultiplier: {x: 0.5, y: 2}
+        UseRange: 0
+        RangeDistance: 5
+        UseRangeFalloff: 0
+        RangeFalloff:
+          serializedVersion: 2
+          m_Curve:
+          - serializedVersion: 3
+            time: 0
+            value: 1
+            inSlope: 0
+            outSlope: 0
+            tangentMode: 0
+            weightedMode: 0
+            inWeight: 0
+            outWeight: 0
+          - serializedVersion: 3
+            time: 1
+            value: 0
+            inSlope: 0
+            outSlope: 0
+            tangentMode: 0
+            weightedMode: 0
+            inWeight: 0
+            outWeight: 0
+          m_PreInfinity: 2
+          m_PostInfinity: 2
+          m_RotationOrder: 4
+        RemapRangeFalloff: {x: 0, y: 1}
+        Owner: {fileID: 1390137682543734070}
+        DebugActive: 0
+        TargetShaker: {fileID: 0}
+        Duration: 0.2
+        ResetShakerValuesAfterShake: 1
+        ResetTargetValuesAfterShake: 1
+        ShakeSpeed: 20
+        ShakeRange: 0.5
+        ShakeMainDirection: {x: 0, y: 1, z: 0}
+        RandomizeDirection: 0
+        ShakeAltDirection: {x: 0, y: 1, z: 0}
+        RandomizeDirectionOnPlay: 0
+        AddDirectionalNoise: 1
+        DirectionalNoiseStrengthMin: {x: 0.25, y: 0.25, z: 0.25}
+        DirectionalNoiseStrengthMax: {x: 0.25, y: 0.25, z: 0.25}
+        RandomnessSeed: {x: 0, y: 0, z: 0}
+        RandomizeSeedOnShake: 1
+        UseAttenuation: 1
+        AttenuationCurve:
+          serializedVersion: 2
+          m_Curve:
+          - serializedVersion: 3
+            time: 0
+            value: 0
+            inSlope: 0
+            outSlope: 0
+            tangentMode: 0
+            weightedMode: 0
+            inWeight: 0
+            outWeight: 0
+          - serializedVersion: 3
+            time: 0.5
+            value: 1
+            inSlope: 0
+            outSlope: 0
+            tangentMode: 0
+            weightedMode: 0
+            inWeight: 0
+            outWeight: 0
+          - serializedVersion: 3
+            time: 1
+            value: 0
+            inSlope: 0
+            outSlope: 0
+            tangentMode: 0
+            weightedMode: 0
+            inWeight: 0
+            outWeight: 0
+          m_PreInfinity: 2
+          m_PostInfinity: 2
+          m_RotationOrder: 4
+    - rid: 2505063018823155715
+      type: {class: MMF_PositionShake, ns: MoreMountains.Feedbacks, asm: MoreMountains.Feedbacks}
+      data:
+        Active: 1
+        UniqueID: 274263359
+        Label: Position Shake
+        ChannelMode: 1
+        Channel: 0
+        MMChannelDefinition: {fileID: 11400000, guid: b884338ef34b563429fa2a8b298b35bd, type: 2}
         Chance: 100
         DisplayColor: {r: 0, g: 0, b: 0, a: 1}
         Timing:
@@ -809,27 +1163,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e3fe4ebf057b3da4cb271ef278df4d1a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  autoDetectLoopLength: 1
-  manualLoopLength: 0
-  backgroundMusic: {fileID: 8300000, guid: 5ad5e39cef5cd49489157663907e4925, type: 3}
+  autoDetectLoopLength: 0
+  manualLoopLength: 15
+  errorTime: 0
+  backgroundMusic: {fileID: 8300000, guid: 73c11f5e333d939438650246b71bbabb, type: 3}
   gameStages:
   - stageName: "\u4E3B\u9898+\u9F13\u70B9"
     tracks:
-    - {fileID: 8300000, guid: 5ad5e39cef5cd49489157663907e4925, type: 3}
-    - {fileID: 8300000, guid: ead9492190f36404ab500d5bc94dc715, type: 3}
+    - {fileID: 8300000, guid: 73c11f5e333d939438650246b71bbabb, type: 3}
   - stageName: "\u4E3B\u9898+\u8D1D\u65AF"
     tracks:
-    - {fileID: 8300000, guid: 5ad5e39cef5cd49489157663907e4925, type: 3}
-    - {fileID: 8300000, guid: ead9492190f36404ab500d5bc94dc715, type: 3}
-    - {fileID: 8300000, guid: 4d0254662c7a4d84583c70b47c04af95, type: 3}
-    - {fileID: 8300000, guid: ac2ab32d2c462f144b5225f966141c57, type: 3}
+    - {fileID: 8300000, guid: 73c11f5e333d939438650246b71bbabb, type: 3}
+    - {fileID: 8300000, guid: 58f84f3360c8b0c41923fefe75827a4a, type: 3}
+    - {fileID: 8300000, guid: b8e1725d51cf6794fac910308129942e, type: 3}
+    - {fileID: 8300000, guid: 97f466023c837d74580a50e4fd6e47c9, type: 3}
   - stageName: "\u5B8C\u6574\u6DF7\u97F3"
     tracks:
-    - {fileID: 8300000, guid: 5ad5e39cef5cd49489157663907e4925, type: 3}
-    - {fileID: 8300000, guid: ead9492190f36404ab500d5bc94dc715, type: 3}
-    - {fileID: 8300000, guid: cecb152f5e1c2754ba0b4f6885ff4a0a, type: 3}
-    - {fileID: 8300000, guid: 4d0254662c7a4d84583c70b47c04af95, type: 3}
-    - {fileID: 8300000, guid: ac2ab32d2c462f144b5225f966141c57, type: 3}
+    - {fileID: 8300000, guid: 73c11f5e333d939438650246b71bbabb, type: 3}
+    - {fileID: 8300000, guid: 58f84f3360c8b0c41923fefe75827a4a, type: 3}
+    - {fileID: 8300000, guid: 8d7d1966011f34246be4b80303cd9848, type: 3}
+    - {fileID: 8300000, guid: b8e1725d51cf6794fac910308129942e, type: 3}
+    - {fileID: 8300000, guid: 97f466023c837d74580a50e4fd6e47c9, type: 3}
 --- !u!114 &7898669464761630494
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -852,7 +1206,7 @@ MonoBehaviour:
   beatFeedbacks:
   - name: "\u8D85\u8F7B"
     triggerBeats: 01010101
-    intensity: 0.1
+    intensity: 0.3
     feedback: {fileID: 5763091350117042767}
   - name: "\u8F7B"
     triggerBeats: 00010001
@@ -864,11 +1218,11 @@ MonoBehaviour:
     feedback: {fileID: 1390137682543734070}
   stageConfigs:
   - name: "\u9636\u6BB51"
-    stageIntensity: 1
-    enabledBeatIndices: 00000000
+    stageIntensity: 0.5
+    enabledBeatIndices: 000000000100000002000000
   - name: "\u9636\u6BB52"
-    stageIntensity: 1.2
-    enabledBeatIndices: 01000000
+    stageIntensity: 1
+    enabledBeatIndices: 000000000100000002000000
   - name: "\u9636\u6BB53"
     stageIntensity: 1.5
-    enabledBeatIndices: 0100000002000000
+    enabledBeatIndices: 000000000100000002000000
