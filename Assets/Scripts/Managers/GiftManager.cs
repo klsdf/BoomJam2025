@@ -177,7 +177,17 @@ namespace BoomJam2025
         /// </remarks>
         private void Update()
         {
-            if (!isGiftGenerationEnabled) return;
+            // 更新总贡献值显示（无论礼物生成是否启用）
+            UpdateTotalContribution();
+            
+            if (!isGiftGenerationEnabled) 
+            {
+                isLongPressing = false;
+                isSpacePressing = false;
+                ApplyRainbowEffect();
+                RemoveRainbowEffect();
+                return;
+            }
 
             // 检测鼠标按下
             if (Input.GetMouseButtonDown(0))
@@ -220,9 +230,6 @@ namespace BoomJam2025
                     SpawnGift();
                 }
             }
-
-            // 更新总贡献值显示
-            UpdateTotalContribution();
         }
         
         /// <summary>

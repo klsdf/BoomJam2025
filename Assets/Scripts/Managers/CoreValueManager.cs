@@ -171,10 +171,10 @@ namespace BoomJam2025
             normalGiftContribution += singleClickValue;
             
             // 检查是否达到1 trillion
-            if (valueContribution >= 1000000000000m) // 1 trillion = 1,000,000,000,000
-            {
-                RestartManager.Instance.OnAdvanceRestartButtonClicked();
-            }
+            // if (valueContribution >= 1000000000000m) // 1 trillion = 1,000,000,000,000
+            // {
+            //     RestartManager.Instance.OnAdvanceRestartButtonClicked();
+            // }
             
             return singleClickValue;
         }

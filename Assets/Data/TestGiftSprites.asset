@@ -23,4 +23,4 @@ MonoBehaviour:
     - {fileID: 21300000, guid: 278a4468bfdd174468a3d38260b44739, type: 3}
   specialGiftAnimations:
   - {fileID: 11400000, guid: aa9b9390ff1ce294197b2fd4eea364d0, type: 2}
-  - {fileID: 0}
+  - {fileID: 11400000, guid: b1bddd8fe80fe6f45b9e02b292892571, type: 2}
