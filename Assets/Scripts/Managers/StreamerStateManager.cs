@@ -97,15 +97,15 @@ namespace BoomJam2025
 
                     break;
                 case StreamerState.CasualSinging:
-                    Debug.Log("切换到随性唱歌状态，切换到阶段1");
+                    Debug.Log("切换到随性唱歌状态，切换到阶段0");
                     AudioManager.Instance.SwitchToStage(0);
                     break;
                 case StreamerState.FocusedSinging:
-                    Debug.Log("切换到投入唱歌状态，切换到阶段2");
+                    Debug.Log("切换到投入唱歌状态，切换到阶段1");
                     AudioManager.Instance.SwitchToStage(1);
                     break;
                 case StreamerState.PassionateSinging:
-                    Debug.Log("切换到激情唱歌状态，切换到阶段3");
+                    Debug.Log("切换到激情唱歌状态，切换到阶段2");
                     AudioManager.Instance.SwitchToStage(2);
                     break;
             }
