@@ -1,0 +1,78 @@
+﻿title: VNDialogue
+tags:
+---
+<<Act ？？？>>
+A VISUAL NOVEL EXAMPLE
+？？？: 你死于奉献不足。
+？？？: 但我给你一次机会，回到你猝死前的1分钟。
+？？？: 这一次，只要你刷得过榜一大哥，就能改变一切。
+
+<<Act 我>>
+主角怔住了
+我: 所以你是让我……狂刷礼物，争回她？
+声音低语
+？？？: 如果你还爱她——或者，你不甘心。
+我: 你是...
+？？？: Rui叔是我们共同的敌人，加油吧
+// 将背景图像设置为名为"bg_office"的精灵
+// <<Scene bg_office>>
+// 开始以50%音量循环播放音频片段"ambient_birds"
+// <<PlayAudio ambient_birds 0.5 loop>>
+
+// A VISUAL NOVEL EXAMPLE
+
+// 添加名为"Eve"的角色，使用精灵"cool-girl"，放置在屏幕左半部分+中心位置，带有绿色文本标签
+// <<Act Eve cool-girl left center green>>
+
+
+// 添加角色"Adam"，使用精灵"biz-guy"，放置在屏幕右侧外，带有蓝色文本标签
+// <<Act Adam biz-guy 1.25 center #226677>>
+
+
+// 在0.5秒内将Adam动画移动到右半部分+中心位置
+// <<Move Adam right center 0.5>>
+
+
+// <<PlayAudio music_funny 1.0 loop>>
+
+
+// 水平翻转Eve角色以面向Adam
+// <<Flip Eve>>
+
+// Yarn快捷选择，一种创建分支选项的简单方式
+// -> Eve gets upset with Adam
+// 	// <<Shake Eve 1.0>>
+// 	Eve: WHAT DO YOU WANT???
+// 	Adam: I just wanted to see if you liked using Yarn Spinner.
+// 	Eve: ... It's fine. Thanks. Now leave me alone.
+// -> Adam asks Eve a question
+// 	Adam: Do you think Yarn Spinner is easy to use?
+// 	Eve: Not when you're bothering me.
+// 	Adam: Oh, I didn't realize you were busy. Sorry.
+
+// 隐藏Adam角色并从场景中移除
+// <<Hide Adam>>
+// 停止所有声音播放
+// <<StopAudioAll>>
+
+
+// <<Flip Eve>>
+// <<PlayAudio music_romantic>>
+
+// <<StopAudioAll>>
+// <<Flip Eve>>
+// <<wait 1.5>>
+// <<Flip Eve>>
+
+// <<Shake Eve>>
+
+
+// <<PlayAudio music_funny>>
+// <<Flip Eve>>
+// <<Move Eve 1.25 center 1.0>>
+
+
+// 淡入到黑色，从0%不透明度到100%不透明度，持续2.0秒
+// <<Fade black 0.0 1.0 2.0>>
+
+===

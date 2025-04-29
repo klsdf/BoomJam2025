@@ -34,6 +34,7 @@ namespace BoomJam2025
         private List<string> comments = new List<string>();
         private CommentPool commentPool;
         private bool isInitialized = false;
+        private bool _isEnabled = false;
         
         public enum SpawnSpeed
         {
@@ -107,7 +108,7 @@ namespace BoomJam2025
         
         private void Update()
         {
-            if (!isInitialized) return;
+            if (!isInitialized || !_isEnabled) return;
             
             if (Time.time >= nextSpawnTime)
             {
@@ -195,6 +196,25 @@ namespace BoomJam2025
         public void ClearComments()
         {
             commentPool.Clear();
+        }
+
+        /// <summary>
+        /// 开始运行
+        /// </summary>
+        public void StartRunning()
+        {
+            _isEnabled = true;
+            ClearComments();
+            SetNextSpawnTime();
+        }
+
+        /// <summary>
+        /// 停止运行
+        /// </summary>
+        public void StopRunning()
+        {
+            _isEnabled = false;
+            ClearComments();
         }
     }
 }

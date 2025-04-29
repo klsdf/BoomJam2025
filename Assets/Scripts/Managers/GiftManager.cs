@@ -118,6 +118,7 @@ namespace BoomJam2025
         private float lastGiftSpawnTime;
         private bool isLongPressing;
         private bool isSpacePressing;  // 新增：空格键长按状态
+        private bool _isEnabled = false;
      
         /// <summary>
         /// 初始化组件和对象池
@@ -177,6 +178,8 @@ namespace BoomJam2025
         /// </remarks>
         private void Update()
         {
+            if (!_isEnabled) return;
+
             // 更新总贡献值显示（无论礼物生成是否启用）
             UpdateTotalContribution();
             
@@ -493,6 +496,26 @@ namespace BoomJam2025
                     Destroy(child.gameObject);
                 }
             }
+        }
+
+        /// <summary>
+        /// 开始运行
+        /// </summary>
+        public void StartRunning()
+        {
+            _isEnabled = true;
+            isGiftGenerationEnabled = true;
+            ClearAllGifts();
+        }
+
+        /// <summary>
+        /// 停止运行
+        /// </summary>
+        public void StopRunning()
+        {
+            _isEnabled = false;
+            isGiftGenerationEnabled = false;
+            ClearAllGifts();
         }
     }
 } 
