@@ -1143,7 +1143,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   musicManager: {fileID: 8887587330821713447}
   beatManager: {fileID: 7898669464761630494}
-  debugMode: 0
+  debugMode: 1
   debugCurrentStage: 0
   debugTargetStage: 0
   debugPlayBackground: 0
@@ -1166,7 +1166,7 @@ MonoBehaviour:
   autoDetectLoopLength: 0
   manualLoopLength: 15
   errorTime: 0
-  backgroundMusic: {fileID: 8300000, guid: 97f466023c837d74580a50e4fd6e47c9, type: 3}
+  backgroundMusic: {fileID: 8300000, guid: 73c11f5e333d939438650246b71bbabb, type: 3}
   gameStages:
   - stageName: "\u4E3B\u9898+\u9F13\u70B9"
     tracks:

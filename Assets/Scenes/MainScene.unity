@@ -6624,6 +6624,8 @@ GameObject:
   - component: {fileID: 768940299}
   - component: {fileID: 768940298}
   - component: {fileID: 768940301}
+  - component: {fileID: 768940302}
+  - component: {fileID: 768940303}
   m_Layer: 5
   m_Name: ButtonAdvanceRestart
   m_TagString: Untagged
@@ -6757,6 +6759,155 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hoverMaterial: {fileID: 2100000, guid: 4adbf61920b16e448b4fa34e53d60d5d, type: 2}
+--- !u!114 &768940302
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 768940296}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0cb29398a27cf104bb97fac0554c9457, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ChannelMode: 1
+  Channel: 0
+  MMChannelDefinition: {fileID: 11400000, guid: 0f60cbcd7d19be7489547709fb121cc9, type: 2}
+  ShakeDuration: 0.5
+  PlayOnAwake: 0
+  PermanentShake: 0
+  Interruptible: 1
+  AlwaysResetTargetValuesAfterShake: 0
+  OnlyUseShakerValues: 0
+  CooldownBetweenShakes: 0
+  Shaking: 0
+  ForwardDirection: 1
+  TimescaleMode: 0
+  Mode: 0
+  TargetTransform: {fileID: 0}
+  TargetRectTransform: {fileID: 0}
+  ShakeSpeed: 20
+  ShakeRange: 0.5
+  ShakeMainDirection: {x: 0, y: 1, z: 0}
+  RandomizeDirection: 0
+  ShakeAltDirection: {x: 0, y: 1, z: 0}
+  RandomizeDirectionOnPlay: 0
+  AddDirectionalNoise: 1
+  DirectionalNoiseStrengthMin: {x: 0.25, y: 0.25, z: 0.25}
+  DirectionalNoiseStrengthMax: {x: 0.25, y: 0.25, z: 0.25}
+  RandomnessSeed: {x: 0, y: 0, z: 0}
+  RandomizeSeedOnShake: 1
+  UseAttenuation: 1
+  AttenuationCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 0.5
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  StartShakingButton: 0
+--- !u!114 &768940303
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 768940296}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f0a82a086afdc494db67a8b50f091d1e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ChannelMode: 1
+  Channel: 0
+  MMChannelDefinition: {fileID: 11400000, guid: b884338ef34b563429fa2a8b298b35bd, type: 2}
+  ShakeDuration: 0.5
+  PlayOnAwake: 0
+  PermanentShake: 0
+  Interruptible: 1
+  AlwaysResetTargetValuesAfterShake: 0
+  OnlyUseShakerValues: 0
+  CooldownBetweenShakes: 0
+  Shaking: 0
+  ForwardDirection: 1
+  TimescaleMode: 0
+  Mode: 0
+  TargetTransform: {fileID: 0}
+  TargetRectTransform: {fileID: 0}
+  ShakeSpeed: 20
+  ShakeRange: 0.5
+  OscillationOffset: 0
+  ShakeMainDirection: {x: 0, y: 1, z: 0}
+  RandomizeDirection: 0
+  ShakeAltDirection: {x: 0, y: 1, z: 0}
+  RandomizeDirectionOnPlay: 0
+  AddDirectionalNoise: 1
+  DirectionalNoiseStrengthMin: {x: 0.25, y: 0.25, z: 0.25}
+  DirectionalNoiseStrengthMax: {x: 0.25, y: 0.25, z: 0.25}
+  RandomnessSeed: {x: 0, y: 0, z: 0}
+  RandomizeSeedOnShake: 1
+  UseAttenuation: 1
+  AttenuationCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 0.5
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  StartShakingButton: 0
 --- !u!1 &779479956
 GameObject:
   m_ObjectHideFlags: 0
@@ -12802,6 +12953,7 @@ GameObject:
   - component: {fileID: 1001680403}
   - component: {fileID: 1001680405}
   - component: {fileID: 1001680404}
+  - component: {fileID: 1001680407}
   m_Layer: 0
   m_Name: Camera
   m_TagString: Untagged
@@ -12928,6 +13080,102 @@ Transform:
   - {fileID: 298255655}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!82 &1001680407
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1001680402}
+  m_Enabled: 0
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: 293b4d0bede22e4468fc1e96b4503338, type: 3}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 1
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &1022106565
 GameObject:
   m_ObjectHideFlags: 0
@@ -13171,7 +13419,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -3.4, y: 0}
+  m_AnchoredPosition: {x: -7.8997, y: 0}
   m_SizeDelta: {x: 1920, y: 1080}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1105965935
@@ -14674,8 +14922,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   memberLevel: 1
   applyMemberLevel: 0
-  fanLevel: 1
-  applyFanLevel: 0
+  fanLevel: 100
+  applyFanLevel: 1
   contributionValue: 0
   applyContribution: 0
   outerPoints: 0
@@ -16013,6 +16261,8 @@ GameObject:
   - component: {fileID: 1550167722}
   - component: {fileID: 1550167721}
   - component: {fileID: 1550167724}
+  - component: {fileID: 1550167725}
+  - component: {fileID: 1550167726}
   m_Layer: 5
   m_Name: ButtonPause
   m_TagString: Untagged
@@ -16146,108 +16396,155 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hoverMaterial: {fileID: 2100000, guid: 660f4a0d73f7bb24a90a1f67e094de57, type: 2}
---- !u!1001 &1594662477
-PrefabInstance:
+--- !u!114 &1550167725
+MonoBehaviour:
   m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 4571811203593252593}
-    m_Modifications:
-    - target: {fileID: 2907440345312631195, guid: 3eae0ca0e7be4a3418c77baa078f1acf, type: 3}
-      propertyPath: m_Name
-      value: Streamer
-      objectReference: {fileID: 0}
-    - target: {fileID: 6178941056541615192, guid: 3eae0ca0e7be4a3418c77baa078f1acf, type: 3}
-      propertyPath: m_Pivot.x
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 6178941056541615192, guid: 3eae0ca0e7be4a3418c77baa078f1acf, type: 3}
-      propertyPath: m_Pivot.y
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 6178941056541615192, guid: 3eae0ca0e7be4a3418c77baa078f1acf, type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 6178941056541615192, guid: 3eae0ca0e7be4a3418c77baa078f1acf, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 6178941056541615192, guid: 3eae0ca0e7be4a3418c77baa078f1acf, type: 3}
-      propertyPath: m_AnchorMin.x
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 6178941056541615192, guid: 3eae0ca0e7be4a3418c77baa078f1acf, type: 3}
-      propertyPath: m_AnchorMin.y
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 6178941056541615192, guid: 3eae0ca0e7be4a3418c77baa078f1acf, type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 1042.2
-      objectReference: {fileID: 0}
-    - target: {fileID: 6178941056541615192, guid: 3eae0ca0e7be4a3418c77baa078f1acf, type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 658.26
-      objectReference: {fileID: 0}
-    - target: {fileID: 6178941056541615192, guid: 3eae0ca0e7be4a3418c77baa078f1acf, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6178941056541615192, guid: 3eae0ca0e7be4a3418c77baa078f1acf, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6178941056541615192, guid: 3eae0ca0e7be4a3418c77baa078f1acf, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6178941056541615192, guid: 3eae0ca0e7be4a3418c77baa078f1acf, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6178941056541615192, guid: 3eae0ca0e7be4a3418c77baa078f1acf, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6178941056541615192, guid: 3eae0ca0e7be4a3418c77baa078f1acf, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6178941056541615192, guid: 3eae0ca0e7be4a3418c77baa078f1acf, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6178941056541615192, guid: 3eae0ca0e7be4a3418c77baa078f1acf, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: -299
-      objectReference: {fileID: 0}
-    - target: {fileID: 6178941056541615192, guid: 3eae0ca0e7be4a3418c77baa078f1acf, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 89.45
-      objectReference: {fileID: 0}
-    - target: {fileID: 6178941056541615192, guid: 3eae0ca0e7be4a3418c77baa078f1acf, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6178941056541615192, guid: 3eae0ca0e7be4a3418c77baa078f1acf, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6178941056541615192, guid: 3eae0ca0e7be4a3418c77baa078f1acf, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 3eae0ca0e7be4a3418c77baa078f1acf, type: 3}
---- !u!224 &1594662478 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 6178941056541615192, guid: 3eae0ca0e7be4a3418c77baa078f1acf, type: 3}
-  m_PrefabInstance: {fileID: 1594662477}
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1550167719}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0cb29398a27cf104bb97fac0554c9457, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ChannelMode: 1
+  Channel: 0
+  MMChannelDefinition: {fileID: 11400000, guid: 6cfa14ceaa225804f9d0a24e7e9a75e0, type: 2}
+  ShakeDuration: 0.5
+  PlayOnAwake: 0
+  PermanentShake: 0
+  Interruptible: 1
+  AlwaysResetTargetValuesAfterShake: 0
+  OnlyUseShakerValues: 0
+  CooldownBetweenShakes: 0
+  Shaking: 0
+  ForwardDirection: 1
+  TimescaleMode: 0
+  Mode: 0
+  TargetTransform: {fileID: 0}
+  TargetRectTransform: {fileID: 0}
+  ShakeSpeed: 20
+  ShakeRange: 0.5
+  ShakeMainDirection: {x: 0, y: 1, z: 0}
+  RandomizeDirection: 0
+  ShakeAltDirection: {x: 0, y: 1, z: 0}
+  RandomizeDirectionOnPlay: 0
+  AddDirectionalNoise: 1
+  DirectionalNoiseStrengthMin: {x: 0.25, y: 0.25, z: 0.25}
+  DirectionalNoiseStrengthMax: {x: 0.25, y: 0.25, z: 0.25}
+  RandomnessSeed: {x: 0, y: 0, z: 0}
+  RandomizeSeedOnShake: 1
+  UseAttenuation: 1
+  AttenuationCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 0.5
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  StartShakingButton: 0
+--- !u!114 &1550167726
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1550167719}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f0a82a086afdc494db67a8b50f091d1e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ChannelMode: 1
+  Channel: 0
+  MMChannelDefinition: {fileID: 11400000, guid: 0f60cbcd7d19be7489547709fb121cc9, type: 2}
+  ShakeDuration: 0.5
+  PlayOnAwake: 0
+  PermanentShake: 0
+  Interruptible: 1
+  AlwaysResetTargetValuesAfterShake: 0
+  OnlyUseShakerValues: 0
+  CooldownBetweenShakes: 0
+  Shaking: 0
+  ForwardDirection: 1
+  TimescaleMode: 0
+  Mode: 0
+  TargetTransform: {fileID: 0}
+  TargetRectTransform: {fileID: 0}
+  ShakeSpeed: 20
+  ShakeRange: 0.5
+  OscillationOffset: 0
+  ShakeMainDirection: {x: 0, y: 1, z: 0}
+  RandomizeDirection: 0
+  ShakeAltDirection: {x: 0, y: 1, z: 0}
+  RandomizeDirectionOnPlay: 0
+  AddDirectionalNoise: 1
+  DirectionalNoiseStrengthMin: {x: 0.25, y: 0.25, z: 0.25}
+  DirectionalNoiseStrengthMax: {x: 0.25, y: 0.25, z: 0.25}
+  RandomnessSeed: {x: 0, y: 0, z: 0}
+  RandomizeSeedOnShake: 1
+  UseAttenuation: 1
+  AttenuationCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 0.5
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  StartShakingButton: 0
 --- !u!1 &1619368573
 GameObject:
   m_ObjectHideFlags: 0
@@ -19281,6 +19578,7 @@ GameObject:
   - component: {fileID: 5511226299466696026}
   - component: {fileID: 5045689465597192472}
   - component: {fileID: 2348545038622400477}
+  - component: {fileID: 5511226299466696027}
   m_Layer: 0
   m_Name: Contribution
   m_TagString: Untagged
@@ -20737,6 +21035,7 @@ GameObject:
   - component: {fileID: 7212935823078014283}
   - component: {fileID: 6093388008562741930}
   - component: {fileID: 9160161424162209345}
+  - component: {fileID: 9160161424162209346}
   m_Layer: 0
   m_Name: Image
   m_TagString: Untagged
@@ -22189,6 +22488,80 @@ RectTransform:
   m_AnchoredPosition: {x: -1.2797, y: 1.194}
   m_SizeDelta: {x: 1.343, y: 0.3323}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &5511226299466696027
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 32916251593982280}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0cb29398a27cf104bb97fac0554c9457, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ChannelMode: 1
+  Channel: 3
+  MMChannelDefinition: {fileID: 11400000, guid: 0f60cbcd7d19be7489547709fb121cc9, type: 2}
+  ShakeDuration: 0.5
+  PlayOnAwake: 0
+  PermanentShake: 0
+  Interruptible: 1
+  AlwaysResetTargetValuesAfterShake: 0
+  OnlyUseShakerValues: 0
+  CooldownBetweenShakes: 0
+  Shaking: 0
+  ForwardDirection: 1
+  TimescaleMode: 0
+  Mode: 0
+  TargetTransform: {fileID: 0}
+  TargetRectTransform: {fileID: 0}
+  ShakeSpeed: 20
+  ShakeRange: 0.5
+  ShakeMainDirection: {x: 0, y: 1, z: 0}
+  RandomizeDirection: 0
+  ShakeAltDirection: {x: 0, y: 1, z: 0}
+  RandomizeDirectionOnPlay: 0
+  AddDirectionalNoise: 1
+  DirectionalNoiseStrengthMin: {x: 0.25, y: 0.25, z: 0.25}
+  DirectionalNoiseStrengthMax: {x: 0.25, y: 0.25, z: 0.25}
+  RandomnessSeed: {x: 0, y: 0, z: 0}
+  RandomizeSeedOnShake: 1
+  UseAttenuation: 1
+  AttenuationCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 0.5
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  StartShakingButton: 0
 --- !u!1 &5521800318555532608
 GameObject:
   m_ObjectHideFlags: 0
@@ -26187,6 +26560,80 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &9160161424162209346
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2958258614904247942}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0cb29398a27cf104bb97fac0554c9457, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ChannelMode: 1
+  Channel: 3
+  MMChannelDefinition: {fileID: 11400000, guid: b884338ef34b563429fa2a8b298b35bd, type: 2}
+  ShakeDuration: 0.5
+  PlayOnAwake: 0
+  PermanentShake: 0
+  Interruptible: 1
+  AlwaysResetTargetValuesAfterShake: 0
+  OnlyUseShakerValues: 0
+  CooldownBetweenShakes: 0
+  Shaking: 0
+  ForwardDirection: 1
+  TimescaleMode: 0
+  Mode: 0
+  TargetTransform: {fileID: 0}
+  TargetRectTransform: {fileID: 0}
+  ShakeSpeed: 20
+  ShakeRange: 0.5
+  ShakeMainDirection: {x: 0, y: 1, z: 0}
+  RandomizeDirection: 0
+  ShakeAltDirection: {x: 0, y: 1, z: 0}
+  RandomizeDirectionOnPlay: 0
+  AddDirectionalNoise: 1
+  DirectionalNoiseStrengthMin: {x: 0.25, y: 0.25, z: 0.25}
+  DirectionalNoiseStrengthMax: {x: 0.25, y: 0.25, z: 0.25}
+  RandomnessSeed: {x: 0, y: 0, z: 0}
+  RandomizeSeedOnShake: 1
+  UseAttenuation: 1
+  AttenuationCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 0.5
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  StartShakingButton: 0
 --- !u!114 &9209228692971165406
 MonoBehaviour:
   m_ObjectHideFlags: 0

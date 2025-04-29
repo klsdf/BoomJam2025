@@ -103,9 +103,6 @@ namespace BoomJam2025
                     break;
                 case StreamerState.CasualSinging:
                     Debug.Log("切换到随性唱歌状态，切换到阶段0");
-                    AudioManager.Instance.StopAllMusic();
-                    AudioManager.Instance.StartGameMusic();
-
                     AudioManager.Instance.SwitchToStage(0);
                     break;
                 case StreamerState.FocusedSinging:
