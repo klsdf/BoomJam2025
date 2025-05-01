@@ -15204,7 +15204,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0.000061035156, y: -0.00018310547}
+  m_AnchoredPosition: {x: 0, y: -0.00024414062}
   m_SizeDelta: {x: -0.00024414062, y: -0.00024414062}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1217737045
@@ -15462,8 +15462,8 @@ MonoBehaviour:
   startMinute: 59
   startSecond: 0
   durationHours: 0
-  durationMinutes: 1
-  durationSeconds: 0
+  durationMinutes: 0
+  durationSeconds: 30
   textTimeDisplay: {fileID: 7482271935551517967}
   timeEndPanel: {fileID: 322960818}
   restartPanel: {fileID: 872761369}
@@ -15523,7 +15523,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: 6.2999268, y: 136.19995}
+  m_AnchoredPosition: {x: 6.2998047, y: 136.19995}
   m_SizeDelta: {x: -100.8, y: 209.29999}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1268818343
@@ -15562,7 +15562,7 @@ CanvasGroup:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1268818341}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Alpha: 1
   m_Interactable: 1
   m_BlocksRaycasts: 1
@@ -17729,7 +17729,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 6.2999268, y: 123}
+  m_AnchoredPosition: {x: 6.2998047, y: 123}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!225 &1533596350
@@ -20068,8 +20068,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 74.205, y: -28.55}
-  m_SizeDelta: {x: 100.41, y: 57.1}
+  m_AnchoredPosition: {x: 74.2, y: -28.55}
+  m_SizeDelta: {x: 100.4, y: 57.1}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1909139493
 MonoBehaviour:
@@ -25962,7 +25962,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   npcRankers:
   - avatar: {fileID: 21300000, guid: 64f9e7527c9666b41a43fd49a044c1b2, type: 3}
-    nickname: 1
+    nickname: "Rui\u53D4"
     scoreString: 1000000000000
     isPlayer: 0
   - avatar: {fileID: 21300000, guid: 4c409eaaba3358940b414565fe4c51c2, type: 3}

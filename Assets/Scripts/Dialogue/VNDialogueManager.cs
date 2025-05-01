@@ -34,7 +34,7 @@ namespace BoomJam2025
         [SerializeField] private VNManager vnManager;
         [SerializeField] private GameObject dialoguePanel;
         [SerializeField] private bool autoStartDialogue = true;
-        [SerializeField] private string startNode = "VNDialogue";
+        [SerializeField] private string startNode = "FirstDie";
 
         private bool isInitialized = false;
         private bool isDialogueRunning = false;
@@ -64,6 +64,12 @@ namespace BoomJam2025
             if (dialoguePanel != null)
             {
                 dialoguePanel.SetActive(false);
+            }
+
+            // 注册对话完成事件
+            if (vnManager != null && vnManager.runner != null)
+            {
+                vnManager.runner.onDialogueComplete.AddListener(OnDialogueComplete);
             }
 
             isInitialized = true;
@@ -96,21 +102,21 @@ namespace BoomJam2025
         }
 
         /// <summary>
-        /// 开始对话
+        /// 开始对话（协程版本）
         /// </summary>
         /// <param name="nodeName">对话节点名称</param>
-        public void StartDialogue(string nodeName)
+        public IEnumerator StartDialogueCoroutine(string nodeName)
         {
             if (!isInitialized)
             {
                 Debug.LogWarning("Dialogue system is not initialized yet!");
-                return;
+                yield break;
             }
 
             if (isDialogueRunning)
             {
                 Debug.LogWarning("Dialogue is already running!");
-                return;
+                yield break;
             }
 
             // 显示对话面板
@@ -121,11 +127,29 @@ namespace BoomJam2025
             {
                 vnManager.runner.StartDialogue(nodeName);
                 isDialogueRunning = true;
+
+                // 等待对话完成
+                while (isDialogueRunning)
+                {
+                    yield return null;
+                }
+
+                // 对话完成后关闭面板
+                SetDialogueUIsActive(false);
             }
             else
             {
                 Debug.LogError("VNManager or DialogueRunner is not properly initialized!");
             }
+        }
+
+        /// <summary>
+        /// 开始对话（非协程版本，向后兼容）
+        /// </summary>
+        /// <param name="nodeName">对话节点名称</param>
+        public void StartDialogue(string nodeName)
+        {
+            StartCoroutine(StartDialogueCoroutine(nodeName));
         }
 
         /// <summary>
@@ -161,11 +185,27 @@ namespace BoomJam2025
             return vnManager;
         }
 
+        /// <summary>
+        /// 对话完成时的回调
+        /// </summary>
+        private void OnDialogueComplete()
+        {
+            isDialogueRunning = false;
+            // 关闭对话面板
+            SetDialogueUIsActive(false);
+        }
+
         private void OnDestroy()
         {
             if (Instance == this)
             {
                 Instance = null;
+            }
+
+            // 取消注册对话完成事件
+            if (vnManager != null && vnManager.runner != null)
+            {
+                vnManager.runner.onDialogueComplete.RemoveListener(OnDialogueComplete);
             }
         }
     }

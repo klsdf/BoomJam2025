@@ -168,6 +168,10 @@ namespace BoomJam2025
             {
                 StartCoroutine(PlayGrandFinale());
             }
+            else if(RebirthManager.Instance.countRebirth == 0)
+            {
+                StartCoroutine(PlayFirstEnding());
+            }
             else
             {
                 StartCoroutine(PlayNormalEnding());
@@ -175,14 +179,15 @@ namespace BoomJam2025
         }
 
         /// <summary>
-        /// 播放普通结局
+        /// 播放第一次结局
         /// </summary>
-        private IEnumerator PlayNormalEnding()
+        private IEnumerator PlayFirstEnding()
         {
             // TODO: 在这里添加普通结局的演出逻辑
             
-            // 等待当前对话完成并开始新的对话
-            yield return DialogueManager.Instance.StartDialogueAfterCurrent("NormalEnd");
+            // 并行执行两个对话
+            StartCoroutine(DialogueManager.Instance.StartDialogueAfterCurrent("NormalEnd"));
+            yield return VNDialogueManager.Instance.StartDialogueCoroutine("FirstDie");
 
             if (timeEndPanel != null)
             {
@@ -195,13 +200,42 @@ namespace BoomJam2025
         }
 
         /// <summary>
+        /// 播放普通结局
+        /// </summary>
+        private IEnumerator PlayNormalEnding()
+        {
+            // TODO: 在这里添加普通结局的演出逻辑
+            
+            StartCoroutine(DialogueManager.Instance.StartDialogueAfterCurrent("NormalEnd"));
+            yield return VNDialogueManager.Instance.StartDialogueCoroutine("VN_NormalEnd");
+            if (timeEndPanel != null)
+            {
+                timeEndPanel.SetActive(true);
+            }
+            if (inputBlocker != null)
+            {
+                inputBlocker.SetActive(true);
+            }
+        }
+
+        /// <summary>
+        /// 播放第二次开始
+        /// </summary>
+        private IEnumerator PlaySecondStart()
+        {
+            yield return VNDialogueManager.Instance.StartDialogueCoroutine("VN_SecondStart");
+
+        }
+        /// <summary>
         /// 播放大结局
         /// </summary>
         private IEnumerator PlayGrandFinale()
         {
             // TODO: 在这里添加大结局的演出逻辑
-            yield return new WaitForSeconds(10f); // 临时占位，等待实际演出逻辑
-            
+
+            yield return DialogueManager.Instance.StartDialogueAfterCurrent("FinalEnd");
+            yield return VNDialogueManager.Instance.StartDialogueCoroutine("VN_FinalEnd");
+
             if (timeEndPanel != null)
             {
                 timeEndPanel.SetActive(true);
@@ -237,9 +271,13 @@ namespace BoomJam2025
             isTimeEnd = false;
             InitializeTime();
             // 停止当前对话
-            DialogueManager.Instance.StopDialogue();
+            DialogueManager.Instance.StopDialogueCoroutine();
             // 播放循环开始对话
             StartCoroutine(DialogueManager.Instance.StartDialogueAfterCurrent("LoopStart"));
+            if(RebirthManager.Instance.countRebirth == 0)
+            {
+                StartCoroutine(PlaySecondStart());
+            }
             GiftManager.Instance.ClearAllGifts();
             CommentManager.Instance.ClearComments();
             RebirthManager.Instance.TryRebirth();

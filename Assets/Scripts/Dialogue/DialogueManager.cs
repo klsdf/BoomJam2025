@@ -43,6 +43,7 @@ namespace BoomJam2025
         private bool isDialogueRunnerReady = false;
         private string currentNode;
         private bool isDialogueRunning = false;
+        private Coroutine currentDialogueCoroutine;
 
         private void Start()
         {
@@ -148,8 +149,9 @@ namespace BoomJam2025
             OnDialogueNodeComplete += onDialogueComplete;
             StartDialogue(nextNode);
             
-            // 等待新对话完成
-            while (!dialogueCompleted) {
+            // 等待对话完成
+            while (!dialogueCompleted)
+            {
                 yield return null;
             }
         }
@@ -162,6 +164,25 @@ namespace BoomJam2025
             if (dialogueRunner != null)
             {
                 dialogueRunner.Stop();
+            }
+        }
+
+        /// <summary>   
+        /// 停止当前对话协程
+        /// </summary>
+        public void StopDialogueCoroutine()
+        {
+            if (dialogueRunner != null)
+            {
+                dialogueRunner.Stop();
+                isDialogueRunning = false;
+                
+                // 停止当前正在运行的协程
+                if (currentDialogueCoroutine != null)
+                {
+                    StopCoroutine(currentDialogueCoroutine);
+                    currentDialogueCoroutine = null;
+                }
             }
         }
 
