@@ -118,8 +118,8 @@ namespace BoomJam2025
         /// </summary>
         private void StartAllManagers()
         {
-            RestartManager.Instance.StartRunning();
             GiftManager.Instance.StartRunning();
+            RestartManager.Instance.StartRunning();
             CommentManager.Instance.StartRunning();
         }
 

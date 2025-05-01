@@ -57,7 +57,7 @@ namespace BoomJam2025
         private DateTime startDateTime;
         private DateTime endDateTime;
         private bool isTimeEnd = false;
-        private bool isTimerRunning = false;
+        public bool isTimerRunning { get; private set; } = false;
 
         private void Awake()
         {
@@ -86,6 +86,33 @@ namespace BoomJam2025
             {
                 restartPanel.SetActive(false);
             }
+        }
+        
+        /// <summary>
+        /// 播放开场剧情
+        /// </summary>
+        private IEnumerator PlayOpeningSequence()
+        {
+            // 开场对话期间禁用礼物系统
+            GiftManager.Instance.StopRunning();
+            
+            // 等待开场对话完成
+            yield return DialogueManager.Instance.StartDialogueAfterCurrent("StreamerStart");
+            
+            // 开场剧情结束后开始游戏
+            isTimerRunning = true;
+            isGamePaused = false;
+            Time.timeScale = 1f;
+            if (inputBlocker != null)
+            {
+                inputBlocker.SetActive(false);
+            }
+            
+            // 启用礼物系统
+            GiftManager.Instance.StartRunning();
+            
+            // 播放循环开始对话
+            yield return DialogueManager.Instance.StartDialogueAfterCurrent("LoopStart");
         }
 
         // Update is called once per frame
@@ -209,6 +236,10 @@ namespace BoomJam2025
             ResumeGame();
             isTimeEnd = false;
             InitializeTime();
+            // 停止当前对话
+            DialogueManager.Instance.StopDialogue();
+            // 播放循环开始对话
+            StartCoroutine(DialogueManager.Instance.StartDialogueAfterCurrent("LoopStart"));
             GiftManager.Instance.ClearAllGifts();
             CommentManager.Instance.ClearComments();
             RebirthManager.Instance.TryRebirth();
@@ -257,14 +288,27 @@ namespace BoomJam2025
 
         public void StartRunning()
         {
-            isTimerRunning = true;
-            isGamePaused = false;
-            Time.timeScale = 1f;
-            if (inputBlocker != null)
+            // 开场对话期间禁用礼物系统
+            GiftManager.Instance.DisableGiftGeneration();
+            // 如果是第一次运行，播放开场剧情
+            if (RebirthManager.Instance.countRebirth == 0)
             {
-                inputBlocker.SetActive(false);
+                StartCoroutine(PlayOpeningSequence());
             }
-            GiftManager.Instance.EnableGiftGeneration();
+            else
+            {
+                // 启用礼物系统
+                GiftManager.Instance.EnableGiftGeneration();
+                isTimerRunning = true;
+                isGamePaused = false;
+                Time.timeScale = 1f;
+                if (inputBlocker != null)
+                {
+                    inputBlocker.SetActive(false);
+                }        
+                // 播放循环开始对话
+                StartCoroutine(DialogueManager.Instance.StartDialogueAfterCurrent("LoopStart"));
+            }
         }
 
         public void StopRunning()

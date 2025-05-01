@@ -16639,7 +16639,7 @@ MonoBehaviour:
   memberLevel: 1
   applyMemberLevel: 0
   fanLevel: 100
-  applyFanLevel: 1
+  applyFanLevel: 0
   contributionValue: 0
   applyContribution: 0
   outerPoints: 0
@@ -24016,7 +24016,6 @@ Transform:
   - {fileID: 8252416363524442136}
   - {fileID: 4143763817082552434}
   - {fileID: 6604499947392828142}
-  - {fileID: 1594662478}
   m_Father: {fileID: 5598249378939716551}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4779503060465583489

@@ -112,7 +112,7 @@ namespace BoomJam2025
         
         private float screenHeight;
         private GiftPool giftPool;
-        private bool isGiftGenerationEnabled = true;
+        private bool isGiftGenerationEnabled = false;
         private float lastSpecialGiftTime;
         private bool isSpecialGiftAvailable = true;
         private float lastGiftSpawnTime;
@@ -178,20 +178,11 @@ namespace BoomJam2025
         /// </remarks>
         private void Update()
         {
-            if (!_isEnabled) return;
+            if (!_isEnabled || !isGiftGenerationEnabled) return;
 
             // 更新总贡献值显示（无论礼物生成是否启用）
             UpdateTotalContribution();
             
-            if (!isGiftGenerationEnabled) 
-            {
-                isLongPressing = false;
-                isSpacePressing = false;
-                ApplyRainbowEffect();
-                RemoveRainbowEffect();
-                return;
-            }
-
             // 检测鼠标按下
             if (Input.GetMouseButtonDown(0))
             {

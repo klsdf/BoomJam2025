@@ -79,7 +79,7 @@ namespace BoomJam2025
             ResetAllManagers();
             
             // 加载游戏数据
-            SaveManager.Instance.LoadGame();
+            // SaveManager.Instance.LoadGame();
             
             // 设置初始状态为主菜单
             CurrentState = GameState.MainMenu;
