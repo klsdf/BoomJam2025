@@ -7272,6 +7272,7 @@ MonoBehaviour:
   nameplateBG: {fileID: 901905497}
   genericSprite: {fileID: 712239045}
   genericAudioSource: {fileID: 136395902}
+  dialogPanel: {fileID: 1268818342}
 --- !u!4 &722520868
 Transform:
   m_ObjectHideFlags: 0
@@ -10525,7 +10526,7 @@ MonoBehaviour:
   textAnimator: {fileID: 9070735183592861011}
   minX: 50
   maxX: 1870
-  giftSpawnInterval: 0.05
+  giftSpawnInterval: 0.1
   specialGiftProbability: 0.1
   specialGiftCooldown: 5
 --- !u!4 &840414409
@@ -19898,6 +19899,37 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1870888711}
   m_CullTransparentMesh: 1
+--- !u!1 &1875705170
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1875705171}
+  m_Layer: 0
+  m_Name: ButtonFirstClickManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1875705171
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1875705170}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1908006864
 GameObject:
   m_ObjectHideFlags: 0
@@ -20068,8 +20100,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 74.2, y: -28.55}
-  m_SizeDelta: {x: 100.4, y: 57.1}
+  m_AnchoredPosition: {x: 74.21, y: -28.55}
+  m_SizeDelta: {x: 100.42, y: 57.1}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1909139493
 MonoBehaviour:
@@ -22721,8 +22753,9 @@ GameObject:
   - component: {fileID: 1567255656662410496}
   - component: {fileID: 2498443309412129000}
   - component: {fileID: 606035955399596561}
+  - component: {fileID: 7622518702844138137}
   m_Layer: 0
-  m_Name: ButtonUpgradeMAX
+  m_Name: Button_UpgradeMAX
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -24728,6 +24761,7 @@ GameObject:
   - component: {fileID: 7348821600162876122}
   - component: {fileID: 916839407310159190}
   - component: {fileID: 8469274135556760056}
+  - component: {fileID: 8469274135556760057}
   m_Layer: 0
   m_Name: Button_Upgrade
   m_TagString: Untagged
@@ -26128,6 +26162,35 @@ RectTransform:
   m_AnchoredPosition: {x: 1.731, y: -0.61042}
   m_SizeDelta: {x: 1.3816, y: 0.45055}
   m_Pivot: {x: 0.49999872, y: 0.5}
+--- !u!114 &7622518702844138137
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1797645835789666331}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c262da78352f6ac4b8d30e647114d274, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  buttonId: Button_UpgradeMAX
+  groupId: Upgrade_FanLevel
+  onFirstClick:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1263604749}
+        m_TargetAssemblyTypeName: BoomJam2025.RestartManager, Assembly-CSharp
+        m_MethodName: PlayTeachFanLevel
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!224 &7640883153740806263
 RectTransform:
   m_ObjectHideFlags: 0
@@ -27211,6 +27274,35 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hoverMaterial: {fileID: 2100000, guid: a352d79995d916c4a860c3f60810d414, type: 2}
+--- !u!114 &8469274135556760057
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5536596232304892263}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c262da78352f6ac4b8d30e647114d274, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  buttonId: Button_Upgrade
+  groupId: Upgrade_FanLevel
+  onFirstClick:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1263604749}
+        m_TargetAssemblyTypeName: BoomJam2025.RestartManager, Assembly-CSharp
+        m_MethodName: PlayTeachFanLevel
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!224 &8482994081089959455
 RectTransform:
   m_ObjectHideFlags: 0
@@ -28831,6 +28923,7 @@ SceneRoots:
   m_Roots:
   - {fileID: 1001680406}
   - {fileID: 1263604750}
+  - {fileID: 1875705171}
   - {fileID: 1999438024}
   - {fileID: 1219814988}
   - {fileID: 91405997}

@@ -32,6 +32,7 @@ namespace Yarn.Unity.Example {
 		public Image bgImage, fadeBG, nameplateBG;
 		public Image genericSprite; // 本地预制体，用于实例化精灵
 		public AudioSource genericAudioSource; // 本地预制体，用于实例化声音
+		public RectTransform dialogPanel; // 用于对话面板震动
 
 		// 用于跟踪所有实例化对象的大列表
 		List<AudioSource> sounds = new List<AudioSource>(); // 所有实例化声音的大列表
@@ -57,6 +58,7 @@ namespace Yarn.Unity.Example {
 			runner.AddCommandHandler<string,string,string,float>("Move", MoveSprite );
 			runner.AddCommandHandler<string,string>("Flip", FlipSprite );
 			runner.AddCommandHandler<string,float>("Shake", ShakeSprite );
+			runner.AddCommandHandler<float>("ShakeCamera", ShakeCamera );
 
 			runner.AddCommandHandler<string,float,string>("PlayAudio", PlayAudio );
 			runner.AddCommandHandler<string>("StopAudio", StopAudio );
@@ -259,6 +261,15 @@ namespace Yarn.Unity.Example {
 			var findShakeTarget = FindActorOrSprite( actorOrSpriteName );
 			if ( findShakeTarget != null ) {
 				StartCoroutine( SetShake( findShakeTarget.rectTransform, shakeStrength ) );
+			}
+		}
+
+		/// <summary>ShakeCamera(strength=0.5) 控制整个摄像头的震动</summary>
+		public void ShakeCamera(float shakeStrength = 0.5f) {
+			if (dialogPanel != null) {
+				StartCoroutine( SetCameraShake( shakeStrength ) );
+			} else {
+				Debug.LogError("DialogPanel is not assigned in VNManager!");
 			}
 		}
 
@@ -603,6 +614,21 @@ namespace Yarn.Unity.Example {
 			return null; // 没有找到任何匹配的资源
 		}
 
+		// 对话框震动协程
+		IEnumerator SetCameraShake(float shakeStrength = 0.5f) {
+			var startPos = dialogPanel.anchoredPosition;
+			while ( shakeStrength > 0f ) {
+				shakeStrength -= Time.deltaTime;
+				float shakeDistance = Mathf.Clamp( shakeStrength * 69f, 0f, 69f);
+				float shakeFrequency = Mathf.Clamp( shakeStrength * 5f, 0f, 5f);
+				dialogPanel.anchoredPosition = startPos + shakeDistance * new Vector2( 
+					Mathf.Sin(Time.time * shakeFrequency), 
+					Mathf.Sin(Time.time * shakeFrequency + 17f) * 0.62f 
+				);
+				yield return 0;
+			}
+			dialogPanel.anchoredPosition = startPos;
+		}
 
 		#endregion
     } // 结束类

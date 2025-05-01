@@ -223,8 +223,26 @@ namespace BoomJam2025
         /// </summary>
         private IEnumerator PlaySecondStart()
         {
-            yield return VNDialogueManager.Instance.StartDialogueCoroutine("VN_SecondStart");
-
+            isTimerRunning = false;
+            yield return VNDialogueManager.Instance.StartDialogueCoroutine("Teach_Gift");
+            isTimerRunning = true;
+        }
+        /// <summary>
+        /// 播放Teach_FanLevel（协程版本）
+        /// </summary>
+        private IEnumerator PlayTeachFanLevelCoroutine()
+        {
+            isTimerRunning = false;
+            yield return VNDialogueManager.Instance.StartDialogueCoroutine("Teach_FanLevel");
+            isTimerRunning = true;
+        }
+        /// <summary>
+        /// 播放Teach_FanLevel（回调版本）
+        /// </summary>
+        public void PlayTeachFanLevel()
+        {
+            isTimerRunning = false;
+            StartCoroutine(PlayTeachFanLevelCoroutine());
         }
         /// <summary>
         /// 播放大结局
@@ -249,6 +267,7 @@ namespace BoomJam2025
         private void ResumeGame()
         {
             isGamePaused = false;
+            isTimerRunning = true;
             Time.timeScale = 1f;
             if (inputBlocker != null)
             {
@@ -277,6 +296,8 @@ namespace BoomJam2025
             if(RebirthManager.Instance.countRebirth == 0)
             {
                 StartCoroutine(PlaySecondStart());
+                // 启用按钮第一次点击的检测
+                ButtonFirstClickManager.Instance.EnableFirstClickDetection();
             }
             GiftManager.Instance.ClearAllGifts();
             CommentManager.Instance.ClearComments();
@@ -299,10 +320,6 @@ namespace BoomJam2025
         {
             isGamePaused = true;
             Time.timeScale = 0f;
-            if (inputBlocker != null)
-            {
-                inputBlocker.SetActive(true);
-            }
             GiftManager.Instance.DisableGiftGeneration();
         }
 
@@ -313,7 +330,7 @@ namespace BoomJam2025
 
         public void OnAdvanceRestartButtonClicked()
         {
-            PauseGame();
+            StopRunning();
             if (restartPanel != null)
             {
                 restartPanel.SetActive(true);
