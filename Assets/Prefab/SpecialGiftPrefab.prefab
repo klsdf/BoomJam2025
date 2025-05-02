@@ -96,9 +96,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   imageGiftIcon: {fileID: 1856165147339934753}
   textFadeOut: {fileID: 4145387691095167061}
-  fallSpeed: 500
+  fallDuration: 1
   stayDuration: 5
   fadeOutDuration: 1
+  fallEase: 5
 --- !u!114 &3877186104257163087
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -327,7 +328,7 @@ MonoBehaviour:
   m_fontColor32:
     serializedVersion: 2
     rgba: 1316095
-  m_fontColor: {r: 1, g: 0.08018869, b: 0.08018869, a: 0}
+  m_fontColor: {r: 1, g: 1, b: 1, a: 0}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -554,7 +555,7 @@ MonoBehaviour:
         DebugActive: 0
         TargetTMPText: {fileID: 1368443740305758216}
         AlphaMode: 1
-        Duration: 0.5
+        Duration: 0.6
         InstantAlpha: 1
         Curve:
           MMTweenDefinitionType: 0
@@ -660,7 +661,7 @@ MonoBehaviour:
         Mode: 0
         Space: 0
         RandomizeRemap: 0
-        AnimatePositionDuration: 0.5
+        AnimatePositionDuration: 0.6
         AnimatePositionTween:
           MMTweenDefinitionType: 1
           MMTweenCurve: 4

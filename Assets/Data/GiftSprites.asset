@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e05aecc22efa98b4d9fd2bcf338c26e4, type: 3}
-  m_Name: TestGiftSprites
+  m_Name: GiftSprites
   m_EditorClassIdentifier: 
   valueGroups:
   - minValue: 0
@@ -28,5 +28,7 @@ MonoBehaviour:
     - {fileID: 21300000, guid: ab245d56b3bd9f84fb5e6c9ef0f11769, type: 3}
     - {fileID: 21300000, guid: 96e0826b491a0ed42b4d4afaf767e37b, type: 3}
   specialGiftAnimations:
-  - {fileID: 11400000, guid: aa9b9390ff1ce294197b2fd4eea364d0, type: 2}
+  - {fileID: 11400000, guid: e2166cf35374d1f43a3a813c95966d8b, type: 2}
   - {fileID: 11400000, guid: b1bddd8fe80fe6f45b9e02b292892571, type: 2}
+  - {fileID: 11400000, guid: 8ff5cc1e517c9324a992527870899e99, type: 2}
+  - {fileID: 11400000, guid: e681dc4e4a55c004a92390d0c035d002, type: 2}

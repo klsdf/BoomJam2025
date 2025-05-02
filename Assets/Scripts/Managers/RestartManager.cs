@@ -185,8 +185,8 @@ namespace BoomJam2025
         {
             // TODO: 在这里添加普通结局的演出逻辑
             
-            // 并行执行两个对话
-            StartCoroutine(DialogueManager.Instance.StartDialogueAfterCurrent("NormalEnd"));
+            // 分别执行两个对话
+            yield return DialogueManager.Instance.StartDialogueAfterCurrent("NormalEnd");
             yield return VNDialogueManager.Instance.StartDialogueCoroutine("FirstDie");
 
             if (timeEndPanel != null)
@@ -206,6 +206,7 @@ namespace BoomJam2025
         {
             // TODO: 在这里添加普通结局的演出逻辑
             
+            // 并行执行两个对话
             StartCoroutine(DialogueManager.Instance.StartDialogueAfterCurrent("NormalEnd"));
             yield return VNDialogueManager.Instance.StartDialogueCoroutine("VN_NormalEnd");
             if (timeEndPanel != null)
