@@ -13,6 +13,11 @@ namespace BoomJam2025
 
     public class StreamerStateManager : MonoBehaviour
     {
+        // 定义状态切换的阈值
+        private const decimal CASUAL_SINGING_THRESHOLD = 0m;    // 随性唱歌阈值
+        private const decimal FOCUSED_SINGING_THRESHOLD = 200m;  // 投入唱歌阈值
+        private const decimal PASSIONATE_SINGING_THRESHOLD = 20000m; // 激情唱歌阈值
+
         private static StreamerStateManager _instance;
         public static StreamerStateManager Instance
         {
@@ -117,6 +122,48 @@ namespace BoomJam2025
             }
         }
 
+        /// <summary>
+        /// 根据最大每秒普通礼物贡献值更新主播状态
+        /// </summary>
+        public void UpdateStateBasedOnContribution(decimal maxNormalValuePerSecond)
+        {
+            if (maxNormalValuePerSecond >= PASSIONATE_SINGING_THRESHOLD)
+            {
+                Debug.Log($"达到激情唱歌阈值: {PASSIONATE_SINGING_THRESHOLD}");
+                SetState(StreamerState.PassionateSinging);
+            }
+            else if (maxNormalValuePerSecond >= FOCUSED_SINGING_THRESHOLD)
+            {
+                Debug.Log($"达到投入唱歌阈值: {FOCUSED_SINGING_THRESHOLD}");
+                SetState(StreamerState.FocusedSinging);
+            }
+            else if (maxNormalValuePerSecond >= CASUAL_SINGING_THRESHOLD)
+            {
+                Debug.Log($"达到随性唱歌阈值: {CASUAL_SINGING_THRESHOLD}");
+                SetState(StreamerState.CasualSinging);
+            }
+            else
+            {
+                Debug.Log("未达到任何唱歌阈值，保持闲聊状态");
+                SetState(StreamerState.Chatting);
+            }
+        }
+
+        /// <summary>
+        /// 开始运行
+        /// </summary>
+        public void StartRunning()
+        {
+            SetState(StreamerState.Chatting);
+        }
+
+        /// <summary>
+        /// 停止运行
+        /// </summary>
+        public void StopRunning()
+        {
+            SetState(StreamerState.Chatting);
+        }
         private void Update()
         {
             // 调试功能：通过按键切换状态

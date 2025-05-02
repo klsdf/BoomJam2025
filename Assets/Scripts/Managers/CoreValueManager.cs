@@ -148,8 +148,6 @@ namespace BoomJam2025
                 if (valuePerSecond > maxValuePerSecond)
                 {
                     maxValuePerSecond = valuePerSecond;
-                    // Debug.Log($"最大每秒贡献值更新: {maxValuePerSecond}");
-                    
                 }
                 
                 // 更新最大每秒普通礼物贡献值
@@ -157,39 +155,13 @@ namespace BoomJam2025
                 {
                     maxNormalValuePerSecond = normalValuePerSecond;
                     Debug.Log($"最大每秒普通礼物贡献值更新: {maxNormalValuePerSecond}");
-                    UpdateStreamerState();
+                    // 调用StreamerStateManager更新状态
+                    StreamerStateManager.Instance.UpdateStateBasedOnContribution(maxNormalValuePerSecond);
                 }
                 
                 lastSecondValue = valueContribution;
                 lastSecondNormalValue = normalGiftContribution;
                 timer = 0f;
-            }
-        }
-
-        /// <summary>
-        /// 根据最大每秒普通礼物贡献值更新主播状态
-        /// </summary>
-        private void UpdateStreamerState()
-        {
-            if (maxNormalValuePerSecond >= PASSIONATE_SINGING_THRESHOLD)
-            {
-                Debug.Log($"达到激情唱歌阈值: {PASSIONATE_SINGING_THRESHOLD}");
-                StreamerStateManager.Instance.SetState(StreamerState.PassionateSinging);
-            }
-            else if (maxNormalValuePerSecond >= FOCUSED_SINGING_THRESHOLD)
-            {
-                Debug.Log($"达到投入唱歌阈值: {FOCUSED_SINGING_THRESHOLD}");
-                StreamerStateManager.Instance.SetState(StreamerState.FocusedSinging);
-            }
-            else if (maxNormalValuePerSecond >= CASUAL_SINGING_THRESHOLD)
-            {
-                Debug.Log($"达到随性唱歌阈值: {CASUAL_SINGING_THRESHOLD}");
-                StreamerStateManager.Instance.SetState(StreamerState.CasualSinging);
-            }
-            else
-            {
-                Debug.Log("未达到任何唱歌阈值，保持闲聊状态");
-                StreamerStateManager.Instance.SetState(StreamerState.Chatting);
             }
         }
 

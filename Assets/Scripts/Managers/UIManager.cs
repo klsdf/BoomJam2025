@@ -121,6 +121,7 @@ namespace BoomJam2025
             GiftManager.Instance.StartRunning();
             RestartManager.Instance.StartRunning();
             CommentManager.Instance.StartRunning();
+            StreamerStateManager.Instance.StartRunning();
         }
 
         /// <summary>
@@ -131,6 +132,7 @@ namespace BoomJam2025
             RestartManager.Instance.StopRunning();
             GiftManager.Instance.StopRunning();
             CommentManager.Instance.StopRunning();
+            StreamerStateManager.Instance.StopRunning();
         }
     }
 } 
