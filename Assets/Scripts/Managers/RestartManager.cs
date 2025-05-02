@@ -245,6 +245,40 @@ namespace BoomJam2025
             StartCoroutine(PlayTeachFanLevelCoroutine());
         }
         /// <summary>
+        /// 播放Teach_MemberLevel（协程版本）
+        /// </summary>
+        private IEnumerator PlayTeachMemberLevelCoroutine()
+        {
+            isTimerRunning = false;
+            yield return VNDialogueManager.Instance.StartDialogueCoroutine("Teach_MemberLevel");
+            isTimerRunning = true;
+        }
+        /// <summary>
+        /// 播放Teach_MemberLevel（回调版本）
+        /// </summary>
+        public void PlayTeachMemberLevel()
+        {
+            isTimerRunning = false;
+            StartCoroutine(PlayTeachMemberLevelCoroutine());
+        }
+        /// <summary>
+        /// 播放Teach_MemberBenefit（协程版本）
+        /// </summary>
+        private IEnumerator PlayTeachMemberBenefitCoroutine()
+        {
+            isTimerRunning = false;
+            yield return VNDialogueManager.Instance.StartDialogueCoroutine("Teach_MemberBenefit");
+            isTimerRunning = true;
+        }
+        /// <summary>
+        /// 播放Teach_MemberBenefit（回调版本）
+        /// </summary>
+        public void PlayTeachMemberBenefit()
+        {
+            isTimerRunning = false;
+            StartCoroutine(PlayTeachMemberBenefitCoroutine());
+        }
+        /// <summary>
         /// 播放大结局
         /// </summary>
         private IEnumerator PlayGrandFinale()

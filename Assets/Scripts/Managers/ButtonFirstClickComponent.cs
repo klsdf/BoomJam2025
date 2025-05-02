@@ -18,7 +18,7 @@ public class ButtonFirstClickComponent : MonoBehaviour
 
     private Button button;
     private ButtonFirstClickManager buttonManager;
-    private static bool isGroupRegistered = false;
+    private bool isGroupRegistered = false;
 
     private void Awake()
     {
@@ -31,12 +31,9 @@ public class ButtonFirstClickComponent : MonoBehaviour
 
         buttonManager = ButtonFirstClickManager.Instance;
         
-        // 只在第一个按钮组件中注册按钮组
-        if (!isGroupRegistered)
-        {
-            buttonManager.RegisterButtonGroup(groupId, OnFirstClick);
-            isGroupRegistered = true;
-        }
+        // 注册按钮组
+        buttonManager.RegisterButtonGroup(groupId, OnFirstClick);
+        isGroupRegistered = true;
         
         // 将按钮添加到按钮组
         buttonManager.AddButtonToGroup(buttonId, groupId);
@@ -65,7 +62,7 @@ public class ButtonFirstClickComponent : MonoBehaviour
         if (buttonManager != null)
         {
             buttonManager.RemoveButtonFromGroup(buttonId);
-            // 只在最后一个按钮组件被销毁时移除回调
+            // 移除回调
             if (isGroupRegistered)
             {
                 buttonManager.RemoveButtonGroupCallback(groupId);

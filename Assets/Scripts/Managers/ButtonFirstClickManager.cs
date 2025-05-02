@@ -72,6 +72,7 @@ namespace BoomJam2025
                 if (!buttonGroupFirstClickStatus.ContainsKey(groupId))
                 {
                     buttonGroupFirstClickStatus[groupId] = true;
+                    Debug.Log($"注册按钮组 {groupId}，初始化首次点击状态为 true");
                 }
             }
         }
@@ -84,6 +85,7 @@ namespace BoomJam2025
         public void AddButtonToGroup(string buttonId, string groupId)
         {
             buttonToGroupMap[buttonId] = groupId;
+            Debug.Log($"添加按钮 {buttonId} 到组 {groupId}");
         }
 
         /// <summary>
@@ -105,10 +107,18 @@ namespace BoomJam2025
                 return false;
             }
 
+            // 确保按钮组状态已初始化
+            if (!buttonGroupFirstClickStatus.ContainsKey(groupId))
+            {
+                buttonGroupFirstClickStatus[groupId] = true;
+                Debug.Log($"初始化按钮组 {groupId} 的首次点击状态为 true");
+            }
+
             bool isFirst = buttonGroupFirstClickStatus[groupId];
             if (isFirst)
             {
                 buttonGroupFirstClickStatus[groupId] = false;
+                Debug.Log($"按钮 {buttonId} 触发首次点击，组 {groupId} 状态更新为 false");
                 // 如果是首次点击，执行回调函数
                 if (buttonGroupFirstClickCallbacks.ContainsKey(groupId))
                 {

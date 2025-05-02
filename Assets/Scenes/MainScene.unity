@@ -3285,6 +3285,7 @@ GameObject:
   - component: {fileID: 382719398}
   - component: {fileID: 382719397}
   - component: {fileID: 382719396}
+  - component: {fileID: 382719400}
   m_Layer: 0
   m_Name: ButtonAddPoint
   m_TagString: Untagged
@@ -3407,6 +3408,35 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 382719394}
   m_CullTransparentMesh: 1
+--- !u!114 &382719400
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 382719394}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c262da78352f6ac4b8d30e647114d274, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  buttonId: Button_UpgradeCost
+  groupId: MemberBenefit
+  onFirstClick:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1263604749}
+        m_TargetAssemblyTypeName: BoomJam2025.RestartManager, Assembly-CSharp
+        m_MethodName: PlayTeachMemberBenefit
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &384839742
 GameObject:
   m_ObjectHideFlags: 0
@@ -3939,10 +3969,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 901905494}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 162.08502, y: -31.345001}
+  m_SizeDelta: {x: 276.17004, y: 38.690002}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &459912180
 MonoBehaviour:
@@ -4913,6 +4943,7 @@ GameObject:
   - component: {fileID: 571708863}
   - component: {fileID: 571708862}
   - component: {fileID: 571708861}
+  - component: {fileID: 571708865}
   m_Layer: 0
   m_Name: ButtonAddPoint
   m_TagString: Untagged
@@ -5035,6 +5066,35 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 571708859}
   m_CullTransparentMesh: 1
+--- !u!114 &571708865
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 571708859}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c262da78352f6ac4b8d30e647114d274, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  buttonId: Button_MemberBoost
+  groupId: MemberBenefit
+  onFirstClick:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1263604749}
+        m_TargetAssemblyTypeName: BoomJam2025.RestartManager, Assembly-CSharp
+        m_MethodName: PlayTeachMemberBenefit
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &575005000
 GameObject:
   m_ObjectHideFlags: 0
@@ -14069,7 +14129,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 27.5, y: 112}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: -1495.0298, y: -146.60999}
   m_Pivot: {x: -0.000000014877486, y: 0.50000024}
 --- !u!114 &901905495
 MonoBehaviour:
@@ -14314,6 +14374,7 @@ GameObject:
   - component: {fileID: 985085844}
   - component: {fileID: 985085843}
   - component: {fileID: 985085842}
+  - component: {fileID: 985085846}
   m_Layer: 0
   m_Name: ButtonAddPoint
   m_TagString: Untagged
@@ -14436,6 +14497,35 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 985085840}
   m_CullTransparentMesh: 1
+--- !u!114 &985085846
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 985085840}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c262da78352f6ac4b8d30e647114d274, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  buttonId: Button_Crit
+  groupId: MemberBenefit
+  onFirstClick:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1263604749}
+        m_TargetAssemblyTypeName: BoomJam2025.RestartManager, Assembly-CSharp
+        m_MethodName: PlayTeachMemberBenefit
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1001680402
 GameObject:
   m_ObjectHideFlags: 0
@@ -14950,7 +15040,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1102641664
 RectTransform:
   m_ObjectHideFlags: 0
@@ -15486,7 +15576,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1217737044
 RectTransform:
   m_ObjectHideFlags: 0
@@ -18110,7 +18200,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 6.2998047, y: 123}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: -1871.9999, y: -1031.9998}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!225 &1533596350
 CanvasGroup:
@@ -21358,6 +21448,7 @@ GameObject:
   - component: {fileID: 1994352455}
   - component: {fileID: 1994352454}
   - component: {fileID: 1994352453}
+  - component: {fileID: 1994352457}
   m_Layer: 0
   m_Name: ButtonAddPoint
   m_TagString: Untagged
@@ -21480,6 +21571,35 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1994352451}
   m_CullTransparentMesh: 1
+--- !u!114 &1994352457
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1994352451}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c262da78352f6ac4b8d30e647114d274, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  buttonId: Button_CritMultiplier
+  groupId: MemberBenefit
+  onFirstClick:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1263604749}
+        m_TargetAssemblyTypeName: BoomJam2025.RestartManager, Assembly-CSharp
+        m_MethodName: PlayTeachMemberBenefit
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1997648103
 GameObject:
   m_ObjectHideFlags: 0
@@ -23564,6 +23684,7 @@ GameObject:
   - component: {fileID: 3199691149346152519}
   - component: {fileID: 5217984350450079286}
   - component: {fileID: 3857012197118471171}
+  - component: {fileID: 5217984350450079287}
   m_Layer: 0
   m_Name: MemberUpgrade
   m_TagString: Untagged
@@ -25007,6 +25128,35 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 21.94
+--- !u!114 &5217984350450079287
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2912891058836735198}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c262da78352f6ac4b8d30e647114d274, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  buttonId: Button_MemberUpgrade
+  groupId: Upgrade_MemberLevel
+  onFirstClick:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1263604749}
+        m_TargetAssemblyTypeName: BoomJam2025.RestartManager, Assembly-CSharp
+        m_MethodName: PlayTeachMemberLevel
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!222 &5277875619578821280
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -28476,6 +28626,7 @@ GameObject:
   - component: {fileID: 4477939636876052865}
   - component: {fileID: 9209228692971165406}
   - component: {fileID: 9209228692971165407}
+  - component: {fileID: 9209228692971165408}
   m_Layer: 0
   m_Name: ButtonAddPoint
   m_TagString: Untagged
@@ -29296,6 +29447,35 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hoverMaterial: {fileID: 2100000, guid: 06357ec138fc65945b02783bd2bcbaac, type: 2}
+--- !u!114 &9209228692971165408
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8879497360392338297}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c262da78352f6ac4b8d30e647114d274, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  buttonId: Button_BasicValue
+  groupId: MemberBenefit
+  onFirstClick:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1263604749}
+        m_TargetAssemblyTypeName: BoomJam2025.RestartManager, Assembly-CSharp
+        m_MethodName: PlayTeachMemberBenefit
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

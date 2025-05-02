@@ -73,7 +73,8 @@ namespace BoomJam2025
             if (textComputationalFormula != null)
             {
                 decimal percentage = MemberBenefitManager.Instance.GetPercentagePer() * (FanLevelManager.Instance.levelFan - 1);
-                textComputationalFormula.text = $"{percentage:P0}";
+                decimal baseClickValue = MemberBenefitManager.Instance.GetBaseClickValue();
+                textComputationalFormula.text = $"{baseClickValue}+{percentage:P0}";
             }
 
             if (textSingleClickValue != null)
