@@ -52,7 +52,8 @@ namespace BoomJam2025
     public class MusicManager : MonoBehaviour
     {
         #region Events
-        public event Action<int> OnStageChanged;  // 阶段切换事件
+        // 移除事件定义
+        // public event Action<int> OnStageChanged;
         #endregion
 
         #region Inspector Settings
@@ -160,6 +161,7 @@ namespace BoomJam2025
             isPlayingBackground = false;
             currentStageIndex = 0; // 默认从主题+鼓点开始
             targetStageIndex = currentStageIndex;
+            StopAllMusic(); // 确保停止所有音轨
             StartPlayback();
         }
 
@@ -418,7 +420,8 @@ namespace BoomJam2025
                 {
                     // 在循环结束时切换阶段
                     currentStageIndex = targetStageIndex;
-                    OnStageChanged?.Invoke(currentStageIndex);
+                    // 直接调用AudioManager的方法
+                    AudioManager.Instance?.OnMusicStageChanged(currentStageIndex);
                 }
 
                 PlayStageTracks();

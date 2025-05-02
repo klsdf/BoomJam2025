@@ -44,27 +44,17 @@ namespace BoomJam2025
 
         private void Start()
         {
-            StartCoroutine(SubscribeToMusicEvents());
-        }
-
-        private IEnumerator SubscribeToMusicEvents()
-        {
-            yield return null;
-
-            if (AudioManager.Instance == null || AudioManager.Instance.MusicManager == null)
-            {
-                yield break;
-            }
-
-            AudioManager.Instance.MusicManager.OnStageChanged += OnMusicLoop;
+            // 移除事件订阅协程
+            // StartCoroutine(SubscribeToMusicEvents());
         }
 
         private void OnDestroy()
         {
-            if (AudioManager.Instance != null && AudioManager.Instance.MusicManager != null)
-            {
-                AudioManager.Instance.MusicManager.OnStageChanged -= OnMusicLoop;
-            }
+            // 移除事件取消订阅
+            // if (AudioManager.Instance != null && AudioManager.Instance.MusicManager != null)
+            // {
+            //     AudioManager.Instance.MusicManager.OnStageChanged -= OnMusicLoop;
+            // }
         }
 
         /// <summary>
@@ -82,18 +72,6 @@ namespace BoomJam2025
             else
             {
                 isStateChangePending = true;
-            }
-        }
-
-        /// <summary>
-        /// 音乐循环时的回调
-        /// </summary>
-        private void OnMusicLoop(int stageIndex)
-        {
-            if (isStateChangePending)
-            {
-                ShowStreamer(targetState);
-                isStateChangePending = false;
             }
         }
 
@@ -123,6 +101,16 @@ namespace BoomJam2025
                 case StreamerState.PassionateSinging:
                     if (passionateStreamer != null) passionateStreamer.SetActive(true);
                     break;
+            }
+        }
+
+        public void OnMusicStageChanged(int stageIndex)
+        {
+            Debug.Log("音乐阶段改变时的回调");
+            if (isStateChangePending)
+            {
+                ShowStreamer(targetState);
+                isStateChangePending = false;
             }
         }
     }
