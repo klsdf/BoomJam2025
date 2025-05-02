@@ -25,16 +25,20 @@
  *    - SwitchToStage(int stageIndex)：切换到指定阶段
  *    - RestartGameMusic()：重新开始游戏音乐
  *    - StopAllMusic()：停止所有音乐播放
+ *    - StreamerSpeak()：主播讲话（空方法）
+ *    - ProtagonistSpeak()：主角讲话（空方法）
+ *    - NarratorSpeak()：画外音讲话（空方法）
+ *    - CherrySpeak()：Cherry讲话（空方法）
  * 
  * 4. 注意事项：
  *    - 其他管理器应该通过AudioManager调用音乐功能
  *    - 不要直接调用MusicManager
  ****************************************************************************/
+using UnityEngine;
+using System.Collections;
+
 namespace BoomJam2025
 {
-    using UnityEngine;
-    using System.Collections;
-
     public class AudioManager : MonoBehaviour
     {
         #region Singleton
@@ -60,6 +64,9 @@ namespace BoomJam2025
 
         [Header("节拍管理器引用")]
         [SerializeField] private BeatManager beatManager;
+
+        [Header("讲话管理器引用")]
+        [SerializeField] private SpeakVoiceManager speakVoiceManager;
 
         [Header("调试设置")]
         /// <summary>
@@ -101,6 +108,26 @@ namespace BoomJam2025
         /// 调试按钮：停止所有音乐
         /// </summary>
         [SerializeField] private bool debugStopAll = false;
+
+        /// <summary>
+        /// 调试按钮：主播讲话
+        /// </summary>
+        [SerializeField] private bool debugStreamerSpeak = false;
+
+        /// <summary>
+        /// 调试按钮：主角讲话
+        /// </summary>
+        [SerializeField] private bool debugProtagonistSpeak = false;
+
+        /// <summary>
+        /// 调试按钮：画外音讲话
+        /// </summary>
+        [SerializeField] private bool debugNarratorSpeak = false;
+
+        /// <summary>
+        /// 调试按钮：Cherry讲话
+        /// </summary>
+        [SerializeField] private bool debugCherrySpeak = false;
         #endregion
 
         #region Private Fields
@@ -190,6 +217,50 @@ namespace BoomJam2025
             }
         }
 
+        /// <summary>
+        /// 主播讲话
+        /// </summary>
+        public void StreamerSpeak()
+        {
+            if (speakVoiceManager != null)
+            {
+                speakVoiceManager.StreamerSpeak();
+            }
+        }
+
+        /// <summary>
+        /// 主角讲话
+        /// </summary>
+        public void ProtagonistSpeak()
+        {
+            if (speakVoiceManager != null)
+            {
+                speakVoiceManager.ProtagonistSpeak();
+            }
+        }
+
+        /// <summary>
+        /// 画外音讲话
+        /// </summary>
+        public void NarratorSpeak()
+        {
+            if (speakVoiceManager != null)
+            {
+                speakVoiceManager.NarratorSpeak();
+            }
+        }
+
+        /// <summary>
+        /// Cherry讲话
+        /// </summary>
+        public void CherrySpeak()
+        {
+            if (speakVoiceManager != null)
+            {
+                speakVoiceManager.CherrySpeak();
+            }
+        }
+
         public int GetCurrentStage()
         {
             return currentStage;
@@ -232,6 +303,30 @@ namespace BoomJam2025
             {
                 debugStopAll = false;
                 StopAllMusic();
+            }
+
+            if (debugStreamerSpeak)
+            {
+                debugStreamerSpeak = false;
+                StreamerSpeak();
+            }
+
+            if (debugProtagonistSpeak)
+            {
+                debugProtagonistSpeak = false;
+                ProtagonistSpeak();
+            }
+
+            if (debugNarratorSpeak)
+            {
+                debugNarratorSpeak = false;
+                NarratorSpeak();
+            }
+
+            if (debugCherrySpeak)
+            {
+                debugCherrySpeak = false;
+                CherrySpeak();
             }
         }
 
