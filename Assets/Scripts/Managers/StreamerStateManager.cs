@@ -40,13 +40,13 @@ namespace BoomJam2025
             get => _currentState;
             private set
             {
-                if (_currentState != value)
-                {
+              //if (_currentState != value)
+               //
                     Debug.Log($"主播状态从 {_currentState} 切换到 {value}");
                     _currentState = value;
                     OnStateChanged?.Invoke(_currentState);
                     HandleStateChange(_currentState);
-                }
+               //
             }
         }
 
@@ -62,7 +62,6 @@ namespace BoomJam2025
             }
             _instance = this;
             DontDestroyOnLoad(gameObject);
-            AudioManager.Instance.StartGameMusic();
         }
 
         /// <summary>
@@ -70,9 +69,15 @@ namespace BoomJam2025
         /// </summary>
         public void SetState(StreamerState newState)
         {
+            // 如果当前状态和目标状态都是唱歌状态且相同，则不触发切换
+            if (IsInSingingState() && newState == CurrentState)
+            {
+                Debug.Log("当前状态和目标状态都是唱歌状态且相同，不触发切换");
+                return;
+            }
             Debug.Log($"尝试设置主播状态为: {newState}");
             CurrentState = newState;
-            HandleStateChange(newState);
+
         }
 
         /// <summary>
@@ -127,6 +132,13 @@ namespace BoomJam2025
         /// </summary>
         public void UpdateStateBasedOnContribution(decimal maxNormalValuePerSecond)
         {
+            // 如果当前状态是Chatting，则直接返回，不进行任何状态更新
+            if (CurrentState == StreamerState.Chatting)
+            {
+                Debug.Log("当前状态是Chatting，不进行状态更新");
+                return;
+            }
+
             if (maxNormalValuePerSecond >= PASSIONATE_SINGING_THRESHOLD)
             {
                 Debug.Log($"达到激情唱歌阈值: {PASSIONATE_SINGING_THRESHOLD}");
@@ -155,6 +167,7 @@ namespace BoomJam2025
         public void StartRunning()
         {
             SetState(StreamerState.Chatting);
+            
         }
 
         /// <summary>
@@ -183,6 +196,9 @@ namespace BoomJam2025
             {
                 SetState(StreamerState.PassionateSinging);
             }
+            
+            //打印当前状态
+         // Debug.Log($"当前状态: {CurrentState}");
         }
     }
 }

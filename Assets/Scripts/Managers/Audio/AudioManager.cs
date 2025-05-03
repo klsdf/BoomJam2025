@@ -136,23 +136,7 @@ namespace BoomJam2025
 
         public MusicManager MusicManager => musicManager;
 
-        private void Start()
-        {
-            // 移除事件订阅
-            // if (musicManager != null)
-            // {
-            //     musicManager.OnStageChanged += HandleStageChanged;
-            // }
-        }
 
-        private void OnDestroy()
-        {
-            // 移除事件取消订阅
-            // if (musicManager != null)
-            // {
-            //     musicManager.OnStageChanged -= HandleStageChanged;
-            // }
-        }
 
         // 添加新方法
         public void OnMusicStageChanged(int newStage)
@@ -166,15 +150,7 @@ namespace BoomJam2025
             StreamerUIManager.Instance?.OnMusicStageChanged(newStage);
         }
 
-        // 移除旧的事件处理方法
-        // private void HandleStageChanged(int newStage)
-        // {
-        //     currentStage = newStage;
-        //     if (beatManager != null)
-        //     {
-        //         beatManager.StartBeat(currentStage);
-        //     }
-        // }
+
 
         #region Public Methods
         /// <summary>
@@ -190,6 +166,7 @@ namespace BoomJam2025
         /// </summary>
         public void StartGameMusic()
         {
+            musicManager.StopAllMusic();
             musicManager.StartGameMusic();
             currentStage = 0;
             if (beatManager != null)

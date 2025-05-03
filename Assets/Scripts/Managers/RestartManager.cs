@@ -95,6 +95,7 @@ namespace BoomJam2025
         {
             // 开场对话期间禁用礼物系统
             GiftManager.Instance.StopRunning();
+         StreamerStateManager.Instance.SetState(StreamerState.Chatting);
             
             // 等待开场对话完成
             yield return DialogueManager.Instance.StartDialogueAfterCurrent("StreamerStart");
@@ -113,6 +114,10 @@ namespace BoomJam2025
             
             // 播放循环开始对话
             yield return DialogueManager.Instance.StartDialogueAfterCurrent("LoopStart");
+
+
+            //设置主播状态为唱歌
+            StreamerStateManager.Instance.SetState(StreamerState.CasualSinging);
         }
 
         // Update is called once per frame
@@ -185,6 +190,9 @@ namespace BoomJam2025
         {
             // TODO: 在这里添加普通结局的演出逻辑
             
+            //设置主播状态为闲聊
+            StreamerStateManager.Instance.SetState(StreamerState.Chatting);
+            
             // 分别执行两个对话
             yield return DialogueManager.Instance.StartDialogueAfterCurrent("NormalEnd");
             yield return VNDialogueManager.Instance.StartDialogueCoroutine("FirstDie");
@@ -206,6 +214,9 @@ namespace BoomJam2025
         {
             // TODO: 在这里添加普通结局的演出逻辑
             
+            //设置主播状态为闲聊
+            StreamerStateManager.Instance.SetState(StreamerState.Chatting);
+
             // 并行执行两个对话
             StartCoroutine(DialogueManager.Instance.StartDialogueAfterCurrent("NormalEnd"));
             yield return VNDialogueManager.Instance.StartDialogueCoroutine("VN_NormalEnd");
@@ -327,7 +338,7 @@ namespace BoomJam2025
             // 停止当前对话
             DialogueManager.Instance.StopDialogueCoroutine();
             // 播放循环开始对话
-            StartCoroutine(DialogueManager.Instance.StartDialogueAfterCurrent("LoopStart"));
+            StartCoroutine(PlayLoopStartCoroutine());
             if(RebirthManager.Instance.countRebirth == 0)
             {
                 StartCoroutine(PlaySecondStart());
@@ -337,7 +348,7 @@ namespace BoomJam2025
             GiftManager.Instance.ClearAllGifts();
             CommentManager.Instance.ClearComments();
             RebirthManager.Instance.TryRebirth();
-            AudioManager.Instance.StartGameMusic();
+            //dioManager.Instance.StartGameMusic();
         }
         public void OnRestartButtonClicked()
         {
@@ -397,8 +408,15 @@ namespace BoomJam2025
                     inputBlocker.SetActive(false);
                 }        
                 // 播放循环开始对话
-                StartCoroutine(DialogueManager.Instance.StartDialogueAfterCurrent("LoopStart"));
+                StartCoroutine(PlayLoopStartCoroutine());
             }
+        }
+
+        //播放循环后开始说话的协程方法，在结束时触发切换为唱歌状态
+        private IEnumerator PlayLoopStartCoroutine()
+        {
+            yield return DialogueManager.Instance.StartDialogueAfterCurrent("LoopStart");
+            StreamerStateManager.Instance.SetState(StreamerState.CasualSinging);
         }
 
         public void StopRunning()
