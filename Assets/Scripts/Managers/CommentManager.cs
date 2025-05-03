@@ -229,5 +229,22 @@ namespace BoomJam2025
             _isEnabled = false;
             ClearComments();
         }
+
+        /// <summary>
+        /// 暂停弹幕生成
+        /// </summary>
+        public void PauseComments()
+        {
+            _isEnabled = false;
+        }
+
+        /// <summary>
+        /// 继续弹幕生成
+        /// </summary>
+        public void ResumeComments()
+        {
+            _isEnabled = true;
+            SetNextSpawnTime();
+        }
     }
 }

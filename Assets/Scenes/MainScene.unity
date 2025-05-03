@@ -18778,11 +18778,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startHour: 23
-  startMinute: 59
-  startSecond: 0
+  startMinute: 58
+  startSecond: 53
   durationHours: 0
   durationMinutes: 0
-  durationSeconds: 30
+  durationSeconds: 67
   textTimeDisplay: {fileID: 7482271935551517967}
 --- !u!4 &1263604750
 Transform:

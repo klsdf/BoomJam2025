@@ -199,6 +199,109 @@ namespace BoomJam2025
         }
 
         /// <summary>
+        /// 暂停所有音乐播放
+        /// </summary>
+        public void PauseAllMusic()
+        {
+            if (!isPlaying) return;
+            
+            // 记录当前播放进度
+            pauseTime = Time.time;
+            
+            // 记录当前音乐播放时间点
+            foreach (var source in audioSources)
+            {
+                if (source.isPlaying)
+                {
+                    // 记录音频源播放时间
+                    float currentTime = source.time;
+                    // 停止此音频源
+                    source.Stop();
+                    // 保存时间点到音频源的userData
+                    source.gameObject.name = "PausedAt_" + currentTime.ToString();
+                }
+            }
+            
+            // 标记为暂停状态，但不再播放
+            isPaused = true;
+            isPlaying = false;
+        }
+
+        /// <summary>
+        /// 恢复所有音乐播放
+        /// </summary>
+        public void ResumeAllMusic()
+        {
+            if (!isPaused) return;
+            
+            float pausedDuration = 0;
+            
+            // 如果有记录暂停时间
+            if (pauseTime > 0)
+            {
+                pausedDuration = Time.time - pauseTime;
+            }
+            
+            if (isPlayingBackground && backgroundMusic != null && audioSources.Count > 0)
+            {
+                // 恢复背景音乐播放
+                var source = audioSources[0];
+                float resumeTime = 0;
+                
+                // 尝试从名称中获取暂停时间
+                string sourceName = source.gameObject.name;
+                if (sourceName.StartsWith("PausedAt_"))
+                {
+                    string timeStr = sourceName.Substring("PausedAt_".Length);
+                    float.TryParse(timeStr, out resumeTime);
+                }
+                
+                source.clip = backgroundMusic;
+                source.time = resumeTime; // 从暂停时的时间继续播放
+                source.Play();
+                
+                // 重置音频源名称
+                source.gameObject.name = "TrackSource_0";
+            }
+            else if (currentStageIndex >= 0 && currentStageIndex < gameStages.Count)
+            {
+                // 恢复游戏音乐播放
+                var currentStage = gameStages[currentStageIndex];
+                for (int i = 0; i < currentStage.tracks.Count && i < audioSources.Count; i++)
+                {
+                    if (currentStage.tracks[i] != null)
+                    {
+                        var source = audioSources[i];
+                        float resumeTime = 0;
+                        
+                        // 尝试从名称中获取暂停时间
+                        string sourceName = source.gameObject.name;
+                        if (sourceName.StartsWith("PausedAt_"))
+                        {
+                            string timeStr = sourceName.Substring("PausedAt_".Length);
+                            float.TryParse(timeStr, out resumeTime);
+                        }
+                        
+                        source.clip = currentStage.tracks[i];
+                        source.time = resumeTime; // 从暂停时的时间继续播放
+                        source.Play();
+                        
+                        // 重置音频源名称
+                        source.gameObject.name = $"TrackSource_{i}";
+                    }
+                }
+            }
+            
+            // 调整下一个循环时间，考虑暂停的时长
+            nextLoopTime += pausedDuration;
+            
+            // 重置状态
+            isPaused = false;
+            isPlaying = true;
+            pauseTime = 0;
+        }
+
+        /// <summary>
         /// 获取当前阶段
         /// </summary>
         public int GetCurrentStage()

@@ -113,5 +113,21 @@ namespace BoomJam2025
                 isStateChangePending = false;
             }
         }
+
+        /// <summary>
+        /// 暂停主播动画
+        /// </summary>
+        public void PauseStreamerAnimation()
+        {
+            // TODO: 实现暂停主播动画的逻辑
+        }
+
+        /// <summary>
+        /// 继续主播动画
+        /// </summary>
+        public void ResumeStreamerAnimation()
+        {
+            // TODO: 实现继续主播动画的逻辑
+        }
     }
 } 

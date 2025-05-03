@@ -131,10 +131,13 @@ namespace BoomJam2025
         public IEnumerator StartDialogueAfterCurrent(string nextNode)
         {
             // 等待当前对话完成（如果有的话）
+            float startTime = Time.time;
             while (isDialogueRunning)
             {
                 yield return null;
             }
+            float waitTime = Time.time - startTime;
+          //  Debug.Log($"等待当前对话完成耗时: {waitTime:F2}秒");
 
             // 开始新的对话
             bool dialogueCompleted = false;
@@ -147,6 +150,8 @@ namespace BoomJam2025
             };
             
             OnDialogueNodeComplete += onDialogueComplete;
+          //  Debug.Log($"开始播放对话节点: {nextNode}");
+            startTime = Time.time;
             StartDialogue(nextNode);
             
             // 等待对话完成
@@ -154,6 +159,8 @@ namespace BoomJam2025
             {
                 yield return null;
             }
+            float dialogueTime = Time.time - startTime;
+            Debug.Log($"对话节点 {nextNode} 播放完成，持续时间: {dialogueTime:F2}秒");
         }
 
         /// <summary>

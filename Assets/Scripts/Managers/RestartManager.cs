@@ -77,22 +77,30 @@ namespace BoomJam2025
         {
             // 开场对话期间禁用礼物系统
             GiftManager.Instance.StopRunning();
-         StreamerStateManager.Instance.SetState(StreamerState.Chatting);
+            StreamerStateManager.Instance.SetState(StreamerState.Chatting);
             
-            // 等待开场对话完成
-            yield return DialogueManager.Instance.StartDialogueAfterCurrent("StreamerStart");
-            
+            // 设置开始时间为23:58:23
+            startDateTime = DateTime.Today.AddHours(23).AddMinutes(58).AddSeconds(23);
+
             // 开场剧情结束后开始游戏
             isTimerRunning = true;
             isGamePaused = false;
             Time.timeScale = 1f;
             
+            // 启动开场对话但不等待完成
+            StartCoroutine(DialogueManager.Instance.StartDialogueAfterCurrent("StreamerStart"));
+            // 等待30秒（原StreamerStart对话时间）
+            yield return new WaitForSeconds(30f);
+            
+
+            
+            // 启动循环开始对话但不等待完成
+            StartCoroutine(DialogueManager.Instance.StartDialogueAfterCurrent("LoopStart"));
+            // 等待7秒（原LoopStart对话时间）
+            yield return new WaitForSeconds(7f);
+
             // 启用礼物系统
             GiftManager.Instance.StartRunning();
-            
-            // 播放循环开始对话
-            yield return DialogueManager.Instance.StartDialogueAfterCurrent("LoopStart");
-
 
             //设置主播状态为唱歌
             StreamerStateManager.Instance.SetState(StreamerState.CasualSinging);
@@ -198,61 +206,65 @@ namespace BoomJam2025
         /// </summary>
         private IEnumerator PlaySecondStart()
         {
-            isTimerRunning = false;
+            PauseAllSystems();
             yield return VNDialogueManager.Instance.StartDialogueCoroutine("Teach_Gift");
-            isTimerRunning = true;
+            ResumeAllSystems();
         }
+        
         /// <summary>
         /// 播放Teach_FanLevel（协程版本）
         /// </summary>
         private IEnumerator PlayTeachFanLevelCoroutine()
         {
-            isTimerRunning = false;
+            PauseAllSystems();
             yield return VNDialogueManager.Instance.StartDialogueCoroutine("Teach_FanLevel");
-            isTimerRunning = true;
+            ResumeAllSystems();
         }
+        
         /// <summary>
         /// 播放Teach_FanLevel（回调版本）
         /// </summary>
         public void PlayTeachFanLevel()
         {
-            isTimerRunning = false;
             StartCoroutine(PlayTeachFanLevelCoroutine());
         }
+        
         /// <summary>
         /// 播放Teach_MemberLevel（协程版本）
         /// </summary>
         private IEnumerator PlayTeachMemberLevelCoroutine()
         {
-            isTimerRunning = false;
+            PauseAllSystems();
             yield return VNDialogueManager.Instance.StartDialogueCoroutine("Teach_MemberLevel");
-            isTimerRunning = true;
+            ResumeAllSystems();
         }
+        
         /// <summary>
         /// 播放Teach_MemberLevel（回调版本）
         /// </summary>
         public void PlayTeachMemberLevel()
         {
-            isTimerRunning = false;
             StartCoroutine(PlayTeachMemberLevelCoroutine());
         }
+        
         /// <summary>
         /// 播放Teach_MemberBenefit（协程版本）
         /// </summary>
         private IEnumerator PlayTeachMemberBenefitCoroutine()
         {
-            isTimerRunning = false;
+            PauseAllSystems();
             yield return VNDialogueManager.Instance.StartDialogueCoroutine("Teach_MemberBenefit");
-            isTimerRunning = true;
+            ResumeAllSystems();
         }
+
         /// <summary>
         /// 播放Teach_MemberBenefit（回调版本）
         /// </summary>
         public void PlayTeachMemberBenefit()
         {
-            isTimerRunning = false;
             StartCoroutine(PlayTeachMemberBenefitCoroutine());
         }
+
         /// <summary>
         /// 播放大结局
         /// </summary>
@@ -273,7 +285,7 @@ namespace BoomJam2025
             UIManager.Instance.HideRestartPanel();
             UIManager.Instance.HideTimeEndPanel();
             UIManager.Instance.HidePausePanel();
-            GiftManager.Instance.EnableGiftGeneration();
+            // GiftManager.Instance.EnableGiftGeneration();
         }
 
         private void RestartGame()
@@ -285,12 +297,12 @@ namespace BoomJam2025
             DialogueManager.Instance.StopDialogueCoroutine();
             // 播放循环开始对话
             StartCoroutine(PlayLoopStartCoroutine());
-            if(RebirthManager.Instance.countRebirth == 0)
-            {
-                StartCoroutine(PlaySecondStart());
-                // 启用按钮第一次点击的检测
-                ButtonFirstClickManager.Instance.EnableFirstClickDetection();
-            }
+            //if(RebirthManager.Instance.countRebirth == 0)
+            //{
+            //    StartCoroutine(PlaySecondStart());
+            //    // 启用按钮第一次点击的检测
+            //    ButtonFirstClickManager.Instance.EnableFirstClickDetection();
+            //}
             GiftManager.Instance.ClearAllGifts();
             CommentManager.Instance.ClearComments();
             RebirthManager.Instance.TryRebirth();
@@ -322,6 +334,9 @@ namespace BoomJam2025
         {
             // 开场对话期间禁用礼物系统
             GiftManager.Instance.DisableGiftGeneration();
+
+
+
             // 如果是第一次运行，播放开场剧情
             if (RebirthManager.Instance.countRebirth == 0)
             {
@@ -330,7 +345,7 @@ namespace BoomJam2025
             else
             {
                 // 启用礼物系统
-                GiftManager.Instance.EnableGiftGeneration();
+                //GiftManager.Instance.EnableGiftGeneration();
                 isTimerRunning = true;
                 isGamePaused = false;
                 Time.timeScale = 1f;
@@ -344,8 +359,24 @@ namespace BoomJam2025
         private IEnumerator PlayLoopStartCoroutine()
         {
             StreamerStateManager.Instance.SetState(StreamerState.Chatting);
-            yield return DialogueManager.Instance.StartDialogueAfterCurrent("LoopStart");
+            // 启动循环开始对话但不等待完成
+            StartCoroutine(DialogueManager.Instance.StartDialogueAfterCurrent("LoopStart"));
+            // 等待7秒（原LoopStart对话时间）
+            yield return new WaitForSeconds(7f);
             StreamerStateManager.Instance.SetState(StreamerState.CasualSinging);
+             if(RebirthManager.Instance.countRebirth == 1)
+            {
+                StartCoroutine(PlaySecondStart());
+                Debug.Log("播放第二次开始");
+                // 启用按钮第一次点击的检测
+                ButtonFirstClickManager.Instance.EnableFirstClickDetection();
+            }
+            // 启用礼物系统
+            // 如果不是第二次开始的教程阶段,才启用礼物系统
+            if (RebirthManager.Instance.countRebirth != 1)
+            {
+                GiftManager.Instance.EnableGiftGeneration();
+            }
         }
 
         public void StopRunning()
@@ -355,6 +386,28 @@ namespace BoomJam2025
             Time.timeScale = 0f;
             UIManager.Instance.ShowInputBlocker();
             GiftManager.Instance.DisableGiftGeneration();
+        }
+        
+        /// <summary>
+        /// 暂停所有系统（主播状态、评论、礼物）
+        /// </summary>
+        private void PauseAllSystems()
+        {
+            isTimerRunning = false;
+            StreamerStateManager.Instance.PauseAll();
+            CommentManager.Instance.PauseComments();
+            GiftManager.Instance.DisableGiftGeneration();
+        }
+        
+        /// <summary>
+        /// 恢复所有系统（主播状态、评论、礼物）
+        /// </summary>
+        private void ResumeAllSystems()
+        {
+            isTimerRunning = true;
+            StreamerStateManager.Instance.ResumeAll();
+            CommentManager.Instance.ResumeComments();
+            GiftManager.Instance.EnableGiftGeneration();
         }
     }
 }

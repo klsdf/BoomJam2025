@@ -25,6 +25,7 @@
  *    - SwitchToStage(int stageIndex)：切换到指定阶段
  *    - RestartGameMusic()：重新开始游戏音乐
  *    - StopAllMusic()：停止所有音乐播放
+ *    - PauseAllMusic()：暂停所有音乐播放
  *    - StreamerSpeak()：主播讲话（空方法）
  *    - ProtagonistSpeak()：主角讲话（空方法）
  *    - NarratorSpeak()：画外音讲话（空方法）
@@ -207,6 +208,19 @@ namespace BoomJam2025
             {
                 beatManager.StopBeat();
             }
+        }
+
+        /// <summary>
+        /// 暂停所有音乐播放
+        /// </summary>
+        public void PauseAllMusic()
+        {
+            musicManager.PauseAllMusic();
+        }
+
+        public void ResumeAllMusic()
+        {
+            musicManager.ResumeAllMusic();
         }
 
         /// <summary>
