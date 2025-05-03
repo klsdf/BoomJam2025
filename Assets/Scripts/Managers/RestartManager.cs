@@ -343,6 +343,7 @@ namespace BoomJam2025
         //播放循环后开始说话的协程方法，在结束时触发切换为唱歌状态
         private IEnumerator PlayLoopStartCoroutine()
         {
+            StreamerStateManager.Instance.SetState(StreamerState.Chatting);
             yield return DialogueManager.Instance.StartDialogueAfterCurrent("LoopStart");
             StreamerStateManager.Instance.SetState(StreamerState.CasualSinging);
         }
