@@ -8,6 +8,7 @@ namespace BoomJam2025
 {
     using UnityEngine;
     using UnityEngine.UI;
+    using MoreMountains.Feedbacks;
 
     public class UIManager : MonoBehaviour
     {
@@ -16,6 +17,11 @@ namespace BoomJam2025
         [Header("UI Panels")]
         [SerializeField] private GameObject mainMenuPanel;
         [SerializeField] private GameObject liveRoomPanel;
+        [SerializeField] private GameObject timeEndPanel;
+        [SerializeField] private GameObject restartPanel;
+        [SerializeField] private GameObject pausePanel;
+        [SerializeField] private GameObject inputBlocker;
+        [SerializeField] private MMF_Player restartHintText;
 
         private GameObject currentActivePanel;
 
@@ -59,11 +65,9 @@ namespace BoomJam2025
             {
                 case GameState.MainMenu:
                     ShowPanel(mainMenuPanel);
-                    StopAllManagers();
                     break;
                 case GameState.LiveRoom:
                     ShowPanel(liveRoomPanel);
-                    StartAllManagers();
                     break;
             }
         }
@@ -111,28 +115,109 @@ namespace BoomJam2025
         {
             if (mainMenuPanel != null) HidePanel(mainMenuPanel);
             if (liveRoomPanel != null) HidePanel(liveRoomPanel);
+            if (timeEndPanel != null) HidePanel(timeEndPanel);
+            if (restartPanel != null) HidePanel(restartPanel);
+            if (pausePanel != null) HidePanel(pausePanel);
+            if (inputBlocker != null) HidePanel(inputBlocker);
         }
 
-        /// <summary>
-        /// 启动所有管理器
-        /// </summary>
-        private void StartAllManagers()
+        public void ShowTimeEndPanel()
         {
-            GiftManager.Instance.StartRunning();
-            RestartManager.Instance.StartRunning();
-            CommentManager.Instance.StartRunning();
-            StreamerStateManager.Instance.StartRunning();
+            if (timeEndPanel != null)
+            {
+                timeEndPanel.SetActive(true);
+            }
+            if (inputBlocker != null)
+            {
+                inputBlocker.SetActive(true);
+            }
+            RestartManager.Instance.PauseGame();
         }
 
-        /// <summary>
-        /// 停止所有管理器
-        /// </summary>
-        private void StopAllManagers()
+        public void ShowRestartPanel()
         {
-            RestartManager.Instance.StopRunning();
-            GiftManager.Instance.StopRunning();
-            CommentManager.Instance.StopRunning();
-            StreamerStateManager.Instance.StopRunning();
+            // 检查是否可以重启
+            if (RebirthManager.Instance.countRebirth >= 2)
+            {
+                if (restartPanel != null)
+                {
+                    restartPanel.SetActive(true);
+                }
+                if (inputBlocker != null)
+                {
+                    inputBlocker.SetActive(true);
+                }
+                RestartManager.Instance.PauseGame();
+            }
+            else
+            {
+                restartHintText.PlayFeedbacks();
+            }
+
+        }
+
+        public void ShowPausePanel()
+        {
+            if (pausePanel != null)
+            {
+                pausePanel.SetActive(true);
+            }
+            if (inputBlocker != null)
+            {
+                inputBlocker.SetActive(true);
+            }
+            RestartManager.Instance.PauseGame();
+        }
+
+        public void HideTimeEndPanel()
+        {
+            if (timeEndPanel != null)
+            {
+                timeEndPanel.SetActive(false);
+            }
+            if (inputBlocker != null)
+            {
+                inputBlocker.SetActive(false);
+            }
+        }
+
+        public void HideRestartPanel()
+        {
+            if (restartPanel != null)
+            {
+                restartPanel.SetActive(false);
+            }
+            if (inputBlocker != null)
+            {
+                inputBlocker.SetActive(false);
+            }
+        }
+
+        public void HidePausePanel()
+        {
+            if (pausePanel != null)
+            {
+                pausePanel.SetActive(false);
+            }
+            if (inputBlocker != null)
+            {
+                inputBlocker.SetActive(false);
+            }
+        }
+        public void ShowInputBlocker()
+        {
+            if (inputBlocker != null)
+            {
+                inputBlocker.SetActive(true);
+            }
+        }
+
+        public void HideInputBlocker()
+        {
+            if (inputBlocker != null)
+            {
+                inputBlocker.SetActive(false);
+            }
         }
     }
 } 

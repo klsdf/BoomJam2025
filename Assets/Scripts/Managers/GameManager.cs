@@ -8,6 +8,7 @@ namespace BoomJam2025
 {
     using UnityEngine;
     using UnityEngine.Events;
+    using System.Collections;
 
     /// <summary>
     /// 游戏状态枚举
@@ -50,6 +51,16 @@ namespace BoomJam2025
                 {
                     currentState = value;
                     onGameStateChanged.Invoke(currentState);
+                    
+                    // 根据状态启动或停止管理器
+                    if (currentState == GameState.MainMenu)
+                    {
+                        StopAllManagers();
+                    }
+                    else if (currentState == GameState.LiveRoom)
+                    {
+                        StartAllManagers();
+                    }
                 }
             }
         }
@@ -75,14 +86,17 @@ namespace BoomJam2025
         /// </summary>
         private void Start()
         {
-            // 重置所有管理器状态
-            ResetAllManagers();
-            
-            // 加载游戏数据
-            // SaveManager.Instance.LoadGame();
-            
             // 设置初始状态为主菜单
             CurrentState = GameState.MainMenu;
+            
+            // 延迟一帧重置所有管理器状态，确保所有管理器都已经初始化完成
+            StartCoroutine(DelayedReset());
+        }
+
+        private IEnumerator DelayedReset()
+        {
+            yield return null; // 等待一帧
+            ResetAllManagers();
         }
 
         /// <summary>
@@ -109,7 +123,9 @@ namespace BoomJam2025
 
         public void StartGame()
         {
-            CurrentState = GameState.LiveRoom;
+            Debug.Log("游戏场景加载完成，切换游戏状态到LiveRoom");
+            // 切换游戏状态
+            ChangeGameState(GameState.LiveRoom);
         }
 
         /// <summary>
@@ -126,6 +142,28 @@ namespace BoomJam2025
         private void OnApplicationQuit()
         {
             SaveManager.Instance.SaveGame();
+        }
+
+        /// <summary>
+        /// 启动所有管理器
+        /// </summary>
+        private void StartAllManagers()
+        {
+            GiftManager.Instance.StartRunning();
+            RestartManager.Instance.StartRunning();
+            CommentManager.Instance.StartRunning();
+            StreamerStateManager.Instance.StartRunning();
+        }
+
+        /// <summary>
+        /// 停止所有管理器
+        /// </summary>
+        private void StopAllManagers()
+        {
+            RestartManager.Instance.StopRunning();
+            GiftManager.Instance.StopRunning();
+            CommentManager.Instance.StopRunning();
+            StreamerStateManager.Instance.StopRunning();
         }
     }
 }

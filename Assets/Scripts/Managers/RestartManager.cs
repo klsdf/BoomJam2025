@@ -45,12 +45,6 @@ namespace BoomJam2025
         [Header("UI引用")]
         [Tooltip("显示时间的Text组件")]
         public TextMeshProUGUI textTimeDisplay;
-        [Tooltip("时间结束提示面板")]
-        public GameObject timeEndPanel;
-        [Tooltip("提前重开提示面板")]
-        public GameObject restartPanel;
-        [Tooltip("暂停时禁用玩家输入的遮罩")]
-        public GameObject inputBlocker;
 
         private float gameTime = 0f;
         private bool isGamePaused = false;
@@ -74,18 +68,6 @@ namespace BoomJam2025
         void Start()
         {
             InitializeTime();
-            if (timeEndPanel != null)
-            {
-                timeEndPanel.SetActive(false);
-            }
-            if (inputBlocker != null)
-            {
-                inputBlocker.SetActive(false);
-            }
-            if (restartPanel != null)
-            {
-                restartPanel.SetActive(false);
-            }
         }
         
         /// <summary>
@@ -104,10 +86,6 @@ namespace BoomJam2025
             isTimerRunning = true;
             isGamePaused = false;
             Time.timeScale = 1f;
-            if (inputBlocker != null)
-            {
-                inputBlocker.SetActive(false);
-            }
             
             // 启用礼物系统
             GiftManager.Instance.StartRunning();
@@ -196,15 +174,7 @@ namespace BoomJam2025
             // 分别执行两个对话
             yield return DialogueManager.Instance.StartDialogueAfterCurrent("NormalEnd");
             yield return VNDialogueManager.Instance.StartDialogueCoroutine("FirstDie");
-
-            if (timeEndPanel != null)
-            {
-                timeEndPanel.SetActive(true);
-            }
-            if (inputBlocker != null)
-            {
-                inputBlocker.SetActive(true);
-            }
+            UIManager.Instance.ShowTimeEndPanel();
         }
 
         /// <summary>
@@ -220,14 +190,7 @@ namespace BoomJam2025
             // 并行执行两个对话
             StartCoroutine(DialogueManager.Instance.StartDialogueAfterCurrent("NormalEnd"));
             yield return VNDialogueManager.Instance.StartDialogueCoroutine("VN_NormalEnd");
-            if (timeEndPanel != null)
-            {
-                timeEndPanel.SetActive(true);
-            }
-            if (inputBlocker != null)
-            {
-                inputBlocker.SetActive(true);
-            }
+            UIManager.Instance.ShowTimeEndPanel();
         }
 
         /// <summary>
@@ -299,34 +262,17 @@ namespace BoomJam2025
 
             yield return DialogueManager.Instance.StartDialogueAfterCurrent("FinalEnd");
             yield return VNDialogueManager.Instance.StartDialogueCoroutine("VN_FinalEnd");
-
-            if (timeEndPanel != null)
-            {
-                timeEndPanel.SetActive(true);
-            }
-            if (inputBlocker != null)
-            {
-                inputBlocker.SetActive(true);
-            }
         }
 
-        private void ResumeGame()
+        public void ResumeGame()
         {
             isGamePaused = false;
             isTimerRunning = true;
             Time.timeScale = 1f;
-            if (inputBlocker != null)
-            {
-                inputBlocker.SetActive(false);
-            }
-            if (restartPanel != null)
-            {
-                restartPanel.SetActive(false);
-            }
-            if (timeEndPanel != null)
-            {
-                timeEndPanel.SetActive(false);
-            }
+            UIManager.Instance.HideInputBlocker();
+            UIManager.Instance.HideRestartPanel();
+            UIManager.Instance.HideTimeEndPanel();
+            UIManager.Instance.HidePausePanel();
             GiftManager.Instance.EnableGiftGeneration();
         }
 
@@ -355,8 +301,6 @@ namespace BoomJam2025
             RestartGame();
         }
 
-
-
         public float GetGameTime()
         {
             return gameTime;
@@ -372,19 +316,6 @@ namespace BoomJam2025
         public void OnAdvanceCancelButtonClicked()
         {
             ResumeGame();
-        }
-
-        public void OnAdvanceRestartButtonClicked()
-        {
-            StopRunning();
-            if (restartPanel != null)
-            {
-                restartPanel.SetActive(true);
-            }
-            if (inputBlocker != null)
-            {
-                inputBlocker.SetActive(true);
-            }
         }
 
         public void StartRunning()
@@ -403,10 +334,7 @@ namespace BoomJam2025
                 isTimerRunning = true;
                 isGamePaused = false;
                 Time.timeScale = 1f;
-                if (inputBlocker != null)
-                {
-                    inputBlocker.SetActive(false);
-                }        
+                UIManager.Instance.HideInputBlocker();
                 // 播放循环开始对话
                 StartCoroutine(PlayLoopStartCoroutine());
             }
@@ -424,12 +352,8 @@ namespace BoomJam2025
             isTimerRunning = false;
             isGamePaused = true;
             Time.timeScale = 0f;
-            if (inputBlocker != null)
-            {
-                inputBlocker.SetActive(true);
-            }
+            UIManager.Instance.ShowInputBlocker();
             GiftManager.Instance.DisableGiftGeneration();
         }
     }
-
 }

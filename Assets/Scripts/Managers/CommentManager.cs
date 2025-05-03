@@ -91,16 +91,8 @@ namespace BoomJam2025
                 return;
             }
 
-            commentPool = new CommentPool(commentPrefab, commentContainer, maxComments);
-            
-            // 设置ScrollRect
-            if (scrollRect == null)
-            {
-                Debug.LogError("CommentManager: 未设置ScrollRect！");
-                enabled = false;
-                return;
-            }
-            commentPool.SetScrollRect(scrollRect);
+            // 初始化评论池
+            InitializeCommentPool();
             
             isInitialized = true;
             SetNextSpawnTime();
@@ -190,12 +182,33 @@ namespace BoomJam2025
             currentSpeed = speed;
         }
 
+        private void InitializeCommentPool()
+        {
+            if (commentPool == null)
+            {
+                commentPool = new CommentPool(commentPrefab, commentContainer, maxComments);
+                
+                // 设置ScrollRect
+                if (scrollRect == null)
+                {
+                    Debug.LogError("CommentManager: 未设置ScrollRect！");
+                    enabled = false;
+                    return;
+                }
+                commentPool.SetScrollRect(scrollRect);
+            }
+        }
+
         /// <summary>
         /// 清空所有评论
         /// </summary>
         public void ClearComments()
         {
-            commentPool.Clear();
+            if (commentPool == null)
+            {
+                InitializeCommentPool();
+            }
+            commentPool?.Clear();
         }
 
         /// <summary>
