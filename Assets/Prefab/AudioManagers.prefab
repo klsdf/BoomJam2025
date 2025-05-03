@@ -809,8 +809,19 @@ MonoBehaviour:
         RemapRangeFalloff: {x: 0, y: 1}
         Owner: {fileID: 7502937547300398974}
         DebugActive: 0
-        Sfx: {fileID: 8300000, guid: 21896ba3ac38b4ae99d5dca706ab412d, type: 3}
-        RandomSfx: []
+        Sfx: {fileID: 8300000, guid: 750cf8b4276e48f4a9cffb8206b531f4, type: 3}
+        RandomSfx:
+        - {fileID: 8300000, guid: b0a28088bf788e64b8ae2e42f0afa016, type: 3}
+        - {fileID: 8300000, guid: 8f5847cf4ff366b458ac47b56fe7b85a, type: 3}
+        - {fileID: 8300000, guid: 3bf5ee4fc57292f4eb85cfba92c94b30, type: 3}
+        - {fileID: 8300000, guid: 5a5a33a024e1c3041a77889fb1bbdee7, type: 3}
+        - {fileID: 8300000, guid: 94124933adae90c4087d0fbf102d5812, type: 3}
+        - {fileID: 8300000, guid: 94124933adae90c4087d0fbf102d5812, type: 3}
+        - {fileID: 8300000, guid: 5d7fc76b08802d045850f770d886deb4, type: 3}
+        - {fileID: 8300000, guid: ff78f272807dbee458329a0da27de9f2, type: 3}
+        - {fileID: 8300000, guid: a6030779f1cb6d445a678128248a0e11, type: 3}
+        - {fileID: 8300000, guid: 5cf9515b856d5e64ca273369c6d2eb21, type: 3}
+        - {fileID: 8300000, guid: 98cbd069019cb3f4284e1a88198e2970, type: 3}
         TestPlayButton:
           ButtonText: Debug Play Sound
         TestStopButton:
@@ -821,8 +832,8 @@ MonoBehaviour:
         StopSoundOnFeedbackStop: 1
         MinVolume: 1
         MaxVolume: 1
-        MinPitch: 0.8
-        MaxPitch: 1.32
+        MinPitch: 0.94
+        MaxPitch: 1.03
         SfxAudioMixerGroup: {fileID: 0}
         Priority: 128
         PanStereo: 0

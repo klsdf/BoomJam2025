@@ -30,6 +30,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 5659118355788143039}
   - {fileID: 7779792777259006609}
   - {fileID: 6679183045213643592}
   - {fileID: 4571056021437188394}
@@ -65,6 +66,81 @@ MonoBehaviour:
   casualSingingStreamer: {fileID: 7959578098409617824}
   focusedSingingStreamer: {fileID: 420572172351628042}
   passionateStreamer: {fileID: 4469831835092785396}
+--- !u!1 &4794527748650494659
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5659118355788143039}
+  - component: {fileID: 5543898957799234622}
+  - component: {fileID: 260411658652589721}
+  m_Layer: 0
+  m_Name: SteamerBG
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &5659118355788143039
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4794527748650494659}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6178941056541615192}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0.07, y: -1.68}
+  m_SizeDelta: {x: 1027.35, y: 641.94}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!222 &5543898957799234622
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4794527748650494659}
+  m_CullTransparentMesh: 1
+--- !u!114 &260411658652589721
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4794527748650494659}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: 3a2de4afbfbcd254892e7c72a2140090, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
 --- !u!1001 &2871562426263458653
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -117,6 +193,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: StreamerFocusedSinging
       objectReference: {fileID: 0}
+    - target: {fileID: 6786446061586097527, guid: 33aa192aa2487e946bdea0fd02eb63dd, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: eee301cfb2cb62048a20f9b5a74ae835, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -140,6 +220,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 6178941056541615192}
     m_Modifications:
+    - target: {fileID: 226363196895963592, guid: b93537382dbab9f4c9e1db24afa4ce5b, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: eee301cfb2cb62048a20f9b5a74ae835, type: 3}
     - target: {fileID: 8467485262598110791, guid: b93537382dbab9f4c9e1db24afa4ce5b, type: 3}
       propertyPath: m_Name
       value: StreamerPassionateSinging
@@ -207,6 +291,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 6178941056541615192}
     m_Modifications:
+    - target: {fileID: 2062316442378811475, guid: 1c1ae5f81cd9aec4c85121dac3cad486, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: eee301cfb2cb62048a20f9b5a74ae835, type: 3}
     - target: {fileID: 4516689358138403605, guid: 1c1ae5f81cd9aec4c85121dac3cad486, type: 3}
       propertyPath: m_LocalPosition.x
       value: 266.4118
@@ -250,6 +338,10 @@ PrefabInstance:
     - target: {fileID: 8258369470453537413, guid: 1c1ae5f81cd9aec4c85121dac3cad486, type: 3}
       propertyPath: m_Name
       value: StreamerChatting
+      objectReference: {fileID: 0}
+    - target: {fileID: 8258369470453537413, guid: 1c1ae5f81cd9aec4c85121dac3cad486, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -318,6 +410,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2849354911873532188, guid: 1671582c52d7cf9468fbc744c05c8d16, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: eee301cfb2cb62048a20f9b5a74ae835, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

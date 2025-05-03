@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
+using MoreMountains.Feedbacks;
 
 namespace BoomJam2025
 {
@@ -45,6 +46,10 @@ namespace BoomJam2025
         [Tooltip("音效音量")]
         [Range(0f, 1f)]
         public float clickSoundVolume = 1f;
+        
+        [Header("MMFeedbacks设置")]
+        [Tooltip("点击音效Feedback播放器")]
+        public MMF_Player clickSoundPlayer;
 
         private bool isClicking = false;
 
@@ -103,8 +108,13 @@ namespace BoomJam2025
         /// </summary>
         private void PlayClickSound()
         {
-            if (clickSound != null && Camera.main != null)
+            if (clickSoundPlayer != null)
             {
+                clickSoundPlayer.PlayFeedbacks();
+            }
+            else if (clickSound != null && Camera.main != null)
+            {
+                // 如果没有配置MMF_Player，仍然使用旧方法作为备选
                 AudioSource.PlayClipAtPoint(clickSound, Camera.main.transform.position, clickSoundVolume);
             }
         }
