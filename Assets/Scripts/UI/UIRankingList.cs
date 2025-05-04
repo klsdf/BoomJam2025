@@ -44,17 +44,54 @@ namespace BoomJam2025
         private List<RankerInfo> allRankers = new List<RankerInfo>();
         private List<decimal> allScores = new List<decimal>();
 
+        private float nextUpdateTime = 0f;
+        private float updateInterval = 0f;
+
         private void Start()
         {
             InitializeRanking();
+            // 初始化第一次更新时间
+            SetNextUpdateTime();
+        }
+
+        private void SetNextUpdateTime()
+        {
+            // 随机生成5-10秒的间隔
+            updateInterval = Random.Range(5f, 10f);
+            nextUpdateTime = Time.time + updateInterval;
         }
 
         private void Update()
         {
             UpdateRanking();
+            
+            // 检查是否需要更新NPC分数
+            if (Time.time >= nextUpdateTime)
+            {
+                UpdateNPCScores();
+                SetNextUpdateTime();
+            }
         }
 
-        private void InitializeRanking()
+        private void UpdateNPCScores()
+        {
+            // 更新第二名和第三名的分数
+            for (int i = 1; i < 3; i++) // 从1开始，跳过第一名
+            {
+                if (i < allRankers.Count && !allRankers[i].isPlayer)
+                {
+                    // 随机增加100-2000的贡献值
+                    decimal randomIncrease = Random.Range(100, 3001);
+                    allScores[i] += randomIncrease;
+                    allRankers[i].scoreString = allScores[i].ToString();
+                }
+            }
+            
+            SortRankingList();
+            UpdateUI();
+        }
+
+        public void InitializeRanking()
         {
             allRankers.Clear();
             allScores.Clear();

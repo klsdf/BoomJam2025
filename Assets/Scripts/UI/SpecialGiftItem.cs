@@ -15,6 +15,9 @@ namespace BoomJam2025
         [Header("UI Components")]
         public Image imageGiftIcon;
         public GameObject textFadeOut;
+        public Image imageRewardIcon;
+        public Sprite spriteContribution;
+        public Sprite spritePoints;
         
         [Header("Animation Settings")]
         public float fallDuration = 1f;
@@ -115,17 +118,17 @@ namespace BoomJam2025
         {
             float rewardType = Random.value;
             
-            if (rewardType < 0.8f) // 80% 概率获得贡献值
+            if (rewardType < 0.7f) // 70% 概率获得贡献值
             {
-                int level = 100 + FanLevelManager.Instance.levelFan;
+                int level = 60 + FanLevelManager.Instance.levelFan;
                 decimal contributionValue = CoreValueManager.Instance.GetCritValueAtLevel(level);
                 CoreValueManager.Instance.valueContribution += contributionValue;
-                ShowFadeOutText($"贡献值+{CoreValueManager.Instance.FormatValue(contributionValue)}");
+                ShowFadeOutText($"贡献值+{CoreValueManager.Instance.FormatValue(contributionValue)}", spriteContribution);
             }
-            else // 20% 概率获得加点
+            else // 30% 概率获得加点
             {
                 MemberBenefitManager.Instance.pointsOuter += 1;
-                ShowFadeOutText($"点数+1");
+                ShowFadeOutText($"点数+1", spritePoints);
             }
         }
         
@@ -146,14 +149,20 @@ namespace BoomJam2025
         }
 
         /// <summary>
-        /// 显示淡出文本
+        /// 显示淡出文本和图标
         /// </summary>
         /// <param name="text">要显示的文本内容</param>
-        private void ShowFadeOutText(string text)
+        /// <param name="rewardSprite">奖励类型图标</param>
+        private void ShowFadeOutText(string text, Sprite rewardSprite)
         {
             if (textFadeOut == null) return;
             
             textFadeOut.GetComponent<TextMeshProUGUI>().text = text;
+            if (imageRewardIcon != null)
+            {
+                imageRewardIcon.sprite = rewardSprite;
+                imageRewardIcon.gameObject.SetActive(true);
+            }
             textFadeOut.GetComponent<MMF_Player>().PlayFeedbacks();
         }
 

@@ -299,7 +299,7 @@ namespace BoomJam2025
             UIManager.Instance.HideRestartPanel();
             UIManager.Instance.HideTimeEndPanel();
             UIManager.Instance.HidePausePanel();
-            // GiftManager.Instance.EnableGiftGeneration();
+            GiftManager.Instance.EnableGiftGeneration();
         }
 
         private void RestartGame()
@@ -318,6 +318,14 @@ namespace BoomJam2025
             GiftManager.Instance.ClearAllGifts();
             CommentManager.Instance.ClearComments();
             RebirthManager.Instance.TryRebirth();
+            //dioManager.Instance.StartGameMusic();
+            
+            // 重置排名列表
+            UIRankingList rankingList = FindObjectOfType<UIRankingList>();
+            if (rankingList != null)
+            {
+                rankingList.InitializeRanking();
+            }
         }
         public void OnRestartButtonClicked()
         {
