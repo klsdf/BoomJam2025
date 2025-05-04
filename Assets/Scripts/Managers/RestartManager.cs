@@ -271,9 +271,14 @@ namespace BoomJam2025
         private IEnumerator PlayGrandFinale()
         {
             // TODO: 在这里添加大结局的演出逻辑
+            StreamerStateManager.Instance.SetState(StreamerState.Chatting);
 
             yield return DialogueManager.Instance.StartDialogueAfterCurrent("FinalEnd");
             yield return VNDialogueManager.Instance.StartDialogueCoroutine("VN_FinalEnd");
+            // 返回主菜单
+            yield return new WaitForSeconds(1f);
+            StreamerUIManager.Instance.StopAllCoroutines();
+            GameManager.Instance.ChangeGameState(GameState.MainMenu);
         }
 
         public void ResumeGame()

@@ -185,7 +185,7 @@ namespace BoomJam2025
         public void StartChattingShake()
         {
             StopChattingShake();
-            if (chattingShakeMMF != null)
+            if (chattingShakeMMF != null && chattingShakeMMF.gameObject.activeInHierarchy)
             {
                 chattingShakeCoroutine = StartCoroutine(ShakeCoroutine(chattingShakeMMF, chattingShakeMultiplier));
             }
@@ -209,7 +209,7 @@ namespace BoomJam2025
         public void StartCasualSingingShake()
         {
             StopCasualSingingShake();
-            if (casualSingingShakeMMF != null)
+            if (casualSingingShakeMMF != null && casualSingingShakeMMF.gameObject.activeInHierarchy)
             {
                 casualSingingShakeCoroutine = StartCoroutine(ShakeCoroutine(casualSingingShakeMMF, casualSingingShakeMultiplier));
             }
@@ -233,7 +233,7 @@ namespace BoomJam2025
         public void StartFocusedSingingShake()
         {
             StopFocusedSingingShake();
-            if (focusedSingingShakeMMF != null)
+            if (focusedSingingShakeMMF != null && focusedSingingShakeMMF.gameObject.activeInHierarchy)
             {
                 focusedSingingShakeCoroutine = StartCoroutine(ShakeCoroutine(focusedSingingShakeMMF, focusedSingingShakeMultiplier));
             }
@@ -257,7 +257,7 @@ namespace BoomJam2025
         public void StartPassionateSingingShake()
         {
             StopPassionateSingingShake();
-            if (passionateSingingShakeMMF != null)
+            if (passionateSingingShakeMMF != null && passionateSingingShakeMMF.gameObject.activeInHierarchy)
             {
                 passionateShakeCoroutine = StartCoroutine(ShakeCoroutine(passionateSingingShakeMMF, passionateShakeMultiplier));
             }
