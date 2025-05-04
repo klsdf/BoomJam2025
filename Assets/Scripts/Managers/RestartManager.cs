@@ -53,6 +53,9 @@ namespace BoomJam2025
         private bool isTimeEnd = false;
         public bool isTimerRunning { get; private set; } = false;
 
+        private bool isCountdownStarted = false;
+        private bool isCountdownPlayed = false;
+
         private void Awake()
         {
             if (_instance != null && _instance != this)
@@ -114,6 +117,12 @@ namespace BoomJam2025
                 gameTime += Time.deltaTime;
                 UpdateTimeDisplay();
                 CheckTimeLimit();
+                
+                // 检查是否应该播放倒计时
+                if (isCountdownStarted && !isCountdownPlayed)
+                {
+                    CheckCountdownTime();
+                }
             }
         }
 
@@ -300,18 +309,15 @@ namespace BoomJam2025
             InitializeTime();
             // 停止当前对话
             DialogueManager.Instance.StopDialogueCoroutine();
+            
+            // 启动倒计时检测
+            StartCountdownCheck();
+            
             // 播放循环开始对话
             StartCoroutine(PlayLoopStartCoroutine());
-            //if(RebirthManager.Instance.countRebirth == 0)
-            //{
-            //    StartCoroutine(PlaySecondStart());
-            //    // 启用按钮第一次点击的检测
-            //    ButtonFirstClickManager.Instance.EnableFirstClickDetection();
-            //}
             GiftManager.Instance.ClearAllGifts();
             CommentManager.Instance.ClearComments();
             RebirthManager.Instance.TryRebirth();
-            //dioManager.Instance.StartGameMusic();
         }
         public void OnRestartButtonClicked()
         {
@@ -340,8 +346,6 @@ namespace BoomJam2025
             // 开场对话期间禁用礼物系统
             GiftManager.Instance.DisableGiftGeneration();
 
-
-
             // 如果是第一次运行，播放开场剧情
             if (RebirthManager.Instance.countRebirth == 0)
             {
@@ -350,11 +354,14 @@ namespace BoomJam2025
             else
             {
                 // 启用礼物系统
-                //GiftManager.Instance.EnableGiftGeneration();
                 isTimerRunning = true;
                 isGamePaused = false;
                 Time.timeScale = 1f;
                 UIManager.Instance.HideInputBlocker();
+                
+                // 启动倒计时检测
+                StartCountdownCheck();
+                
                 // 播放循环开始对话
                 StartCoroutine(PlayLoopStartCoroutine());
             }
@@ -369,7 +376,7 @@ namespace BoomJam2025
             // 等待7秒（原LoopStart对话时间）
             yield return new WaitForSeconds(7f);
             StreamerStateManager.Instance.SetState(StreamerState.CasualSinging);
-             if(RebirthManager.Instance.countRebirth == 1)
+            if(RebirthManager.Instance.countRebirth == 1)
             {
                 StartCoroutine(PlaySecondStart());
                 Debug.Log("播放第二次开始");
@@ -382,6 +389,58 @@ namespace BoomJam2025
             {
                 GiftManager.Instance.EnableGiftGeneration();
             }
+        }
+
+        /// <summary>
+        /// 检查是否应该播放倒计时
+        /// </summary>
+        private void CheckCountdownTime()
+        {
+            DateTime currentTime = startDateTime.AddSeconds(gameTime);
+            
+            // 目标时间：23:59:50
+            if (currentTime.Hour == 23 && currentTime.Minute == 59 && currentTime.Second >= 50)
+            {
+                Debug.Log($"时间到达23:59:50，播放倒计时音效，当前时间：{currentTime:HH:mm:ss}");
+                
+                try
+                {
+                    if (AudioManager.Instance != null)
+                    {
+                        AudioManager.Instance.PlayCountdown();
+                        Debug.Log("倒计时音效播放指令已发送");
+                    }
+                    else
+                    {
+                        Debug.LogError("错误：AudioManager实例为空");
+                    }
+                }
+                catch (System.Exception e)
+                {
+                    Debug.LogError("播放倒计时音效时发生异常: " + e.Message);
+                }
+                
+                isCountdownPlayed = true;
+            }
+        }
+        
+        /// <summary>
+        /// 开始倒计时检测
+        /// </summary>
+        public void StartCountdownCheck()
+        {
+            isCountdownStarted = true;
+            isCountdownPlayed = false;
+            Debug.Log("倒计时检测已开始");
+        }
+        
+        /// <summary>
+        /// 重置倒计时状态
+        /// </summary>
+        private void ResetCountdown()
+        {
+            isCountdownStarted = false;
+            isCountdownPlayed = false;
         }
 
         public void StopRunning()
@@ -402,6 +461,7 @@ namespace BoomJam2025
             StreamerStateManager.Instance.PauseAll();
             CommentManager.Instance.PauseComments();
             GiftManager.Instance.DisableGiftGeneration();
+            AudioManager.Instance.PauseCountdown();
         }
         
         /// <summary>
@@ -413,6 +473,7 @@ namespace BoomJam2025
             StreamerStateManager.Instance.ResumeAll();
             CommentManager.Instance.ResumeComments();
             GiftManager.Instance.EnableGiftGeneration();
+            AudioManager.Instance.ResumeCountdown();
         }
     }
 }

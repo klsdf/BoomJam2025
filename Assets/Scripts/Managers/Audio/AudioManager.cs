@@ -30,6 +30,7 @@
  *    - ProtagonistSpeak()：主角讲话（空方法）
  *    - NarratorSpeak()：画外音讲话（空方法）
  *    - CherrySpeak()：Cherry讲话（空方法）
+ *    - PlayCountdown()：播放倒计时音效
  * 
  * 4. 注意事项：
  *    - 其他管理器应该通过AudioManager调用音乐功能
@@ -37,6 +38,7 @@
  ****************************************************************************/
 using UnityEngine;
 using System.Collections;
+using MoreMountains.Feedbacks;
 
 namespace BoomJam2025
 {
@@ -68,6 +70,16 @@ namespace BoomJam2025
 
         [Header("讲话管理器引用")]
         [SerializeField] private SpeakVoiceManager speakVoiceManager;
+
+        [Header("倒计时音效")]
+        [Tooltip("倒计时音效播放器")]
+        [SerializeField] private MMF_Player countdownPlayer;
+        
+        [Tooltip("倒计时是否正在播放")]
+        [SerializeField, ReadOnly] private bool isCountdownPlaying = false;
+        
+        [Tooltip("倒计时是否已暂停")]
+        [SerializeField, ReadOnly] private bool isCountdownPaused = false;
 
         [Header("调试设置")]
         /// <summary>
@@ -129,6 +141,11 @@ namespace BoomJam2025
         /// 调试按钮：Cherry讲话
         /// </summary>
         [SerializeField] private bool debugCherrySpeak = false;
+
+        /// <summary>
+        /// 调试按钮：播放倒计时音效
+        /// </summary>
+        [SerializeField] private bool debugPlayCountdown = false;
         #endregion
 
         #region Private Fields
@@ -204,6 +221,7 @@ namespace BoomJam2025
         public void StopAllMusic()
         {
             musicManager.StopAllMusic();
+            StopCountdown();
             if (beatManager != null)
             {
                 beatManager.StopBeat();
@@ -216,11 +234,13 @@ namespace BoomJam2025
         public void PauseAllMusic()
         {
             musicManager.PauseAllMusic();
+            PauseCountdown();
         }
 
         public void ResumeAllMusic()
         {
             musicManager.ResumeAllMusic();
+            ResumeCountdown();
         }
 
         /// <summary>
@@ -265,6 +285,72 @@ namespace BoomJam2025
             {
                 speakVoiceManager.CherrySpeak();
             }
+        }
+
+        /// <summary>
+        /// 播放倒计时音效
+        /// </summary>
+        public void PlayCountdown()
+        {
+            Debug.Log("AudioManager.PlayCountdown被调用");
+            
+            if (countdownPlayer == null)
+            {
+                Debug.LogError("错误：countdownPlayer引用为空，请在Inspector中为AudioManager分配MMF_Player组件");
+                return;
+            }
+            
+            if (!countdownPlayer.gameObject.activeInHierarchy)
+            {
+                Debug.LogWarning("警告：countdownPlayer游戏对象未激活，无法播放");
+                return;
+            }
+            
+            Debug.Log("开始播放倒计时音效");
+            countdownPlayer.PlayFeedbacks();
+            isCountdownPlaying = true;
+            isCountdownPaused = false;
+            Debug.Log("倒计时音效播放请求已发送");
+        }
+        
+        /// <summary>
+        /// 暂停倒计时音效
+        /// </summary>
+        public void PauseCountdown()
+        {
+            if (countdownPlayer == null || !isCountdownPlaying || isCountdownPaused)
+                return;
+                
+            Debug.Log("暂停倒计时音效");
+            countdownPlayer.PauseFeedbacks();
+            isCountdownPaused = true;
+        }
+        
+        /// <summary>
+        /// 恢复倒计时音效
+        /// </summary>
+        public void ResumeCountdown()
+        {
+            if (countdownPlayer == null || !isCountdownPlaying || !isCountdownPaused)
+                return;
+                
+            Debug.Log("恢复倒计时音效");
+            countdownPlayer.ResumeFeedbacks();
+            isCountdownPaused = false;
+        }
+        
+        /// <summary>
+        /// 停止倒计时音效
+        /// </summary>
+        public void StopCountdown()
+        {
+            if (countdownPlayer == null || !isCountdownPlaying)
+                return;
+                
+            Debug.Log("停止倒计时音效");
+            countdownPlayer.StopFeedbacks();
+            isCountdownPlaying = false;
+            isCountdownPaused = false;
         }
 
         public int GetCurrentStage()
@@ -333,6 +419,12 @@ namespace BoomJam2025
             {
                 debugCherrySpeak = false;
                 CherrySpeak();
+            }
+
+            if (debugPlayCountdown)
+            {
+                debugPlayCountdown = false;
+                PlayCountdown();
             }
         }
 
