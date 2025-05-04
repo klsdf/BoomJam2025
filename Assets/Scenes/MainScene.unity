@@ -3572,10 +3572,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 8252416363524442136}
     m_Modifications:
-    - target: {fileID: 2864990864115763969, guid: 3eae0ca0e7be4a3418c77baa078f1acf, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 2907440345312631195, guid: 3eae0ca0e7be4a3418c77baa078f1acf, type: 3}
       propertyPath: m_Name
       value: StreamerMain
@@ -3611,18 +3607,6 @@ PrefabInstance:
     - target: {fileID: 6178941056541615192, guid: 3eae0ca0e7be4a3418c77baa078f1acf, type: 3}
       propertyPath: m_SizeDelta.y
       value: 658.26
-      objectReference: {fileID: 0}
-    - target: {fileID: 6178941056541615192, guid: 3eae0ca0e7be4a3418c77baa078f1acf, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 0.0100210775
-      objectReference: {fileID: 0}
-    - target: {fileID: 6178941056541615192, guid: 3eae0ca0e7be4a3418c77baa078f1acf, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 0.0100097945
-      objectReference: {fileID: 0}
-    - target: {fileID: 6178941056541615192, guid: 3eae0ca0e7be4a3418c77baa078f1acf, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 0.0114311855
       objectReference: {fileID: 0}
     - target: {fileID: 6178941056541615192, guid: 3eae0ca0e7be4a3418c77baa078f1acf, type: 3}
       propertyPath: m_LocalPosition.x
@@ -3670,10 +3654,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6178941056541615192, guid: 3eae0ca0e7be4a3418c77baa078f1acf, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6914140682498304929, guid: 3eae0ca0e7be4a3418c77baa078f1acf, type: 3}
-      propertyPath: forceImmediateSwitch
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -4051,7 +4031,7 @@ MonoBehaviour:
   cursorMode: 0
   clickSound: {fileID: 8300000, guid: 1c46cffeb4d6d9541a61ed42d479a39b, type: 3}
   clickSoundVolume: 1
-  clickSoundPlayer: {fileID: 0}
+  clickSoundPlayer: {fileID: 436318623}
 --- !u!4 &436318622
 Transform:
   m_ObjectHideFlags: 0
@@ -4242,8 +4222,8 @@ MonoBehaviour:
         PoolSize: 10
         UseLegacyEventsMode: 0
         StopSoundOnFeedbackStop: 1
-        MinVolume: 1
-        MaxVolume: 1
+        MinVolume: 2
+        MaxVolume: 2
         MinPitch: 0.97
         MaxPitch: 1.03
         SfxAudioMixerGroup: {fileID: 0}
@@ -8974,7 +8954,7 @@ MonoBehaviour:
   TargetTransform: {fileID: 0}
   TargetRectTransform: {fileID: 0}
   ShakeSpeed: 20
-  ShakeRange: 0.5
+  ShakeRange: 1
   OscillationOffset: 0
   ShakeMainDirection: {x: 0, y: 1, z: 0}
   RandomizeDirection: 0
@@ -32000,7 +31980,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   npcRankers:
   - avatar: {fileID: 21300000, guid: 64f9e7527c9666b41a43fd49a044c1b2, type: 3}
-    nickname: "Rui\u53D4"
+    nickname: Cherry
     scoreString: 1000000000000
     isPlayer: 0
   - avatar: {fileID: 21300000, guid: 4c409eaaba3358940b414565fe4c51c2, type: 3}
@@ -32024,7 +32004,7 @@ MonoBehaviour:
   - {fileID: 1358783246}
   - {fileID: 1548878769}
   playerAvatar: {fileID: 21300000, guid: 137f36a36ea9f854395841a7a3cb00f8, type: 3}
-  playerNickname: Pig
+  playerNickname: "\u73A9\u5BB6"
 --- !u!114 &7482271935551517967
 MonoBehaviour:
   m_ObjectHideFlags: 0
