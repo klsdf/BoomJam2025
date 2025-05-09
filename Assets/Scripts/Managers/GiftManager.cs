@@ -84,14 +84,14 @@ namespace BoomJam2025
 
         [Header("Settings")]
         /// <summary>
-        /// 礼物生成的最小X坐标
+        /// 礼物生成的最小X坐标（相对于屏幕宽度的百分比）
         /// </summary>
-        public float minX = 0f;
+        public float minXPercentage = 0.1f;
         
         /// <summary>
-        /// 礼物生成的最大X坐标
+        /// 礼物生成的最大X坐标（相对于屏幕宽度的百分比）
         /// </summary>
-        public float maxX = 1920f;
+        public float maxXPercentage = 0.9f;
 
         [Header("Long Press Settings")]
         /// <summary>
@@ -272,10 +272,18 @@ namespace BoomJam2025
             canvasGroup.blocksRaycasts = false;
             canvasGroup.interactable = false;
             
-            // 设置随机X位置
+            // 获取父容器宽度
+            RectTransform containerRect = giftContainer as RectTransform;
+            float containerWidth = containerRect.rect.width;
+            
+            // 设置随机X位置（使用容器宽度的百分比）
+            float minX = containerWidth * minXPercentage;
+            float maxX = containerWidth * maxXPercentage;
             float randomX = Random.Range(minX, maxX);
+            
             RectTransform rectTransform = giftItem.gameObject.GetComponent<RectTransform>();
-            rectTransform.anchoredPosition = new Vector2(randomX, 0);
+            // 将礼物放置在容器顶部，Y坐标为0（因为容器锚点在顶部）
+            rectTransform.anchoredPosition = new Vector2(randomX - containerWidth / 2f, -rectTransform.rect.height);
             rectTransform.localScale = Vector3.one;
             
             // 初始化礼物
@@ -422,9 +430,17 @@ namespace BoomJam2025
                 return;
             }
 
-            // 设置随机X位置
+            // 获取父容器宽度
+            RectTransform containerRect = giftContainer as RectTransform;
+            float containerWidth = containerRect.rect.width;
+            
+            // 设置随机X位置（使用容器宽度的百分比）
+            float minX = containerWidth * minXPercentage;
+            float maxX = containerWidth * maxXPercentage;
             float randomX = Random.Range(minX, maxX);
-            specialGift.GetComponent<RectTransform>().anchoredPosition = new Vector2(randomX, 0);
+            
+            RectTransform specialRect = specialGift.GetComponent<RectTransform>();
+            specialRect.anchoredPosition = new Vector2(randomX - containerWidth / 2f, 0);
             
             // 初始化特殊礼物
             specialGiftItem.Initialize(screenHeight);

@@ -4833,10 +4833,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 901905494}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 162.065, y: -31.345001}
-  m_SizeDelta: {x: 276.13, y: 38.690002}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &459912180
 MonoBehaviour:
@@ -4891,7 +4891,7 @@ MonoBehaviour:
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 1
+  m_fontStyle: 0
   m_HorizontalAlignment: 1
   m_VerticalAlignment: 256
   m_textAlignment: 65535
@@ -12019,8 +12019,8 @@ MonoBehaviour:
   mainCamera: {fileID: 1001680403}
   giftData: {fileID: 11400000, guid: a0865e18e67a4f5448adc63198b55b49, type: 2}
   textAnimator: {fileID: 9070735183592861011}
-  minX: 50
-  maxX: 1870
+  minXPercentage: 0.1
+  maxXPercentage: 0.9
   giftSpawnInterval: 0.08
   specialGiftProbability: 0.08
   specialGiftCooldown: 8
@@ -15264,7 +15264,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 27.5, y: 112}
-  m_SizeDelta: {x: -1495.0698, y: -146.60999}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: -0.000000014877486, y: 0.50000024}
 --- !u!114 &901905495
 MonoBehaviour:
@@ -18648,11 +18648,11 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1092772154}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -7.8997, y: 0}
-  m_SizeDelta: {x: 1920, y: 1080}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: -7.899719, y: 0}
+  m_SizeDelta: {x: 0, y: 1080}
+  m_Pivot: {x: 0.5, y: 1}
 --- !u!222 &1105965935
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -19153,7 +19153,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1217737044
 RectTransform:
   m_ObjectHideFlags: 0
@@ -22220,7 +22220,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 6.2998047, y: 123}
-  m_SizeDelta: {x: -1871.9999, y: -1031.9998}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!225 &1533596350
 CanvasGroup:
@@ -28111,7 +28111,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Alpha 0.1
+  m_text: Alpha 0.21
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: ca5280af178d4c446ab98cb3a2414be9, type: 2}
   m_sharedMaterial: {fileID: -531988550628259788, guid: ca5280af178d4c446ab98cb3a2414be9, type: 2}
